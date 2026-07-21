@@ -533,7 +533,7 @@ async function pushSharedState(){
   if(!sharedDirty) return;
   setSyncStatus('● Salvando…', 'saving');
   try{
-    var response = await fetch('/api/state', {
+    var response = await fetch('/api/public/state', {
       method:'PUT',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({state:collectSharedState()})
@@ -560,7 +560,7 @@ function sharedSet(key, value){
 
 async function loadSharedState(){
   try{
-    var response = await fetch('/api/state', {cache:'no-store'});
+    var response = await fetch('/api/public/state', {cache:'no-store'});
     if(!response.ok) throw new Error('load failed');
     var data = await response.json();
     sharedRevision = data.revision || 0;
@@ -578,7 +578,7 @@ async function loadSharedState(){
 async function checkSharedUpdates(){
   if(sharedDirty) return;
   try{
-    var response = await fetch('/api/state', {cache:'no-store'});
+    var response = await fetch('/api/public/state', {cache:'no-store'});
     if(!response.ok) return;
     var data = await response.json();
     if(data.revision > sharedRevision){
