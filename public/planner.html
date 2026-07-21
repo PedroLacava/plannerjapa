@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Japan Trip Planner",
+  "schemaVersion": 1,
+  "description": "Planejador interativo (drag-and-drop) da viagem ao Japão, Nov 2026: calendário dia a dia entre chegada (Haneda 08/Nov) e partida (Narita 27/Nov), com cards das cidades-base e atividades opcionais para encaixar a mão."
+}
+</script>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root{
+    color-scheme: light;
+    --ink:#2b2620;
+    --paper:#faf7f1;
+    --line:#ddd4c4;
+    --tokyo:#3b5dc9; --tokyo-bg:#eaf0ff;
+    --hakone:#1a7a4a; --hakone-bg:#e6f7ee;
+    --nagoya:#8a5a12; --nagoya-bg:#fbf0dc;
+    --kyoto:#c1461f; --kyoto-bg:#fdece2;
+    --osaka:#a8286b; --osaka-bg:#fbe7f1;
+    --hiro:#0e7a7a; --hiro-bg:#e2f6f6;
+    --koyasan:#6a3fa0; --koyasan-bg:#f1e8fb;
+    --far:#a35a12; --far-bg:#fbead6;
+    --transport:#285c75; --transport-bg:#e7f3f8;
+    --free:#8a8478; --free-bg:#f0ede4;
+    --warn:#b3261e; --warn-bg:#fdeceb;
+    --tight:#a3690f; --tight-bg:#fbf0dc;
+    --same:#2f7a4a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 18px 20px 40px;
+  }
+  h1{font-size:19px; margin:0 0 2px;}
+  .subtitle{font-size:12.5px; color:#6b6456; margin-bottom:14px; line-height:1.5;}
+  .layout{
+    display:grid;
+    grid-template-columns: 280px 1fr 260px;
+    gap:16px;
+    align-items:start;
+  }
+  @media (max-width: 1100px){
+    .layout{ grid-template-columns: 1fr; }
+    .calendar-panel{ position:static !important; }
+  }
+  .calendar-panel{
+    position: sticky;
+    top: 12px;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+  }
+  .panel{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+  }
+  .panel h2{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:#8a8478;
+    margin:0 0 8px;
+  }
+  .cat-label{
+    font-size:10.5px;
+    font-weight:700;
+    color:#8a8478;
+    margin:12px 0 5px;
+    text-transform:uppercase;
+    letter-spacing:.03em;
+  }
+  .cat-label:first-child{ margin-top:0; }
+
+  details.region{ margin-bottom:6px; }
+  details.region summary{
+    font-size:10.5px; font-weight:700; color:#8a8478; text-transform:uppercase;
+    letter-spacing:.03em; cursor:pointer; margin:10px 0 5px; list-style:none;
+  }
+  details.region summary::-webkit-details-marker{ display:none; }
+  details.region summary::before{ content:'▸ '; }
+  details.region[open] summary::before{ content:'▾ '; }
+
+  .card{
+    border-radius:8px;
+    padding:7px 8px;
+    margin-bottom:6px;
+    cursor:grab;
+    border:1.5px solid transparent;
+    user-select:none;
+    position:relative;
+  }
+  .card-head{ display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; }
+  .card-head .hrs{ font-weight:400; font-size:10px; opacity:.75; margin-left:auto; }
+  .card-head .emoji{ font-size:13px; }
+  .card ul.bullets{ margin:5px 0 0; padding-left:15px; font-size:10.3px; font-weight:400; opacity:.9; line-height:1.4; }
+  .card ul.bullets li{ margin-bottom:1px; }
+  .card.dragging{ opacity:.4; }
+  .travel-line{ font-size:10.3px; font-weight:700; margin-top:4px; }
+  .travel-line.trip{ color:var(--far); }
+  .travel-line.same{ color:var(--same); }
+  .detail-box .travel-line{ font-size:11px; margin-top:3px; margin-bottom:2px; }
+  .chip-travel{ font-size:9px; cursor:help; opacity:.9; }
+  .card .del-custom{
+    position:absolute; top:4px; right:5px; border:none; background:none; cursor:pointer;
+    font-size:12px; color:inherit; opacity:.5; padding:0 2px;
+  }
+  .card .del-custom:hover{ opacity:1; color:var(--warn); }
+  .card .usage-badge{
+    position:absolute; top:-6px; left:-6px; background:var(--ink); color:#fff;
+    font-size:9px; font-weight:700; border-radius:999px; padding:1px 5px;
+    line-height:1.4; box-shadow:0 1px 2px rgba(0,0,0,.25);
+  }
+
+  .card.base-tokyo, .base-chip.tokyo, .detail-box.tokyo{ background:var(--tokyo-bg); color:var(--tokyo); border-color:var(--tokyo);}
+  .card.base-hakone, .base-chip.hakone, .detail-box.hakone{ background:var(--hakone-bg); color:var(--hakone); border-color:var(--hakone);}
+  .card.base-nagoya, .base-chip.nagoya, .detail-box.nagoya{ background:var(--nagoya-bg); color:var(--nagoya); border-color:var(--nagoya);}
+  .card.base-kyoto, .base-chip.kyoto, .detail-box.kyoto{ background:var(--kyoto-bg); color:var(--kyoto); border-color:var(--kyoto);}
+  .card.base-osaka, .base-chip.osaka, .detail-box.osaka{ background:var(--osaka-bg); color:var(--osaka); border-color:var(--osaka);}
+  .card.base-koyasan, .base-chip.koyasan, .detail-box.koyasan{ background:var(--koyasan-bg); color:var(--koyasan); border-color:var(--koyasan);}
+
+  /* tour colors — matched to the base/region they belong to, dashed border = "day trip" (you sleep somewhere else) */
+  .card.tour-tokyo, .tour-chip.tour-tokyo, .detail-box.tour-tokyo{ background:var(--tokyo-bg); color:var(--tokyo); border-color:var(--tokyo); border-style:dashed; }
+  .card.tour-hakone, .tour-chip.tour-hakone, .detail-box.tour-hakone{ background:var(--hakone-bg); color:var(--hakone); border-color:var(--hakone); border-style:dashed; }
+  .card.tour-nagoya, .tour-chip.tour-nagoya, .detail-box.tour-nagoya{ background:var(--nagoya-bg); color:var(--nagoya); border-color:var(--nagoya); border-style:dashed; }
+  .card.tour-kyoto, .tour-chip.tour-kyoto, .detail-box.tour-kyoto{ background:var(--kyoto-bg); color:var(--kyoto); border-color:var(--kyoto); border-style:dashed; }
+  .card.tour-osaka, .tour-chip.tour-osaka, .detail-box.tour-osaka{ background:var(--osaka-bg); color:var(--osaka); border-color:var(--osaka); border-style:dashed; }
+  .card.tour-hiro, .tour-chip.tour-hiro, .detail-box.tour-hiro{ background:var(--hiro-bg); color:var(--hiro); border-color:var(--hiro); border-style:dashed; }
+  .card.tour-far, .tour-chip.tour-far, .detail-box.tour-far{ background:var(--far-bg); color:var(--far); border-color:var(--far); border-style:dashed; }
+  .card.tour-koyasan, .tour-chip.tour-koyasan, .detail-box.tour-koyasan{ background:var(--koyasan-bg); color:var(--koyasan); border-color:var(--koyasan); border-style:dashed; }
+  .card.tour-transport, .tour-chip.tour-transport, .detail-box.tour-transport{ background:var(--transport-bg); color:var(--transport); border-color:var(--transport); border-style:solid; }
+
+  .legend-note{ font-size:10.5px; color:#8a8478; line-height:1.5; margin-top:10px;}
+
+  /* ---- create-card form ---- */
+  .create-toggle{
+    width:100%; margin-top:4px; padding:7px; font-size:11.5px; border-radius:7px;
+    border:1.5px dashed var(--line); background:#fff; color:#6b6456; cursor:pointer; font-weight:700;
+  }
+  .create-toggle:hover{ background:#f2eee2; }
+  .create-form{
+    border:1px solid var(--line); border-radius:8px; padding:9px; margin-top:8px; background:#fbf9f4;
+    display:none;
+  }
+  .create-form.open{ display:block; }
+  .create-form label{ display:block; font-size:10px; font-weight:700; color:#8a8478; text-transform:uppercase; letter-spacing:.03em; margin:7px 0 2px; }
+  .create-form label:first-child{ margin-top:0; }
+  .create-form input[type="text"], .create-form input[type="number"], .create-form select, .create-form textarea{
+    width:100%; font-size:12px; padding:5px 6px; border-radius:5px; border:1px solid var(--line); background:#fff; font-family:inherit;
+  }
+  .create-form textarea{ min-height:44px; resize:vertical; }
+  .create-form .row2{ display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+  .create-form .type-toggle{ display:flex; gap:6px; }
+  .create-form .type-toggle button{
+    flex:1; padding:5px; font-size:11px; border-radius:5px; border:1px solid var(--line); background:#fff; cursor:pointer;
+  }
+  .create-form .type-toggle button.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .create-form .submit-btn{
+    width:100%; margin-top:9px; padding:7px; font-size:11.5px; border-radius:6px; border:none;
+    background:var(--ink); color:#fff; cursor:pointer; font-weight:700;
+  }
+  .create-form .hint{ font-size:9.5px; color:#a89e88; margin-top:4px; }
+  .only-tour{ display:none; }
+  .create-form[data-type="tour"] .only-tour{ display:block; }
+
+  /* ---- week-grid calendar ---- */
+  .weekday-header{
+    display:grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap:6px;
+    margin-bottom:6px;
+  }
+  .weekday-header div{
+    font-size:10.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    color:#a89e88;
+    text-align:center;
+    letter-spacing:.03em;
+  }
+  .week-row{
+    display:grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap:6px;
+    margin-bottom:6px;
+  }
+  .day-cell{
+    min-height:76px;
+    border:1.5px dashed var(--line);
+    border-radius:8px;
+    padding:5px 5px 6px;
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    transition: background .12s, border-color .12s;
+    cursor:pointer;
+  }
+  .day-cell.over{ background:#f2eee2; border-color:#b0a68a; }
+  .day-cell.out-of-range{
+    background:#f5f3ee;
+    border-style:solid;
+    border-color:#eee8da;
+    cursor:default;
+    opacity:.5;
+  }
+  .day-cell.locked{ border-style:solid; background:#f5f3ec; cursor:default; }
+  .day-cell.selected{ box-shadow: 0 0 0 2px var(--ink) inset; }
+  .day-num{ font-size:11px; font-weight:700; color:#8a8478; display:flex; justify-content:space-between; align-items:center; }
+  .day-num .hours-badge{ font-size:9px; font-weight:700; border-radius:4px; padding:1px 4px; }
+  .hours-badge.ok{ color:#7a7264; background:#efece2; }
+  .hours-badge.tight{ color:var(--tight); background:var(--tight-bg); }
+  .hours-badge.over{ color:var(--warn); background:var(--warn-bg); }
+
+  .view-options{ border:1px solid var(--line); border-radius:7px; background:#fbf9f4; padding:7px 8px; margin:2px 0 8px; }
+  .view-options-title{ font-size:9.5px; font-weight:700; color:#8a8478; text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px; }
+  .details-toggle{ display:block; font-size:10.5px; color:#6b6456; margin:2px 0; cursor:pointer; }
+  .details-toggle input{ margin-right:4px; vertical-align:middle; }
+  .suggested-route{ margin-top:6px; padding:6px 7px; border-radius:6px; background:rgba(255,255,255,.72); border:1px solid currentColor; }
+  .suggested-title{ font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.03em; margin-bottom:3px; }
+  .suggested-route ol{ margin:0; padding-left:18px; font-size:10px; font-weight:400; line-height:1.42; }
+  .suggested-route li{ margin-bottom:2px; }
+  .tour-chip .suggested-route{ padding:4px 5px; }
+  .tour-chip .suggested-route ol{ font-size:9px; padding-left:15px; }
+  .detail-box .suggested-route ol{ font-size:11px; line-height:1.5; }
+
+  .base-chip{
+    border-radius:5px;
+    padding:2px 5px;
+    font-size:10.3px;
+    font-weight:700;
+  }
+  .base-chip .chip-header, .tour-chip .chip-header{
+    display:flex; align-items:center; justify-content:space-between; gap:4px;
+  }
+  .base-chip .x, .tour-chip .x{
+    border:none; background:none; cursor:pointer; font-size:12px; line-height:1; padding:0 1px; color:inherit; opacity:.55;
+  }
+  .base-chip .x:hover, .tour-chip .x:hover{ opacity:1; color:var(--warn); }
+  .base-placeholder{ font-size:9.5px; color:#c2b9a4; padding:2px 5px; }
+
+  .tour-list{ display:flex; flex-direction:column; gap:2px; flex:1; }
+  .tour-chip{
+    border-radius:5px;
+    padding:2px 5px;
+    font-size:9.8px;
+    font-weight:600;
+  }
+  .base-chip ul.bullets, .tour-chip ul.bullets{
+    margin:3px 0 0; padding-left:13px; font-size:9.3px; font-weight:400; line-height:1.35; opacity:.9;
+  }
+  .tour-chip .chip-travel-line{ font-size:9px; font-weight:700; margin-top:2px; }
+  .chip-duration{ display:inline-block; margin-left:3px; padding:1px 4px; border-radius:4px; background:rgba(255,255,255,.72); font-size:8.8px; font-weight:800; white-space:nowrap; }
+  .day-cell .empty-hint{ font-size:9.5px; color:#c2b9a4; margin-top:2px; }
+  .day-cell .locked-chip{ font-size:10.5px; font-weight:700; }
+  .day-cell .locked-chip .note{ font-size:9.5px; font-weight:400; opacity:.8; }
+
+  /* ---- day detail panel ---- */
+  .detail-box{
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    padding:9px 10px;
+    background:var(--free-bg);
+    margin-bottom:8px;
+  }
+  .detail-box .card-head{ font-size:13px; }
+  .detail-box .note{ font-size:11px; font-weight:600; opacity:.85; margin-top:2px; }
+  .detail-box ul.bullets{ margin:6px 0 0; padding-left:16px; font-size:11px; font-weight:400; line-height:1.5; }
+  .detail-placeholder{ font-size:11.5px; color:#a89e88; padding:6px 2px; }
+  .detail-total{ font-size:11.5px; font-weight:700; padding:4px 2px 0; }
+  .detail-total.tight{ color:var(--tight); }
+  .detail-total.over{ color:var(--warn); }
+
+  .add-controls{ border:1px solid var(--line); border-radius:8px; padding:8px 9px; margin-bottom:10px; background:#fbf9f4; }
+  .add-controls label{ display:block; font-size:10px; font-weight:700; color:#8a8478; text-transform:uppercase; letter-spacing:.03em; margin:6px 0 2px; }
+  .add-controls label:first-child{ margin-top:0; }
+  .add-controls select{ width:100%; font-size:12px; padding:5px 6px; border-radius:5px; border:1px solid var(--line); background:#fff; font-family:inherit; }
+
+  .summary-sub{ font-size:10.5px; font-weight:700; color:#8a8478; text-transform:uppercase; letter-spacing:.03em; margin:12px 0 4px;}
+  .summary-sub:first-child{ margin-top:0; }
+  .summary-item{
+    display:flex;
+    justify-content:space-between;
+    gap:6px;
+    font-size:12px;
+    padding:4px 0;
+    border-bottom:1px solid #f0ede4;
+  }
+  .summary-item b{ font-weight:700; white-space:nowrap; }
+  .summary-item strong{ display:block; font-weight:700; }
+  .stay-dates{ display:block; color:#6b6456; font-size:10.5px; margin-top:1px; }
+  .stay-overview{ border:1px solid var(--line); border-radius:8px; background:#fbf9f4; padding:9px 10px; margin-bottom:10px; }
+  .stay-overview-title{ font-size:10.5px; font-weight:800; color:#6b6456; text-transform:uppercase; letter-spacing:.04em; margin-bottom:5px; }
+  .stay-overview-row{ display:flex; justify-content:space-between; gap:8px; font-size:11.5px; padding:3px 0; border-top:1px solid #eee8dc; }
+  .stay-overview-row:first-of-type{ border-top:0; }
+  .stay-overview-row b{ white-space:nowrap; }
+  .banner{
+    font-size:11.5px;
+    border-radius:7px;
+    padding:7px 9px;
+    margin-top:8px;
+    line-height:1.4;
+  }
+  .banner.warn{ background:var(--warn-bg); color:var(--warn); border:1px solid #f3c9c5; }
+  .banner.tight{ background:var(--tight-bg); color:var(--tight); border:1px solid #f0dcb0; margin-top:6px; }
+  .reset-btn{
+    margin-top:12px;
+    width:100%;
+    padding:7px;
+    font-size:11.5px;
+    border-radius:7px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:#6b6456;
+    cursor:pointer;
+  }
+  .reset-btn:hover{ background:#f2eee2; }
+  .pdf-btn{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .pdf-btn:hover{ background:#453f34; }
+
+  .saved-box{ margin-top:6px; }
+  .saved-box input[type="text"]{
+    width:100%; font-size:12px; padding:5px 6px; border-radius:5px; border:1px solid var(--line); margin-bottom:6px; font-family:inherit;
+  }
+  .saved-item{
+    display:flex; align-items:center; justify-content:space-between; gap:6px;
+    border:1px solid var(--line); border-radius:6px; padding:5px 7px; margin-top:6px; font-size:11.5px;
+  }
+  .saved-item .info{ flex:1; overflow:hidden; }
+  .saved-item .name{ font-weight:700; }
+  .saved-item .date{ font-size:9.5px; color:#a89e88; }
+  .saved-item .actions{ display:flex; gap:4px; }
+  .saved-item button{
+    border:1px solid var(--line); background:#fff; border-radius:4px; font-size:10.5px; padding:3px 6px; cursor:pointer;
+  }
+  .saved-item button:hover{ background:#f2eee2; }
+  .saved-item .del-version{ color:var(--warn); border-color:#f3c9c5; }
+  .saved-empty{ font-size:11px; color:#a89e88; margin-top:6px; }
+
+  .export-box{ margin-top:6px; }
+  .export-hint{ font-size:10.5px; color:#8a8478; line-height:1.5; margin-bottom:6px; }
+  #export-output{
+    display:none; width:100%; min-height:70px; margin-top:8px; font-size:9.5px; font-family:monospace;
+    padding:6px; border-radius:6px; border:1px solid var(--line); background:#fbf9f4; resize:vertical;
+  }
+  #export-output.show{ display:block; }
+  .copy-hint{ display:none; font-size:10px; color:var(--same); margin-top:4px; font-weight:700; }
+  .copy-hint.show{ display:block; }
+  .sync-status{
+    display:inline-flex; align-items:center; gap:6px; margin-left:8px; padding:3px 8px;
+    border-radius:999px; background:#e6f7ee; color:#1a7a4a; font-size:10.5px;
+    font-weight:700; vertical-align:middle;
+  }
+  .sync-status.saving{ background:#fbf0dc; color:#a3690f; }
+  .sync-status.error{ background:#fdeceb; color:#b3261e; }
+
+  /* ---- print / PDF view ---- */
+  #print-view{ display:none; }
+  @media print{
+    .screen-only{ display:none !important; }
+    body{ padding:0; background:#fff; }
+    #print-view{
+      display:block !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color:#222;
+      padding:14px;
+    }
+    #print-view h1{ font-size:19px; margin:0 0 4px; }
+    #print-view .p-sub{ font-size:11px; color:#555; margin-bottom:14px; }
+    #print-view .p-stays{ border:1.5px solid #777; border-radius:7px; padding:9px 11px; margin:0 0 14px; page-break-inside:avoid; }
+    #print-view .p-stays h2{ font-size:13px; margin:0 0 6px; }
+    #print-view .p-stay-row{ display:flex; justify-content:space-between; gap:10px; font-size:11px; padding:3px 0; border-top:1px solid #ddd; }
+    #print-view .p-stay-row:first-of-type{ border-top:0; }
+    #print-view .p-stay-row b{ white-space:nowrap; }
+    #print-view .p-day{
+      border:1px solid #ccc; border-radius:6px; padding:8px 10px; margin-bottom:8px;
+      page-break-inside: avoid;
+    }
+    #print-view .p-day.p-locked{ background:#f3f3f3; }
+    #print-view .p-date{ font-size:12.5px; font-weight:700; margin-bottom:3px; }
+    #print-view .p-base{ font-size:11.5px; font-weight:700; margin-bottom:2px; }
+    #print-view .p-tour-block{ margin:4px 0 4px 6px; }
+    #print-view .p-tour{ font-size:10.8px; margin:1px 0 1px 4px; }
+    #print-view .p-tour .p-travel{ color:#666; font-weight:400; }
+    #print-view ul.p-bullets{ margin:2px 0 2px 24px; padding-left:14px; font-size:9.8px; color:#444; line-height:1.45; }
+    #print-view .p-base + ul.p-bullets{ margin-left:18px; }
+    #print-view .p-total{ font-size:10.5px; font-weight:700; margin-top:3px; }
+    #print-view .p-empty{ font-size:10.8px; color:#888; font-style:italic; }
+    #print-view .p-suggested{ margin-top:18px; border-top:2px solid #777; padding-top:10px; }
+    #print-view .p-suggested h2{ font-size:15px; margin:0 0 4px; }
+    #print-view .p-suggested-intro{ font-size:10.5px; color:#666; margin-bottom:8px; }
+    #print-view .p-suggested-card{ border:1px solid #ccc; border-radius:6px; padding:7px 9px; margin-bottom:7px; page-break-inside:avoid; }
+    #print-view .p-suggested-title{ font-size:11.5px; font-weight:700; }
+    #print-view .p-suggested-card ol{ margin:4px 0 0 20px; padding:0; font-size:10.5px; line-height:1.45; }
+    #print-view .p-unused{ margin-top:18px; border-top:2px solid #777; padding-top:10px; }
+    #print-view .p-unused h2{ font-size:15px; margin:0 0 4px; }
+    #print-view .p-unused-intro{ font-size:10.5px; color:#666; margin-bottom:8px; }
+    #print-view .p-unused-region{ margin:8px 0 4px; font-size:11px; font-weight:800; text-transform:uppercase; color:#555; }
+    #print-view .p-unused-item{ border-bottom:1px solid #ddd; padding:4px 0; page-break-inside:avoid; }
+    #print-view .p-unused-name{ font-size:10.8px; font-weight:700; }
+    #print-view .p-unused-meta{ font-size:9.8px; color:#666; margin-top:1px; }
+    #print-view .p-summary{ margin-top:16px; border-top:1px solid #ccc; padding-top:10px; }
+    #print-view .p-summary h2{ font-size:13px; margin:0 0 6px; }
+    #print-view .p-summary-item{ font-size:11px; display:flex; justify-content:space-between; max-width:320px; padding:2px 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1 class="screen-only">✈️ Planejador Japão — Nov 2026 <span id="sync-status" class="sync-status">● Compartilhado</span></h1>
+<div class="subtitle screen-only">Arraste um card de <b>Base</b> (onde vocês dormem, 1 por dia, borda sólida) e quantos <b>Passeios</b> quiser no mesmo dia (borda tracejada) — ou clique num dia e use os menus dropdown no painel "Detalhe do dia", mais rápido que arrastar. Cada passeio mostra 🚄 tempo de trem se for day trip, ou 🏠 se for na mesma cidade da base. Fique de olho no total de horas do dia.</div>
+
+<div class="layout screen-only">
+
+  <!-- POOL -->
+  <div class="panel" id="pool-panel">
+    <h2>Cards disponíveis</h2>
+    <div id="pool-body"></div>
+    <button class="create-toggle" id="create-toggle">+ Criar meu próprio card</button>
+    <div class="create-form" id="create-form" data-type="tour">
+      <div class="type-toggle">
+        <button type="button" data-type="base" id="type-base-btn">🏨 Base (pernoite)</button>
+        <button type="button" data-type="tour" class="active" id="type-tour-btn">🎟️ Passeio</button>
+      </div>
+      <label>Nome</label>
+      <input type="text" id="cf-name" placeholder="Ex: Nikko">
+      <div class="row2">
+        <div>
+          <label>Emoji</label>
+          <input type="text" id="cf-emoji" placeholder="📍" maxlength="4">
+        </div>
+        <div>
+          <label>Cor</label>
+          <select id="cf-color"></select>
+        </div>
+      </div>
+      <div class="only-tour">
+        <label>Horas estimadas</label>
+        <input type="number" id="cf-hours" value="3" min="0.5" step="0.5">
+        <label>Deslocamento (deixe em branco se for na mesma cidade da base)</label>
+        <input type="text" id="cf-travel" placeholder="Ex: ~40min de Osaka (Shinkansen, JR Pass)">
+      </div>
+      <label>Destaques (1 por linha, opcional)</label>
+      <textarea id="cf-bullets" placeholder="Um destaque por linha"></textarea>
+      <button type="button" class="submit-btn" id="cf-submit">Criar card</button>
+      <div class="hint">Passeios criados aparecem em "Seus passeios" no final da lista. Cards criados podem ser apagados pelo × no canto.</div>
+    </div>
+    <div class="legend-note">Os cards do painel não somem ao arrastar — use quantas vezes quiser.<br><br>
+      <b>Cores:</b> 🚆 deslocamentos azul-petróleo · 🗼 Tóquio azul · ♨️ Hakone verde · 🏯 Nagoya dourado · 🍜 Osaka rosa · ⛩️ Kyoto laranja · 🏛️ Koyasan roxo · 🕊️ Hiroshima/Miyajima petróleo (day trip de Osaka) · day trips mais longes em marrom-âmbar.<br>
+      Borda sólida = onde dormem. Borda tracejada = passeio (day trip).<br>
+      🚄 = precisa de trem (day trip) · 🏠 = mesma cidade, sem deslocamento.</div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="panel calendar-panel">
+    <h2>Novembro 2026 — Segunda a Domingo</h2>
+    <div id="stay-summary-top" class="stay-overview"></div>
+    <div class="view-options">
+      <div class="view-options-title">Conteúdo dos cards</div>
+      <label class="details-toggle"><input type="checkbox" id="toggle-details"> Mostrar descrições detalhadas</label>
+      <label class="details-toggle"><input type="checkbox" id="toggle-suggested"> Mostrar roteiro sugerido</label>
+    </div>
+    <div class="weekday-header">
+      <div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div><div>Dom</div>
+    </div>
+    <div id="calendar"></div>
+  </div>
+
+  <!-- SUMMARY / DETAIL -->
+  <div class="panel">
+    <h2>Detalhe do dia</h2>
+    <div id="day-detail"><div class="detail-placeholder">Clique em um dia do calendário para ver os detalhes aqui.</div></div>
+    <h2 style="margin-top:14px;">Resumo</h2>
+    <div id="summary"></div>
+    <div id="banners"></div>
+    <button class="reset-btn" id="reset-btn">↺ Restaurar proposta inicial</button>
+    <button class="reset-btn pdf-btn" id="export-pdf-btn">🖨️ Exportar PDF (p/ enviar no celular)</button>
+
+    <div class="saved-box">
+      <h2 style="margin-top:14px;">Roteiros salvos</h2>
+      <input type="text" id="save-name" placeholder="Nome do roteiro (ex: Plano final)">
+      <button class="reset-btn save-btn" id="save-version-btn">💾 Salvar versão atual</button>
+      <div id="saved-list"></div>
+    </div>
+
+    <div class="export-box">
+      <h2 style="margin-top:14px;">Cópia de segurança</h2>
+      <div class="export-hint">As alterações já são compartilhadas automaticamente. Se quiser, gere também uma cópia do roteiro atual em texto.</div>
+      <button class="reset-btn" id="export-state-btn">📋 Gerar cópia do roteiro atual</button>
+      <textarea id="export-output" readonly></textarea>
+      <div class="copy-hint" id="copy-hint">✅ Copiado! Cole na conversa com o assistente.</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="print-view"></div>
+
+<script>
+var SHARED_KEYS = [
+  'japan-trip-planner-v3',
+  'japan-trip-planner-custom-v1',
+  'japan-trip-planner-saved-v1'
+];
+var sharedRevision = 0;
+var sharedDirty = false;
+var sharedTimer = null;
+
+function setSyncStatus(text, kind){
+  var el = document.getElementById('sync-status');
+  if(!el) return;
+  el.textContent = text;
+  el.className = 'sync-status' + (kind ? ' ' + kind : '');
+}
+
+function collectSharedState(){
+  var state = {};
+  SHARED_KEYS.forEach(function(key){
+    var value = localStorage.getItem(key);
+    if(value !== null) state[key] = value;
+  });
+  return state;
+}
+
+async function pushSharedState(){
+  sharedTimer = null;
+  if(!sharedDirty) return;
+  setSyncStatus('● Salvando…', 'saving');
+  try{
+    var response = await fetch('/api/state', {
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({state:collectSharedState()})
+    });
+    if(!response.ok) throw new Error('save failed');
+    var data = await response.json();
+    sharedRevision = data.revision;
+    sharedDirty = false;
+    setSyncStatus('● Salvo e compartilhado', '');
+  }catch(e){
+    setSyncStatus('● Erro ao salvar', 'error');
+    sharedDirty = true;
+    sharedTimer = setTimeout(pushSharedState, 3000);
+  }
+}
+
+function sharedSet(key, value){
+  localStorage.setItem(key, value);
+  sharedDirty = true;
+  setSyncStatus('● Salvando…', 'saving');
+  clearTimeout(sharedTimer);
+  sharedTimer = setTimeout(pushSharedState, 450);
+}
+
+async function loadSharedState(){
+  try{
+    var response = await fetch('/api/state', {cache:'no-store'});
+    if(!response.ok) throw new Error('load failed');
+    var data = await response.json();
+    sharedRevision = data.revision || 0;
+    if(data.state){
+      SHARED_KEYS.forEach(function(key){
+        if(Object.prototype.hasOwnProperty.call(data.state, key)) localStorage.setItem(key, data.state[key]);
+        else localStorage.removeItem(key);
+      });
+    }
+  }catch(e){
+    setSyncStatus('● Sem conexão', 'error');
+  }
+}
+
+async function checkSharedUpdates(){
+  if(sharedDirty) return;
+  try{
+    var response = await fetch('/api/state', {cache:'no-store'});
+    if(!response.ok) return;
+    var data = await response.json();
+    if(data.revision > sharedRevision){
+      setSyncStatus('● Atualizando…', 'saving');
+      SHARED_KEYS.forEach(function(key){
+        if(data.state && Object.prototype.hasOwnProperty.call(data.state, key)) localStorage.setItem(key, data.state[key]);
+        else localStorage.removeItem(key);
+      });
+      location.reload();
+    }
+  }catch(e){}
+}
+
+async function initPlanner(){
+  await loadSharedState();
+  setInterval(checkSharedUpdates, 5000);
+  var STORAGE_KEY = 'japan-trip-planner-v3';
+  var CUSTOM_KEY = 'japan-trip-planner-custom-v1';
+
+  var TRIP_START = '2026-11-08'; // arrival (Haneda 23h55)
+  var TRIP_END   = '2026-11-27'; // departure (Narita 16h55)
+  var WD_PT = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+
+  var HOURS_OK = 9, HOURS_TIGHT = 12; // <=9 ok, 9-12 tight, >12 over
+
+  var COLOR_OPTIONS = [
+    {key:'tokyo', label:'Azul (Tóquio)'},
+    {key:'hakone', label:'Verde (Hakone)'},
+    {key:'nagoya', label:'Dourado (Nagoya)'},
+    {key:'osaka', label:'Rosa (Osaka)'},
+    {key:'kyoto', label:'Laranja (Kyoto)'},
+    {key:'koyasan', label:'Roxo (Koyasan)'},
+    {key:'hiro', label:'Petróleo (Hiroshima)'},
+    {key:'far', label:'Âmbar (day trip longe)'},
+    {key:'transport', label:'Azul-petróleo (deslocamento)'}
+  ];
+
+  function toDate(str){ var p = str.split('-').map(Number); return new Date(p[0], p[1]-1, p[2]); }
+  function toISO(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  function mondayIndex(d){ return (d.getDay() + 6) % 7; }
+
+  var startDate = toDate(TRIP_START);
+  var endDate = toDate(TRIP_END);
+  var gridStart = new Date(startDate); gridStart.setDate(gridStart.getDate() - mondayIndex(gridStart));
+  var gridEnd = new Date(endDate); gridEnd.setDate(gridEnd.getDate() + (6 - mondayIndex(gridEnd)));
+
+  var allDates = [];
+  for(var d = new Date(gridStart); d <= gridEnd; d.setDate(d.getDate()+1)){ allDates.push(toISO(d)); }
+
+  function dayLabel(iso){ var dd = toDate(iso); return { num:dd.getDate(), wd: WD_PT[mondayIndex(dd)] }; }
+  function inRange(iso){ return iso >= TRIP_START && iso <= TRIP_END; }
+
+  var lockedInfo = {};
+  lockedInfo[TRIP_START] = {type:'arrival', text:'Chegada Haneda 23h55'};
+  lockedInfo[TRIP_END] = {type:'departure', text:'Voo Narita 16h55'};
+
+  // ---- BASES: onde vocês dormem (1 por dia) ----
+  var BASE_DEFS = {
+    tokyo:  {icon:'🗼', label:'Tóquio', sleepCity:'Tóquio', colorKey:'tokyo',
+             bullets:['Base urbana, metrô fácil','Boas regiões p/ ficar: Nakameguro, Ebisu, Shibuya']},
+    hakone: {icon:'♨️', label:'Hakone (Ryokan)', sleepCity:'Hakone', colorKey:'hakone',
+             bullets:['Único trecho com ryokan + onsen','Reserve com 4+ meses de antecedência']},
+    nagoya: {icon:'🏯', label:'Nagoya', sleepCity:'Nagoya', colorKey:'nagoya',
+             bullets:['Base prática entre Tóquio e Kansai','Boa conexão de Shinkansen com Tóquio, Hakone e Osaka','Especialidades locais: hitsumabushi, miso katsu, tebasaki e kishimen']},
+    osaka:  {icon:'🍜', label:'Osaka', sleepCity:'Osaka', colorKey:'osaka',
+             bullets:['Mais barato que Kyoto','Ótima base p/ day trips no Kansai (Kyoto ~30min de trem)']},
+    kyoto:  {icon:'⛩️', label:'Kyoto (pernoite)', sleepCity:'Kyoto', colorKey:'kyoto',
+             bullets:['Único jeito de ver o amanhecer sem pressa','Mais caro que ficar em Osaka','Hospedagem em machiya tradicional']},
+    koyasan:{icon:'🏛️', label:'Koyasan (templo)', sleepCity:'Koyasan', colorKey:'koyasan',
+             bullets:['Hospedagem em templo budista (shukubo) — reserve com antecedência','Cerimônia da manhã + culinária vegetariana budista (shojin ryori)','~2h de Osaka de trem — melhor 1 noite do que ida e volta no mesmo dia','Chegue à tarde, saia depois da cerimônia da manhã seguinte']}
+  };
+
+  // ---- TOURS: passeios, independentes de onde vocês dormem ----
+  // travel: null = sem deslocamento (mesma cidade da base) · string = tempo médio de trem partindo da base típica
+  var TOUR_DEFS = {
+    'transport-haneda-tokyo': {icon:'🌙', label:'Haneda → hotel em Tóquio', hours:1.5, region:'transport', colorKey:'transport', travel:'Chegada 23h55 · traslado noturno',
+                          bullets:['JR Pass: provavelmente inviável neste horário','Após imigração e bagagem, Tokyo Monorail e trens JR devem estar encerrados','Recomendação: táxi ou transfer reservado até o hotel','Confirmar o horário real das últimas partidas perto da viagem']},
+    'transport-tokyo-hakone': {icon:'🚅', label:'Tóquio → Hakone', hours:2, region:'transport', colorKey:'transport', travel:'Tokyo/Shinagawa → Odawara → Hakone-Yumoto',
+                          bullets:['JR Pass: cobre o Shinkansen Hikari ou Kodama até Odawara','Não usar Nozomi sem comprar o bilhete complementar','Odawara → Hakone-Yumoto: Hakone Tozan Railway, fora do JR Pass','Reservar assento no trecho de Shinkansen']},
+    'transport-tokyo-nagoya': {icon:'🚅', label:'Tóquio → Nagoya', hours:2, region:'transport', colorKey:'transport', travel:'Tokyo/Shinagawa → Nagoya · cerca de 2h',
+                          bullets:['JR Pass: cobre Hikari e Kodama','Nozomi exige bilhete complementar específico','Reservar assento, especialmente com bagagem grande','A chegada na Nagoya Station combina com Toyota Museum, Noritake ou jantar no centro']},
+    'transport-hakone-nagoya': {icon:'🚅', label:'Hakone → Nagoya', hours:2.5, region:'transport', colorKey:'transport', travel:'Hakone-Yumoto → Odawara → Nagoya · cerca de 2h30',
+                          bullets:['JR Pass: cobertura parcial','Hakone-Yumoto → Odawara: Hakone Tozan Railway, fora do passe','Odawara → Nagoya: Hikari ou Kodama coberto','Conferir os horários, pois nem todo Hikari para em Odawara']},
+    'transport-nagoya-osaka': {icon:'🚅', label:'Nagoya → Osaka', hours:1.25, region:'transport', colorKey:'transport', travel:'Nagoya → Shin-Osaka · cerca de 1h15',
+                          bullets:['JR Pass: cobre Hikari e Kodama','Nozomi exige bilhete complementar específico','Reservar assento no Shinkansen','Somar o deslocamento urbano entre Shin-Osaka e a hospedagem']},
+    'transport-osaka-nagoya': {icon:'🚅', label:'Osaka ↔ Nagoya', hours:2.5, region:'transport', colorKey:'transport', travel:'Shin-Osaka ↔ Nagoya · ida e volta',
+                          bullets:['JR Pass: cobre Hikari e Kodama nos dois sentidos','Nozomi exige bilhete complementar específico','Útil se Nagoya for um day trip em vez de pernoite','Reservar ida cedo e retorno depois do jantar']},
+    'transport-nagoya-ghibli': {icon:'🚇', label:'Nagoya ↔ Ghibli Park', hours:2, region:'transport', colorKey:'transport', travel:'Metrô Higashiyama + Linimo · cerca de 45-60min por sentido',
+                          bullets:['JR Pass: não cobre o trajeto recomendado','Nagoya Station → Fujigaoka pela linha Higashiyama','Fujigaoka → Ai-Chikyuhaku Kinen Koen pelo Linimo','Ingressos têm data e horário: reservar com antecedência']},
+    'transport-hakone-osaka': {icon:'🚅', label:'Hakone → Osaka', hours:3.5, region:'transport', colorKey:'transport', travel:'Hakone-Yumoto → Odawara → Shin-Osaka',
+                          bullets:['JR Pass: cobertura parcial','Hakone-Yumoto → Odawara: Hakone Tozan Railway, fora do passe','Odawara → Shin-Osaka: Hikari ou Kodama coberto','Alguns horários exigem conexão; reservar assentos e conferir o trajeto no dia anterior']},
+    'transport-osaka-kyoto': {icon:'🚆', label:'Osaka ↔ Kyoto', hours:1, region:'transport', colorKey:'transport', travel:'Osaka Station ↔ Kyoto Station · ida e volta',
+                          bullets:['JR Pass: cobre integralmente','Preferir JR Kyoto Line Special Rapid se estiverem perto de Osaka Station','Shinkansen entre Shin-Osaka e Kyoto também é coberto, mas pode aumentar o deslocamento urbano','Tempo aproximado no trem: 30min por sentido']},
+    'transport-osaka-nara-uji': {icon:'🚆', label:'Osaka → Nara → Uji → Osaka', hours:2.5, region:'transport', colorKey:'transport', travel:'Circuito pelas linhas JR Yamatoji e JR Nara',
+                          bullets:['JR Pass: cobre integralmente os trens JR','Osaka → Nara: JR Yamatoji Rapid','Nara → Uji → Kyoto: JR Nara Line','Kyoto → Osaka: JR Kyoto Line Special Rapid']},
+    'transport-osaka-himeji-kobe': {icon:'🚅', label:'Osaka → Himeji → Kobe → Osaka', hours:2, region:'transport', colorKey:'transport', travel:'Shin-Osaka → Himeji → Sannomiya → Osaka',
+                          bullets:['JR Pass: cobre integralmente','Shin-Osaka → Himeji: Hikari ou Sakura, não Nozomi','Himeji → Sannomiya e Kobe → Osaka: JR Special Rapid','Fazer Himeji primeiro e Kobe no retorno reduz deslocamentos']},
+    'transport-osaka-okayama': {icon:'🚅', label:'Osaka ↔ Okayama + Kurashiki', hours:2.5, region:'transport', colorKey:'transport', travel:'Shin-Osaka → Okayama → Kurashiki · ida e volta',
+                          bullets:['JR Pass: cobre integralmente','Shin-Osaka → Okayama: Hikari ou Sakura','Okayama → Kurashiki: JR Sanyo Line','Evitar Nozomi sem o bilhete complementar']},
+    'transport-osaka-hiroshima': {icon:'🚅', label:'Osaka ↔ Hiroshima', hours:3, region:'transport', colorKey:'transport', travel:'Shin-Osaka ↔ Hiroshima · cerca de 1h20-1h45 por sentido',
+                          bullets:['Card somente para o deslocamento de ida e volta entre Osaka e Hiroshima','JR Pass: cobre Shinkansen Sakura e Hikari','Não usar Nozomi ou Mizuho sem bilhete complementar','Reservar os assentos de ida e volta e sair cedo','Miyajima permanece apenas como opção dentro do card de passeio de Hiroshima']},
+    'transport-osaka-usj': {icon:'🚆', label:'Osaka ↔ Universal Studios Japan', hours:0.75, region:'transport', colorKey:'transport', travel:'Osaka Station → Nishikujo → Universal City',
+                          bullets:['JR Pass: cobre integralmente','Usar JR Osaka Loop Line e JR Yumesaki Line','Planejar chegada antes da abertura do parque','Na volta, esperar trens e estações cheios']},
+    'transport-osaka-koyasan': {icon:'🚞', label:'Osaka → Koyasan', hours:2.5, region:'transport', colorKey:'transport', travel:'Namba → Gokurakubashi → Koyasan · apenas ida',
+                          bullets:['JR Pass: não cobre o trajeto mais prático','Usar Nankai Railway de Namba até Gokurakubashi','Subir pelo Nankai Cable Car e seguir de ônibus local','Avaliar o Koyasan World Heritage Ticket para trem, teleférico e ônibus']},
+    'transport-koyasan-tokyo': {icon:'🚅', label:'Koyasan → Tóquio', hours:6, region:'transport', colorKey:'transport', travel:'Koyasan → Gokurakubashi → Namba/Shin-Osaka → Tokyo · cerca de 6h',
+                          bullets:['JR Pass: cobertura parcial','Koyasan → Gokurakubashi → Osaka: ônibus, teleférico e Nankai Railway, fora do passe','Seguir de Namba até Shin-Osaka; metrô é a opção mais simples e não é coberto','Shin-Osaka → Tokyo: Shinkansen Hikari coberto pelo JR Pass','Nozomi exige bilhete complementar; reservar o Hikari com antecedência']},
+    'transport-osaka-tokyo': {icon:'🚅', label:'Osaka → Tóquio', hours:3, region:'transport', colorKey:'transport', travel:'Shin-Osaka → Tokyo Station',
+                          bullets:['JR Pass: cobre Hikari','Nozomi exige bilhete complementar específico','Reservar assentos e manter as malas dentro das dimensões permitidas','Chegada na Tokyo Station combina com Marunouchi, Ginza e Nihonbashi']},
+    'transport-tokyo-narita': {icon:'✈️', label:'Tóquio → Aeroporto de Narita', hours:1.5, region:'transport', colorKey:'transport', travel:'Tokyo Station → Narita Airport · Narita Express',
+                          bullets:['JR Pass: cobre integralmente o Narita Express','Reserva de assento obrigatória','Para o voo das 16h55, sair do centro entre 12h e 12h30','Confirmar terminal e horário do trem na véspera']},
+
+    'shibuya-harajuku':  {icon:'🛍️', label:'Shibuya + Harajuku + Omotesando', hours:7, region:'tokyo', colorKey:'tokyo', travel:null,
+                          bullets:['Meiji Jingu cedo + Harajuku e Cat Street','Beams, United Arrows e lojas de Omotesando','Shibuya Crossing + Shibuya Sky','Nintendo Tokyo + Pokémon Center Shibuya','Hands, Loft e Mega Don Quijote'],
+                          suggested:['Comece no Meiji Jingu antes do movimento','Siga por Harajuku e Cat Street','Almoce e faça compras em Omotesando','Termine no Shibuya Parco, Crossing e Shibuya Sky']},
+    'nakameguro-daikanyama': {icon:'🌿', label:'Nakameguro + Daikanyama + Ebisu', hours:5, region:'tokyo', colorKey:'tokyo', travel:null,
+                          bullets:['Caminhada pelo Rio Meguro e cafés','Daikanyama T-Site + lojas de design','Akomeya e boutiques independentes','Yebisu Garden Place no fim da tarde'],
+                          suggested:['Comece perto das 11h com brunch em Nakameguro','Caminhe pelo Rio Meguro sem pressa','Siga para Daikanyama T-Site e as boutiques','Termine com jantar em Ebisu']},
+    'ginza-nihonbashi':  {icon:'🏙️', label:'Ginza + Marunouchi + Nihonbashi', hours:6, region:'tokyo', colorKey:'tokyo', travel:null,
+                          bullets:['Uniqlo Ginza (12 andares) + Dover Street Market','Tokyo Station e Marunouchi','Pokémon Center DX Nihonbashi','Lojas de departamento e papelaria','Boa região para reservar omakase à noite'],
+                          suggested:['Comece na Tokyo Station e caminhe por Marunouchi','Siga para as lojas e papelarias de Ginza','Passe pelo Pokémon Center DX em Nihonbashi','Termine com jantar especial ou omakase']},
+    'teamlab-planets':   {icon:'🎨', label:'teamLab Planets', hours:3, region:'tokyo', colorKey:'tokyo', travel:'~25-35min de Ginza · metrô + Yurikamome (fora do JR Pass)',
+                          bullets:['Experiência imersiva em Toyosu','Ingresso com data e horário — reserve com antecedência','Contemple cerca de 2h dentro da atração + margem de acesso','Card independente, sugerido no mesmo dia de Ginza'],
+                          suggested:['Reserve um horário pela manhã','Chegue com 20-30min de antecedência','Faça a experiência sem incluir o restante de Toyosu ou Odaiba','Depois siga para Ginza, Marunouchi e Nihonbashi']},
+    'asakusa-ryogoku':   {icon:'🤼', label:'Asakusa + Ryogoku', hours:6, region:'tokyo', colorKey:'tokyo', travel:null,
+                          bullets:['Senso-ji e Nakamise cedo','Kappabashi: utensílios e facas japonesas','Show de sumô + almoço de chanko-nabe','Tokyo Skytree como extensão opcional','⚠️ O torneio de novembro ocorre em Fukuoka; treino real de stable não é uma opção nessa viagem'],
+                          suggested:['Visite Senso-ji e Nakamise cedo','Explore utensílios e facas em Kappabashi','Siga para Ryogoku para sumô e chanko-nabe','Inclua o Skytree apenas se ainda houver energia']},
+    'ueno-yanaka':       {icon:'🏯', label:'Ueno + Yanaka + Nezu', hours:5, region:'tokyo', colorKey:'tokyo', travel:null,
+                          bullets:['Parque de Ueno e museus','Mercado Ameyoko','Yanaka Ginza e casas antigas','Nezu Shrine e ruas residenciais tranquilas'],
+                          suggested:['Comece pelas ruas antigas e templos de Yanaka','Passe pela Yanaka Ginza','Caminhe em direção ao Parque de Ueno','Escolha no máximo um museu e almoce no Ameyoko']},
+    'akihabara-kanda':   {icon:'⚡', label:'Akihabara + Kanda + Jimbocho', hours:5, region:'tokyo', colorKey:'tokyo', travel:null,
+                          bullets:['Fliperamas, eletrônicos e Super Potato','Lojas de anime, mangá e colecionáveis','Kanda Myojin','Jimbocho: livrarias, pôsteres e curry japonês'],
+                          suggested:['Venha de Ueno depois do almoço','Passe pelo Kanda Myojin','Explore eletrônicos, colecionáveis e fliperamas em Akihabara','Inclua Jimbocho apenas se livros e pôsteres forem prioridade']},
+    'shinjuku':          {icon:'🌃', label:'Shinjuku', hours:6, region:'tokyo', colorKey:'tokyo', travel:null,
+                          bullets:['Shinjuku Gyoen + lojas de departamento','Observatório do Governo Metropolitano','Omoide Yokocho e Golden Gai','Pit Inn para jazz à noite','Don Quijote como parada final'],
+                          suggested:['Chegue no meio da tarde vindo de Shimokitazawa','Escolha o observatório ou Shinjuku Gyoen','Jante no Omoide Yokocho','Termine no Pit Inn, Golden Gai ou Don Quijote']},
+    'shimokitazawa-koenji': {icon:'👖', label:'Shimokitazawa + Koenji', hours:5, region:'tokyo', colorKey:'tokyo', travel:null,
+                          bullets:['Brechós e vintage selecionado','Lojas de vinil e cafés','Pequenas casas de show','Koenji tem perfil mais local e menos turístico'],
+                          suggested:['Chegue a Shimokitazawa perto das 11h, quando as lojas abrem','Explore brechós, vinil e cafés','Almoce no próprio bairro','Para reduzir deslocamentos, pule Koenji e siga direto para Shinjuku']},
+    'toyosu-odaiba':     {icon:'🌉', label:'Toyosu + Odaiba', hours:4, region:'tokyo', colorKey:'tokyo', travel:null,
+                          bullets:['Mercado de Toyosu ou Senkyaku Banrai','Orla e arquitetura de Odaiba','DiverCity, Gundam e pôr do sol da baía','Alternativa independente, sem o teamLab Planets'],
+                          suggested:['Comece pelo mercado de Toyosu ou Senkyaku Banrai','Almoce na região','Siga de trem elevado para Odaiba','Termine na orla, no DiverCity e no pôr do sol da baía']},
+    'aoyama-roppongi':   {icon:'🎵', label:'Aoyama + Roppongi', hours:5, region:'tokyo', colorKey:'tokyo', travel:null,
+                          bullets:['Nezu Museum e arquitetura de Aoyama','21_21 Design Sight + Tokyo Midtown','Mori Art Museum ou mirante de Roppongi Hills','Blue Note Tokyo para jazz à noite'],
+                          suggested:['Comece pelo Nezu Museum e arquitetura de Aoyama','Siga para o 21_21 Design Sight e Tokyo Midtown','Escolha o Mori Art Museum ou o mirante','Reserve o Blue Note para encerrar a noite']},
+    'chofu-kichijoji':   {icon:'🥚', label:'Chofu + Kichijoji', hours:5, region:'tokyo', colorKey:'tokyo', travel:'~35-50min de trem local do centro de Tóquio (não é JR Pass)',
+                          bullets:['Mayo Terrace da Kewpie — reserva obrigatória','Parque Inokashira','Lojas, cafés e Harmonica Yokocho em Kichijoji','Combine apenas se a visita à Kewpie for prioridade']},
+    'yokohama':          {icon:'🍥', label:'Yokohama (Cup Noodles)', hours:4, region:'tokyo', colorKey:'tokyo', travel:'~30min · trem local (não é a JR Pass Shinkansen)',
+                          bullets:['Museu Cup Noodles — monte seu próprio lámen','Minato Mirai (orla)']},
+    'kamakura':          {icon:'🗿', label:'Kamakura (Grande Buda)', hours:5, region:'tokyo', colorKey:'tokyo', travel:'~1h · trem local (não é a JR Pass Shinkansen)',
+                          bullets:['Grande Buda (Daibutsu)','Hase-dera + trilhas de bambu']},
+    'outlet':            {icon:'🛍️', label:'Outlet (compras)', hours:4, region:'tokyo', colorKey:'tokyo', travel:'~1h30 · ônibus (não coberto pela JR Pass)',
+                          bullets:['Compras com desconto','Ex: Gotemba Premium Outlets (perto de Hakone)']},
+    'disney':            {icon:'🏰', label:'Disney (Land/Sea)', hours:9, region:'tokyo', colorKey:'tokyo', travel:'~15min · trem local (não é JR Pass)',
+                          bullets:['A única DisneySea do mundo','Reserve com meses de antecedência','Ocupa o dia inteiro — evite combinar com outro passeio']},
+
+    'hakone-museum-onsen':{icon:'♨️', label:'Museu ao ar livre + Onsen', hours:5, region:'hakone', colorKey:'hakone', travel:null,
+                          bullets:['Hakone Open Air Museum (esculturas)','Check-in no ryokan + banho onsen com vista do Fuji']},
+    'hakone-ropeway':    {icon:'🚡', label:'Ropeway + Lake Ashi', hours:5, region:'hakone', colorKey:'hakone', travel:null,
+                          bullets:['Teleférico sobre vulcão ativo','Lake Ashi com reflexo do Fuji','Onsen + sake à noite']},
+
+    'nagoya-station-toyota': {icon:'⚙️', label:'Nagoya Station + Toyota + Noritake', hours:5, region:'nagoya', colorKey:'nagoya', travel:null,
+                          bullets:['Toyota Commemorative Museum of Industry and Technology','Noritake Garden e centro de artesanato','JR Central Towers e mirantes da região da estação','Termine com jantar de especialidades de Nagoya'],
+                          suggested:['Comece pelo Toyota Commemorative Museum','Siga a pé ou de ônibus para o Noritake Garden','Volte à Nagoya Station para lojas e mirantes','Jante hitsumabushi, miso katsu, tebasaki ou kishimen']},
+    'nagoya-castle-tokugawa': {icon:'🏯', label:'Nagoya Castle + Tokugawa', hours:5, region:'nagoya', colorKey:'nagoya', travel:null,
+                          bullets:['Nagoya Castle e Honmaru Palace','Tokugawa Art Museum e seus tesouros samurais','Tokugawa Garden','Um dia focado na história do clã Owari-Tokugawa'],
+                          suggested:['Visite Nagoya Castle pela manhã','Almoce na região do castelo','Siga para o Tokugawa Art Museum','Termine caminhando pelo Tokugawa Garden']},
+    'nagoya-sakae-osu': {icon:'🌆', label:'Sakae + Osu', hours:5, region:'nagoya', colorKey:'nagoya', travel:null,
+                          bullets:['Oasis 21 e Chubu Electric Power MIRAI TOWER','Nagoya City Science Museum como opção','Osu Kannon e galerias comerciais de Osu','Bairro bom para compras, cultura pop e comida de rua'],
+                          suggested:['Comece em Sakae e no Oasis 21','Escolha o MIRAI TOWER ou o Science Museum','Caminhe até Osu Kannon','Explore as galerias de Osu e termine com jantar']},
+    'nagoya-scmaglev': {icon:'🚄', label:'SCMAGLEV and Railway Park', hours:4, region:'nagoya', colorKey:'nagoya', travel:'~30min da Nagoya Station · Aonami Line (fora do JR Pass)',
+                          bullets:['História e evolução do Tokaido Shinkansen','Trens históricos e veículo maglev em exposição','Simuladores sujeitos a disponibilidade','Excelente meio dia para quem gosta de ferrovias']},
+    'nagoya-ghibli-park': {icon:'🌳', label:'Ghibli Park', hours:9, region:'nagoya', colorKey:'nagoya', travel:'~45-60min por sentido · metrô + Linimo (fora do JR Pass)',
+                          bullets:['Passeio de dia inteiro no Aichi Expo Memorial Park','Áreas temáticas e Ghibli’s Grand Warehouse','Ingresso com data e horário: reservar com antecedência','Use junto com o card de deslocamento Nagoya ↔ Ghibli Park']},
+    'nagoya-atsuta': {icon:'⛩️', label:'Atsuta Jingu + Shirotori Garden', hours:4, region:'nagoya', colorKey:'nagoya', travel:null,
+                          bullets:['Atsuta Jingu, um dos santuários xintoístas mais importantes do Japão','Shirotori Garden e paisagismo tradicional','Roteiro mais leve e tranquilo','Boa combinação com almoço de hitsumabushi']},
+
+    'fushimi-inari':     {icon:'⛩️', label:'Fushimi Inari (torii)', hours:2, region:'kyoto', colorKey:'kyoto', travel:'🚄 ~30min de Osaka · JR Rapid (JR Pass)',
+                          bullets:['Milhares de torii vermelhos na montanha','Melhor ao amanhecer/anoitecer','1º trem de Osaka ~5h30']},
+    'arashiyama':        {icon:'🎋', label:'Arashiyama (bambu) + Kinkaku-ji', hours:3, region:'kyoto', colorKey:'kyoto', travel:'🚄 ~45min de Osaka · JR + trem local (JR Pass)',
+                          bullets:['Floresta de bambu ao amanhecer','Pavilhão Dourado (Kinkaku-ji)','Lotado depois das 10h']},
+    'gion-tea':          {icon:'🍵', label:'Gion + Cerimônia do chá', hours:3, region:'kyoto', colorKey:'kyoto', travel:'🚄 ~30min de Osaka · JR Rapid (JR Pass)',
+                          bullets:['Bairro das gueixas','Cerimônia do matcha com mestre','⚠️ Reserve com 2+ meses']},
+    'nishiki-market':    {icon:'🍱', label:'Nishiki Market', hours:1.5, region:'kyoto', colorKey:'kyoto', travel:'🚄 ~30min de Osaka · JR Rapid (JR Pass)',
+                          bullets:['"Cozinha de Kyoto" — 100+ lojas','Chá, frutas raras, conservas']},
+    'kyoto-cooking':     {icon:'🍜', label:'Aula de culinária (Kyoto)', hours:3, region:'kyoto', colorKey:'kyoto', travel:'🚄 ~30min de Osaka · JR Rapid (JR Pass)',
+                          bullets:['Sushi, soba ou tempura com chef local','2-3h de aula + refeição']},
+    'sake-tasting':      {icon:'🍶', label:'Degustação de sake', hours:1.5, region:'kyoto', colorKey:'kyoto', travel:'🚄 ~30min de Osaka · JR Rapid (JR Pass)',
+                          bullets:['Distrito de Fushimi (capital do sake)','Gekkeikan, Kizakura']},
+    'dotonbori':         {icon:'🐙', label:'Dotonbori (à noite)', hours:2, region:'osaka', colorKey:'osaka', travel:null,
+                          bullets:['Neons refletidos no rio','Cheiro de takoyaki no ar']},
+    'kuromon':           {icon:'🦀', label:'Kuromon Market', hours:1.5, region:'osaka', colorKey:'osaka', travel:null,
+                          bullets:['Mercado histórico de frutos do mar','Ostras, polvo, uni na hora']},
+    'denim-shopping':    {icon:'👖', label:'Denim (Evisu/Momotaro)', hours:3, region:'osaka', colorKey:'osaka', travel:null,
+                          bullets:['Evisu — marca icônica de Osaka','Momotaro e Japan Blue (Okayama)']},
+    'okonomimura':       {icon:'🥘', label:'Okonomimura', hours:1.5, region:'osaka', colorKey:'osaka', travel:null,
+                          bullets:['3 andares, 20+ restaurantes','Veja o chef preparar na sua frente']},
+    'pokemon-osaka':     {icon:'⚡', label:'Pokémon Center Osaka', hours:1, region:'osaka', colorKey:'osaka', travel:null,
+                          bullets:['Produtos exclusivos tema Kansai','Daimaru Shinsaibashi']},
+    'usj':               {icon:'🍄', label:'USJ (parque)', hours:9, region:'osaka', colorKey:'osaka', travel:null,
+                          bullets:['Super Nintendo World','Wizarding World of Harry Potter','⚠️ Reserve Express Pass — ocupa o dia inteiro']},
+    'nara-uji':          {icon:'🦌', label:'Nara + Uji', hours:7, region:'far', colorKey:'far', travel:'🚄 ~45min de Osaka · JR Nara Line (JR Pass)',
+                          bullets:['Veados livres pedindo comida','Todai-ji: Buda gigante de bronze','Uji: templo da moeda de 10¢ + cerimônia do chá','Day trip mais longe — não combine com outro passeio']},
+    'kobe-himeji':       {icon:'🏯', label:'Kobe + Himeji', hours:8, region:'far', colorKey:'far', travel:'🚄 ~20-40min de Osaka · Shinkansen (JR Pass)',
+                          bullets:['Castelo de Himeji (UNESCO)','Kobe beef','Day trip mais longe — não combine com outro passeio']},
+    'okayama-kurachiki': {icon:'🏘️', label:'Okayama + Kurachiki', hours:7, region:'far', colorKey:'far', travel:'🚄 ~50min de Osaka · Shinkansen (JR Pass)',
+                          bullets:['Bikan: vila de armazéns e canais','Pouco turística, clima feudal','Day trip mais longe — não combine com outro passeio']},
+
+    'peace-memorial':    {icon:'🕊️', label:'Hiroshima + Miyajima opcional', hours:8, region:'hiro', colorKey:'hiro', travel:'🚄 ~1h15-1h45 de Osaka até Hiroshima · Miyajima adiciona ~45-60min por sentido (JR Pass)',
+                          bullets:['Peace Memorial Park + museu: ~2h30','Almoço com okonomiyaki de Hiroshima ou ostras: ~1h','Centro de Hiroshima sem Miyajima: roteiro de ~4-5h','Opcional: Miyajima, Itsukushima e torii flutuante: +3-4h','JR Pass cobre trem até Miyajimaguchi e JR West Miyajima Ferry; taxa de visitante é separada'],
+                          suggested:['Chegue cedo e comece pelo Peace Memorial Park e museu','Almoce okonomiyaki de Hiroshima ou ostras','Se quiser um dia mais leve, permaneça no centro de Hiroshima','Opcional: siga pela JR Sanyo Line até Miyajimaguchi e atravesse de ferry','Retorne com margem para o Shinkansen reservado até Osaka']}
+  };
+
+  var REGION_LABELS = {
+    transport:'Deslocamentos — priorizando JR Pass',
+    tokyo:'Passeios em Tóquio', hakone:'Passeios em Hakone', nagoya:'Passeios em Nagoya',
+    kyoto:'Passeios em Kyoto (day trip de Osaka)', osaka:'Passeios em Osaka',
+    far:'Day trips mais longos (Nara, Kobe/Himeji, Okayama)', hiro:'Hiroshima + Miyajima (day trip de Osaka)',
+    custom:'Seus passeios criados'
+  };
+  var REGION_ORDER = ['transport','tokyo','hakone','nagoya','kyoto','osaka','far','hiro','custom'];
+
+  // ---- custom cards created by the user, persisted separately from the plan ----
+  var customStore = {bases:{}, tours:{}};
+  function loadCustom(){
+    try{ var raw = localStorage.getItem(CUSTOM_KEY); if(raw){ var parsed = JSON.parse(raw); return {bases:parsed.bases||{}, tours:parsed.tours||{}}; } }catch(e){}
+    return {bases:{}, tours:{}};
+  }
+  function saveCustom(){
+    sharedSet(CUSTOM_KEY, JSON.stringify(customStore));
+    mergeCustomIntoDefs();
+    buildPool();
+    render();
+  }
+  function mergeCustomIntoDefs(){
+    Object.keys(customStore.bases).forEach(function(id){ BASE_DEFS[id] = customStore.bases[id]; });
+    Object.keys(customStore.tours).forEach(function(id){ TOUR_DEFS[id] = customStore.tours[id]; });
+  }
+  customStore = loadCustom();
+  mergeCustomIntoDefs();
+
+  var TOUR_MIGRATION = {
+    'meiji-dawn':'shibuya-harajuku',
+    'nakameguro':'nakameguro-daikanyama',
+    'harajuku-fashion':'shibuya-harajuku',
+    'pokemon-akihabara':'akihabara-kanda',
+    'teamlab':'teamlab-planets',
+    'yanaka':'ueno-yanaka',
+    'jazz-night':'aoyama-roppongi',
+    'shimokitazawa':'shimokitazawa-koenji',
+    'uniqlo-ginza':'ginza-nihonbashi',
+    'stationery-store':'ginza-nihonbashi',
+    'don-quijote':'shinjuku',
+    'omakase':'ginza-nihonbashi',
+    'sumo-show-chanko':'asakusa-ryogoku',
+    'kewpie-museum':'chofu-kichijoji',
+    'miyajima':'peace-memorial',
+    'hiroshima-food':'peace-memorial'
+  };
+
+  function migrateTourCards(sourcePlan){
+    var changed = false;
+    Object.keys(sourcePlan || {}).forEach(function(iso){
+      var entry = sourcePlan[iso];
+      if(!entry || !Array.isArray(entry.tours)) return;
+      var next = [];
+      entry.tours.forEach(function(id){
+        var mapped = TOUR_MIGRATION[id] || id;
+        if(mapped !== id) changed = true;
+        if(next.indexOf(mapped) === -1) next.push(mapped);
+        else changed = true;
+      });
+      entry.tours = next;
+    });
+    return changed;
+  }
+
+  function applyArrivalAndTeamLabUpdate(sourcePlan){
+    if(sourcePlan._updates && sourcePlan._updates.arrivalTeamLabV1) return false;
+    var changed = false;
+    if(!sourcePlan[TRIP_START]){ sourcePlan[TRIP_START] = emptyDay(); changed = true; }
+    if(sourcePlan[TRIP_START].base !== 'tokyo'){
+      sourcePlan[TRIP_START].base = 'tokyo';
+      changed = true;
+    }
+    if(sourcePlan[TRIP_END] && sourcePlan[TRIP_END].base){
+      sourcePlan[TRIP_END].base = null;
+      changed = true;
+    }
+    var ginzaDate = null;
+    Object.keys(sourcePlan).sort().forEach(function(iso){
+      var entry = sourcePlan[iso];
+      if(!entry || !Array.isArray(entry.tours)) return;
+      if(entry.tours.indexOf('ginza-nihonbashi') !== -1 && !ginzaDate) ginzaDate = iso;
+      var next = entry.tours.filter(function(id){ return id !== 'toyosu-odaiba' && id !== 'teamlab-planets'; });
+      if(next.length !== entry.tours.length){ entry.tours = next; changed = true; }
+    });
+    if(ginzaDate){
+      var ginzaEntry = sourcePlan[ginzaDate];
+      if(ginzaEntry.tours.indexOf('teamlab-planets') === -1){
+        ginzaEntry.tours.push('teamlab-planets');
+        changed = true;
+      }
+    }
+    sourcePlan._updates = sourcePlan._updates || {};
+    sourcePlan._updates.arrivalTeamLabV1 = true;
+    changed = true;
+    return changed;
+  }
+
+  // default proposal
+  var defaultPlan = {
+    '2026-11-08': {base:'tokyo', tours:['transport-haneda-tokyo'], note:'Chegada tarde — primeira noite em Tóquio; reservar transfer'},
+    '2026-11-09': {base:'tokyo',  tours:['nakameguro-daikanyama'], note:'Primeiro dia leve — começar perto das 11h'},
+    '2026-11-10': {base:'tokyo',  tours:['shibuya-harajuku'], note:''},
+    '2026-11-11': {base:'tokyo',  tours:['ueno-yanaka','akihabara-kanda'], note:''},
+    '2026-11-12': {base:'tokyo',  tours:['asakusa-ryogoku'], note:''},
+    '2026-11-13': {base:'tokyo',  tours:[], note:'Livre para outra atividade ou descanso'},
+    '2026-11-14': {base:'tokyo',  tours:['shimokitazawa-koenji','shinjuku'], note:'Koenji opcional — priorizar Shimokitazawa + Shinjuku'},
+    '2026-11-15': {base:'hakone', tours:['transport-tokyo-hakone','hakone-museum-onsen'], note:''},
+    '2026-11-16': {base:'hakone', tours:['hakone-ropeway'], note:''},
+    '2026-11-17': {base:'osaka',  tours:['transport-hakone-osaka','dotonbori','kuromon'], note:'Chegada em Osaka'},
+    '2026-11-18': {base:'osaka',  tours:['transport-osaka-kyoto','fushimi-inari','arashiyama'], note:''},
+    '2026-11-19': {base:'osaka',  tours:['transport-osaka-kyoto','gion-tea','nishiki-market'], note:''},
+    '2026-11-20': {base:'osaka',  tours:['denim-shopping','pokemon-osaka','okonomimura'], note:''},
+    '2026-11-21': {base:'osaka',  tours:['transport-osaka-nara-uji','nara-uji'], note:''},
+    '2026-11-22': {base:'osaka',  tours:['transport-osaka-usj','usj'], note:''},
+    '2026-11-23': {base:'osaka',  tours:['transport-osaka-himeji-kobe','kobe-himeji'], note:''},
+    '2026-11-24': {base:'osaka',  tours:['transport-osaka-kyoto','kyoto-cooking','sake-tasting'], note:''},
+    '2026-11-25': {base:null,     tours:[], note:'Livre — dá pra encaixar 1 noite em Koyasan (templo), Okayama+Kurachiki ou repetir algo'},
+    '2026-11-26': {base:'tokyo',  tours:['transport-osaka-tokyo','ginza-nihonbashi','teamlab-planets'], note:'Retorno de Osaka — teamLab Planets no mesmo dia de Ginza'},
+    '2026-11-27': {base:null, tours:['transport-tokyo-narita'], note:'Voo 16h55 — sair do centro entre 12h e 12h30'}
+  };
+
+  function emptyDay(){ return {base:null, tours:[], note:''}; }
+
+  function loadPlan(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){
+        var parsed = JSON.parse(raw);
+        var ok = Object.keys(parsed).every(function(k){
+          var e = parsed[k];
+          if(e.tours && !Array.isArray(e.tours)) return false;
+          return true;
+        });
+        if(ok){
+          var changed = migrateTourCards(parsed);
+          if(applyArrivalAndTeamLabUpdate(parsed)) changed = true;
+          if(changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
+          return parsed;
+        }
+      }
+    }catch(e){}
+    var freshPlan = JSON.parse(JSON.stringify(defaultPlan));
+    applyArrivalAndTeamLabUpdate(freshPlan);
+    return freshPlan;
+  }
+  function savePlan(){
+    sharedSet(STORAGE_KEY, JSON.stringify(plan));
+    buildPool();
+    render();
+  }
+
+  var plan = loadPlan();
+  var selectedDate = null;
+  var showCalendarDetails = localStorage.getItem('japan-trip-planner-show-details-v1') === '1';
+  var showSuggestedRoute = localStorage.getItem('japan-trip-planner-show-suggested-v1') === '1';
+
+  var poolBodyEl = document.getElementById('pool-body');
+  var calendarEl = document.getElementById('calendar');
+  var summaryEl = document.getElementById('summary');
+  var bannersEl = document.getElementById('banners');
+  var detailEl = document.getElementById('day-detail');
+
+  function bulletsHtml(bullets){
+    return '<ul class="bullets">' + bullets.map(function(b){ return '<li>'+b+'</li>'; }).join('') + '</ul>';
+  }
+
+  function suggestedHtml(def){
+    if(!def || !def.suggested || !def.suggested.length) return '';
+    return '<div class="suggested-route"><div class="suggested-title">Ordem sugerida</div><ol>'
+      + def.suggested.map(function(step){ return '<li>'+step+'</li>'; }).join('')
+      + '</ol></div>';
+  }
+
+  function travelLineHtml(td){
+    if(td.travel) return '<div class="travel-line trip">'+ (td.colorKey === 'transport' ? '🚆 ' : (td.travel.indexOf('🚄') === -1 ? '🚄 ' : '')) + td.travel + '</div>';
+    return '<div class="travel-line same">🏠 Sem deslocamento — mesma cidade da base</div>';
+  }
+
+  function dayHours(entry){
+    if(!entry || !entry.tours) return 0;
+    return entry.tours.reduce(function(sum, id){
+      var t = TOUR_DEFS[id];
+      return sum + (t ? t.hours : 0);
+    }, 0);
+  }
+  function hoursStatus(h){
+    if(h <= HOURS_OK) return 'ok';
+    if(h <= HOURS_TIGHT) return 'tight';
+    return 'over';
+  }
+
+  // how many days a given base/tour id currently appears on the calendar
+  function usageCount(kind, id){
+    var count = 0;
+    Object.keys(plan).forEach(function(iso){
+      if(!inRange(iso) || lockedInfo[iso]) return;
+      var e = plan[iso];
+      if(!e) return;
+      if(kind === 'base' && e.base === id) count++;
+      if(kind === 'tour' && e.tours && e.tours.indexOf(id) !== -1) count++;
+    });
+    return count;
+  }
+
+  // remove any references to a deleted custom card from the plan
+  function purgeIdFromPlan(kind, id){
+    Object.keys(plan).forEach(function(iso){
+      var e = plan[iso];
+      if(!e) return;
+      if(kind === 'base' && e.base === id) e.base = null;
+      if(kind === 'tour' && e.tours) e.tours = e.tours.filter(function(t){ return t !== id; });
+    });
+  }
+
+  function buildPool(){
+    var html = '<div class="cat-label">Bases (pernoite — 1 por dia)</div>';
+    Object.keys(BASE_DEFS).forEach(function(id){
+      var def = BASE_DEFS[id];
+      var isCustom = !!customStore.bases[id];
+      var uses = usageCount('base', id);
+      html += '<div class="card base-'+def.colorKey+'" draggable="true" data-kind="base" data-id="'+id+'">'
+            + (uses > 0 ? '<span class="usage-badge" title="Já está em '+uses+' dia'+(uses>1?'s':'')+' do calendário">✓ '+uses+'</span>' : '')
+            + (isCustom ? '<button class="del-custom" data-del-kind="base" data-del-id="'+id+'" title="Apagar card">&times;</button>' : '')
+            + '<div class="card-head"><span class="emoji">'+def.icon+'</span><span>'+def.label+'</span></div>'
+            + bulletsHtml(def.bullets)
+            + '</div>';
+    });
+
+    REGION_ORDER.forEach(function(region){
+      var idsInRegion = Object.keys(TOUR_DEFS).filter(function(id){ return TOUR_DEFS[id].region === region; });
+      if(idsInRegion.length === 0) return;
+      html += '<details class="region" open><summary>'+REGION_LABELS[region]+'</summary>';
+      idsInRegion.forEach(function(id){
+        var def = TOUR_DEFS[id];
+        var isCustom = !!customStore.tours[id];
+        var uses = usageCount('tour', id);
+        html += '<div class="card tour-'+def.colorKey+'" draggable="true" data-kind="tour" data-id="'+id+'">'
+              + (uses > 0 ? '<span class="usage-badge" title="Já está em '+uses+' dia'+(uses>1?'s':'')+' do calendário">✓ '+uses+'</span>' : '')
+              + (isCustom ? '<button class="del-custom" data-del-kind="tour" data-del-id="'+id+'" title="Apagar card">&times;</button>' : '')
+              + '<div class="card-head"><span class="emoji">'+def.icon+'</span><span>'+def.label+'</span><span class="hrs">~'+def.hours+'h</span></div>'
+              + travelLineHtml(def)
+              + bulletsHtml(def.bullets)
+              + (showSuggestedRoute ? suggestedHtml(def) : '')
+              + '</div>';
+      });
+      html += '</details>';
+    });
+
+    poolBodyEl.innerHTML = html;
+
+    poolBodyEl.querySelectorAll('.del-custom').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var kind = btn.dataset.delKind, id = btn.dataset.delId;
+        if(!confirm('Apagar este card criado por você? Ele será removido de qualquer dia que já o use.')) return;
+        if(kind === 'base'){ delete customStore.bases[id]; delete BASE_DEFS[id]; }
+        else { delete customStore.tours[id]; delete TOUR_DEFS[id]; }
+        purgeIdFromPlan(kind, id);
+        savePlan();
+        saveCustom();
+      });
+    });
+  }
+
+  function buildCalendar(){
+    calendarEl.innerHTML = '';
+    for(var i=0; i<allDates.length; i+=7){
+      var weekRow = document.createElement('div');
+      weekRow.className = 'week-row';
+      allDates.slice(i, i+7).forEach(function(iso){
+        weekRow.appendChild(buildDayCell(iso));
+      });
+      calendarEl.appendChild(weekRow);
+    }
+  }
+
+  function buildDayCell(iso){
+    var cell = document.createElement('div');
+    var lbl = dayLabel(iso);
+    var locked = lockedInfo[iso];
+    var isInRange = inRange(iso);
+
+    cell.className = 'day-cell' + (!isInRange ? ' out-of-range' : '') + (locked ? ' locked' : '') + (selectedDate === iso ? ' selected' : '');
+
+    if(!isInRange){
+      cell.innerHTML = '<div class="day-num">'+lbl.num+'</div>';
+      return cell;
+    }
+
+    if(locked){
+      var lockedEntry = plan[iso] || emptyDay();
+      cell.innerHTML = '<div class="day-num">'+lbl.num+'</div>'
+        + '<div class="locked-chip">✈️ ' + (locked.type === 'arrival' ? 'Chegada' : 'Partida') + '<div class="note">'+locked.text+'</div></div>';
+      if(locked.type === 'arrival' && lockedEntry.base && BASE_DEFS[lockedEntry.base]){
+        var lockedBase = BASE_DEFS[lockedEntry.base];
+        var lockedBaseChip = document.createElement('div');
+        lockedBaseChip.className = 'base-chip ' + lockedBase.colorKey;
+        lockedBaseChip.innerHTML = '<div class="chip-header"><span>'+lockedBase.icon+' '+lockedBase.label+' · 1ª noite</span></div>';
+        if(showCalendarDetails) lockedBaseChip.insertAdjacentHTML('beforeend', bulletsHtml(lockedBase.bullets));
+        cell.appendChild(lockedBaseChip);
+      }
+      var lockedTours = document.createElement('div');
+      lockedTours.className = 'tour-list';
+      (lockedEntry.tours || []).forEach(function(tid, idx){
+        var td = TOUR_DEFS[tid];
+        if(!td) return;
+        var chip = document.createElement('div');
+        chip.className = 'tour-chip tour-' + td.colorKey;
+        chip.innerHTML = '<div class="chip-header"><span>'+td.icon+' '+td.label+' <span class="chip-duration">~'+td.hours+'h</span> <span class="chip-travel">🧭</span></span></div>';
+        var xBtn = document.createElement('button');
+        xBtn.className = 'x'; xBtn.innerHTML = '&times;'; xBtn.title = 'Remover deslocamento';
+        xBtn.addEventListener('click', function(e){
+          e.stopPropagation();
+          lockedEntry.tours.splice(idx, 1);
+          plan[iso] = lockedEntry;
+          savePlan();
+        });
+        chip.querySelector('.chip-header').appendChild(xBtn);
+        if(showCalendarDetails) chip.insertAdjacentHTML('beforeend', bulletsHtml(td.bullets));
+        if(showSuggestedRoute) chip.insertAdjacentHTML('beforeend', suggestedHtml(td));
+        lockedTours.appendChild(chip);
+      });
+      cell.appendChild(lockedTours);
+      cell.addEventListener('click', function(){ selectedDate = iso; render(); });
+      cell.addEventListener('dragover', function(e){ e.preventDefault(); cell.classList.add('over'); });
+      cell.addEventListener('dragleave', function(){ cell.classList.remove('over'); });
+      cell.addEventListener('drop', function(e){
+        e.preventDefault(); e.stopPropagation(); cell.classList.remove('over');
+        try{
+          var payload = JSON.parse(e.dataTransfer.getData('text/plain'));
+          if(payload.kind === 'base' && locked.type === 'arrival' && BASE_DEFS[payload.id]){
+            lockedEntry.base = payload.id;
+          } else if(payload.kind === 'tour' && TOUR_DEFS[payload.id] && TOUR_DEFS[payload.id].region === 'transport'){
+            lockedEntry.tours = lockedEntry.tours || [];
+            if(lockedEntry.tours.indexOf(payload.id) === -1) lockedEntry.tours.push(payload.id);
+          } else return;
+          plan[iso] = lockedEntry; selectedDate = iso; savePlan();
+        }catch(err){}
+      });
+      return cell;
+    }
+
+    var entry = plan[iso] || emptyDay();
+    var hrs = dayHours(entry);
+    var status = hoursStatus(hrs);
+
+    var numRow = document.createElement('div');
+    numRow.className = 'day-num';
+    numRow.innerHTML = '<span>'+lbl.num+'</span>' + (hrs > 0 ? '<span class="hours-badge '+status+'">'+hrs+'h</span>' : '');
+    cell.appendChild(numRow);
+
+    // base chip
+    if(entry.base && BASE_DEFS[entry.base]){
+      var bd = BASE_DEFS[entry.base];
+      var baseChip = document.createElement('div');
+      baseChip.className = 'base-chip ' + bd.colorKey;
+      var baseHeader = document.createElement('div');
+      baseHeader.className = 'chip-header';
+      baseHeader.innerHTML = '<span>'+bd.icon+' '+bd.label+'</span>';
+      var xBtn = document.createElement('button');
+      xBtn.className = 'x'; xBtn.innerHTML = '&times;'; xBtn.title = 'Remover pernoite';
+      xBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        entry.base = null;
+        plan[iso] = entry;
+        savePlan();
+      });
+      baseHeader.appendChild(xBtn);
+      baseChip.appendChild(baseHeader);
+      if(showCalendarDetails){
+        baseChip.insertAdjacentHTML('beforeend', bulletsHtml(bd.bullets));
+      }
+      cell.appendChild(baseChip);
+    } else {
+      var ph = document.createElement('div');
+      ph.className = 'base-placeholder';
+      ph.textContent = 'sem pernoite';
+      cell.appendChild(ph);
+    }
+
+    // tours
+    var tourList = document.createElement('div');
+    tourList.className = 'tour-list';
+    if(entry.tours && entry.tours.length){
+      entry.tours.forEach(function(tid, idx){
+        var td = TOUR_DEFS[tid];
+        if(!td) return;
+        var chip = document.createElement('div');
+        chip.className = 'tour-chip tour-' + td.colorKey;
+        var chipHeader = document.createElement('div');
+        chipHeader.className = 'chip-header';
+        var travelTitle = td.travel ? td.travel.replace(/"/g,'') : 'Sem deslocamento — mesma cidade da base';
+        var travelIcon = td.colorKey === 'transport' ? '🧭' : (td.travel ? '🚄' : '🏠');
+        chipHeader.innerHTML = '<span>'+td.icon+' '+td.label+' <span class="chip-duration">~'+td.hours+'h</span> <span class="chip-travel" title="'+travelTitle+'">'+travelIcon+'</span></span>';
+        var xBtn = document.createElement('button');
+        xBtn.className = 'x'; xBtn.innerHTML = '&times;'; xBtn.title = 'Remover passeio';
+        xBtn.addEventListener('click', function(e){
+          e.stopPropagation();
+          entry.tours.splice(idx, 1);
+          plan[iso] = entry;
+          savePlan();
+        });
+        chipHeader.appendChild(xBtn);
+        chip.appendChild(chipHeader);
+        if(showCalendarDetails){
+          chip.insertAdjacentHTML('beforeend', '<div class="chip-travel-line">'+travelTitle+'</div>' + bulletsHtml(td.bullets));
+        }
+        if(showSuggestedRoute){
+          chip.insertAdjacentHTML('beforeend', suggestedHtml(td));
+        }
+        tourList.appendChild(chip);
+      });
+    } else {
+      var hint = document.createElement('div');
+      hint.className = 'empty-hint';
+      hint.textContent = 'clique p/ selecionar ou arraste aqui';
+      tourList.appendChild(hint);
+    }
+    cell.appendChild(tourList);
+
+    cell.addEventListener('click', function(){ selectedDate = iso; render(); });
+    cell.addEventListener('dragover', function(e){ e.preventDefault(); cell.classList.add('over'); });
+    cell.addEventListener('dragleave', function(){ cell.classList.remove('over'); });
+    cell.addEventListener('drop', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      cell.classList.remove('over');
+      var data = e.dataTransfer.getData('text/plain');
+      if(!data) return;
+      try{
+        var payload = JSON.parse(data);
+        var d = plan[iso] || emptyDay();
+        if(payload.kind === 'base'){
+          d.base = payload.id;
+        } else if(payload.kind === 'tour'){
+          d.tours = d.tours || [];
+          if(d.tours.indexOf(payload.id) === -1) d.tours.push(payload.id);
+        }
+        plan[iso] = d;
+        selectedDate = iso;
+        savePlan();
+      }catch(err){}
+    });
+
+    return cell;
+  }
+
+  function buildAddControls(iso, entry, transportOnly, allowBase){
+    var wrap = document.createElement('div');
+    wrap.className = 'add-controls';
+
+    if(!transportOnly || allowBase){
+      var baseLabel = document.createElement('label');
+      baseLabel.textContent = 'Definir pernoite (base)';
+      wrap.appendChild(baseLabel);
+
+      var baseSelect = document.createElement('select');
+      var noneOpt = document.createElement('option');
+      noneOpt.value = ''; noneOpt.textContent = '— nenhum —';
+      baseSelect.appendChild(noneOpt);
+      Object.keys(BASE_DEFS).forEach(function(id){
+        var def = BASE_DEFS[id];
+        var opt = document.createElement('option');
+        opt.value = id; opt.textContent = def.icon + ' ' + def.label;
+        if(entry.base === id) opt.selected = true;
+        baseSelect.appendChild(opt);
+      });
+      baseSelect.addEventListener('change', function(){
+        entry.base = baseSelect.value || null;
+        plan[iso] = entry;
+        savePlan();
+      });
+      wrap.appendChild(baseSelect);
+    }
+
+    var tourLabel = document.createElement('label');
+    tourLabel.textContent = transportOnly ? 'Adicionar deslocamento' : 'Adicionar passeio (🚄 = day trip · 🏠 = mesma cidade)';
+    wrap.appendChild(tourLabel);
+
+    var tourSelect = document.createElement('select');
+    var placeholderOpt = document.createElement('option');
+    placeholderOpt.value = ''; placeholderOpt.textContent = '+ escolher passeio para adicionar';
+    tourSelect.appendChild(placeholderOpt);
+    (transportOnly ? ['transport'] : REGION_ORDER).forEach(function(region){
+      var idsInRegion = Object.keys(TOUR_DEFS).filter(function(id){ return TOUR_DEFS[id].region === region; });
+      if(idsInRegion.length === 0) return;
+      var optgroup = document.createElement('optgroup');
+      optgroup.label = REGION_LABELS[region];
+      idsInRegion.forEach(function(id){
+        var def = TOUR_DEFS[id];
+        var opt = document.createElement('option');
+        opt.value = id; opt.textContent = (def.colorKey === 'transport' ? '🧭' : (def.travel ? '🚄' : '🏠')) + ' ' + def.icon + ' ' + def.label + ' (~' + def.hours + 'h)';
+        optgroup.appendChild(opt);
+      });
+      tourSelect.appendChild(optgroup);
+    });
+    tourSelect.addEventListener('change', function(){
+      if(!tourSelect.value) return;
+      entry.tours = entry.tours || [];
+      if(entry.tours.indexOf(tourSelect.value) === -1) entry.tours.push(tourSelect.value);
+      plan[iso] = entry;
+      tourSelect.value = '';
+      savePlan();
+    });
+    wrap.appendChild(tourSelect);
+
+    return wrap;
+  }
+
+  function buildDetail(){
+    if(!selectedDate){
+      detailEl.innerHTML = '<div class="detail-placeholder">Clique em um dia do calendário para ver os detalhes aqui.</div>';
+      return;
+    }
+    var locked = lockedInfo[selectedDate];
+    var lbl = dayLabel(selectedDate);
+    if(locked){
+      var lockedEntry = plan[selectedDate] || emptyDay();
+      detailEl.innerHTML = '<div class="detail-box"><div class="card-head"><span class="emoji">✈️</span><span>'
+        + (locked.type === 'arrival' ? 'Chegada' : 'Partida') + ' — dia ' + lbl.num + '</span></div>'
+        + '<div class="note">'+locked.text+'</div></div>';
+      detailEl.appendChild(buildAddControls(selectedDate, lockedEntry, true, locked.type === 'arrival'));
+      if(locked.type === 'arrival' && lockedEntry.base && BASE_DEFS[lockedEntry.base]){
+        var lockedBaseDef = BASE_DEFS[lockedEntry.base];
+        detailEl.insertAdjacentHTML('beforeend', '<div class="detail-box '+lockedBaseDef.colorKey+'"><div class="card-head"><span class="emoji">'+lockedBaseDef.icon+'</span><span>Primeira noite em '+lockedBaseDef.label+' — dia '+lbl.num+'</span></div>'+bulletsHtml(lockedBaseDef.bullets)+'</div>');
+      }
+      (lockedEntry.tours || []).forEach(function(tid){
+        var td = TOUR_DEFS[tid];
+        if(!td) return;
+        detailEl.insertAdjacentHTML('beforeend', '<div class="detail-box tour-'+td.colorKey+'"><div class="card-head"><span class="emoji">'+td.icon+'</span><span>'+td.label+'</span><span class="hrs">~'+td.hours+'h</span></div>'
+          + travelLineHtml(td) + bulletsHtml(td.bullets) + (showSuggestedRoute ? suggestedHtml(td) : '') + '</div>');
+      });
+      return;
+    }
+    var entry = plan[selectedDate] || emptyDay();
+    detailEl.innerHTML = '';
+    detailEl.appendChild(buildAddControls(selectedDate, entry));
+
+    var html = '';
+
+    if(entry.base && BASE_DEFS[entry.base]){
+      var bd = BASE_DEFS[entry.base];
+      html += '<div class="detail-box '+bd.colorKey+'"><div class="card-head"><span class="emoji">'+bd.icon+'</span><span>Dorme em '+bd.label+' — dia '+lbl.num+'</span></div>'
+        + (entry.note ? '<div class="note">'+entry.note+'</div>' : '')
+        + bulletsHtml(bd.bullets) + '</div>';
+    } else {
+      html += '<div class="detail-placeholder">Dia '+lbl.num+': pernoite ainda não definido.'+(entry.note ? ' — '+entry.note : '')+'</div>';
+    }
+
+    if(entry.tours && entry.tours.length){
+      entry.tours.forEach(function(tid){
+        var td = TOUR_DEFS[tid];
+        if(!td) return;
+        html += '<div class="detail-box tour-'+td.colorKey+'"><div class="card-head"><span class="emoji">'+td.icon+'</span><span>'+td.label+'</span><span class="hrs">~'+td.hours+'h</span></div>'
+          + travelLineHtml(td)
+          + bulletsHtml(td.bullets)
+          + (showSuggestedRoute ? suggestedHtml(td) : '') + '</div>';
+      });
+      var hrs = dayHours(entry);
+      var status = hoursStatus(hrs);
+      var msg = status === 'ok' ? 'Total: '+hrs+'h — tranquilo.' :
+                status === 'tight' ? 'Total: '+hrs+'h — dia cheio, pode apertar dependendo do deslocamento.' :
+                'Total: '+hrs+'h — não cabe num dia só, considere mover um passeio para outro dia.';
+      html += '<div class="detail-total '+(status==='ok'?'':status)+'">'+msg+'</div>';
+    } else {
+      html += '<div class="detail-placeholder">Nenhum passeio adicionado ainda.</div>';
+    }
+
+    detailEl.insertAdjacentHTML('beforeend', html);
+  }
+
+  function addDaysISO(iso, amount){
+    var date = toDate(iso);
+    date.setDate(date.getDate() + amount);
+    return toISO(date);
+  }
+
+  function formatShortDate(iso){
+    var date = toDate(iso);
+    return String(date.getDate()).padStart(2,'0') + '/' + String(date.getMonth()+1).padStart(2,'0');
+  }
+
+  function getStaySegments(){
+    var stays = [];
+    var current = null;
+    allDates.filter(inRange).forEach(function(iso){
+      var entry = plan[iso];
+      var baseId = entry && entry.base && BASE_DEFS[entry.base] ? entry.base : null;
+      if(baseId && current && current.baseId === baseId && addDaysISO(current.lastNight, 1) === iso){
+        current.lastNight = iso;
+        current.nights++;
+        return;
+      }
+      if(current){ stays.push(current); current = null; }
+      if(baseId){
+        current = {baseId:baseId, city:BASE_DEFS[baseId].sleepCity, start:iso, lastNight:iso, nights:1};
+      }
+    });
+    if(current) stays.push(current);
+    stays.forEach(function(stay){ stay.checkout = addDaysISO(stay.lastNight, 1); });
+    return stays;
+  }
+
+  function buildStayOverview(){
+    var stays = getStaySegments();
+    var html = '<div class="stay-overview-title">Onde dormimos · entrada → saída</div>';
+    if(!stays.length){
+      html += '<div class="stay-overview-row"><span>Nenhum pernoite definido</span><b>—</b></div>';
+    } else {
+      stays.forEach(function(stay){
+        html += '<div class="stay-overview-row"><span><b>'+stay.city+'</b> · '+formatShortDate(stay.start)+' → '+formatShortDate(stay.checkout)+'</span><b>'+stay.nights+' noite'+(stay.nights>1?'s':'')+'</b></div>';
+      });
+    }
+    document.getElementById('stay-summary-top').innerHTML = html;
+  }
+
+  function buildSummary(){
+    var tourCounts = {};
+    var assignedBase = 0;
+    var tightDays = [];
+
+    allDates.filter(inRange).forEach(function(iso){
+      if(lockedInfo[iso] && lockedInfo[iso].type === 'departure') return;
+      var entry = plan[iso];
+      if(!entry) return;
+      if(entry.base && BASE_DEFS[entry.base]){
+        assignedBase++;
+      }
+      (entry.tours || []).forEach(function(tid){
+        var td = TOUR_DEFS[tid];
+        if(!td) return;
+        tourCounts[td.label] = (tourCounts[td.label] || 0) + 1;
+      });
+      var hrs = dayHours(entry);
+      var status = hoursStatus(hrs);
+      if(status !== 'ok'){
+        tightDays.push({iso:iso, hrs:hrs, status:status});
+      }
+    });
+
+    var totalSlots = allDates.filter(function(d){ return inRange(d) && (!lockedInfo[d] || lockedInfo[d].type !== 'departure'); }).length;
+    var noBase = totalSlots - assignedBase;
+
+    var html = '<div class="summary-sub">Hospedagens · entrada → saída</div>';
+    getStaySegments().forEach(function(stay){
+      html += '<div class="summary-item"><span><strong>'+stay.city+'</strong><span class="stay-dates">'+formatShortDate(stay.start)+' → '+formatShortDate(stay.checkout)+'</span></span><b>'+stay.nights+' noite'+(stay.nights>1?'s':'')+'</b></div>';
+    });
+    if(noBase > 0){
+      html += '<div class="summary-item"><span>Dias sem pernoite definido</span><b>'+noBase+'</b></div>';
+    }
+
+    html += '<div class="summary-sub">Passeios no roteiro</div>';
+    if(Object.keys(tourCounts).length === 0){
+      html += '<div class="summary-item"><span>Nenhum ainda</span><b>—</b></div>';
+    }
+    Object.keys(tourCounts).forEach(function(label){
+      html += '<div class="summary-item"><span>'+label+'</span><b>'+tourCounts[label]+'</b></div>';
+    });
+
+    var totalTripDays = allDates.filter(inRange).length;
+    html += '<div class="summary-sub">Total</div>';
+    html += '<div class="summary-item"><span>Dias no Japão</span><b>'+totalTripDays+'</b></div>';
+
+    summaryEl.innerHTML = html;
+
+    // banners
+    var bannerHtml = '';
+
+    if(tightDays.length){
+      bannerHtml += '<div class="banner tight">⏱️ <b>Dias com muito passeio marcado:</b><br>' + tightDays.map(function(td){
+        var lbl = dayLabel(td.iso);
+        var word = td.status === 'over' ? 'não cabe num dia só' : 'dia cheio';
+        return 'Dia ' + lbl.num + '/Nov: ' + td.hrs + 'h (' + word + ')';
+      }).join('<br>') + '</div>';
+    }
+
+    bannersEl.innerHTML = bannerHtml;
+    buildStayOverview();
+  }
+
+  function render(){
+    buildCalendar();
+    buildDetail();
+    buildSummary();
+    attachPoolDrag();
+  }
+
+  function attachPoolDrag(){
+    document.querySelectorAll('#pool-body .card[draggable="true"]').forEach(function(card){
+      card.addEventListener('dragstart', function(e){
+        var payload = { kind: card.dataset.kind, id: card.dataset.id };
+        e.dataTransfer.setData('text/plain', JSON.stringify(payload));
+        card.classList.add('dragging');
+        setTimeout(function(){ card.classList.remove('dragging'); }, 0);
+      });
+    });
+  }
+
+  document.getElementById('reset-btn').addEventListener('click', function(){
+    if(confirm('Restaurar a proposta inicial? Isso apaga seus ajustes.')){
+      plan = JSON.parse(JSON.stringify(defaultPlan));
+      selectedDate = null;
+      savePlan();
+    }
+  });
+
+  var toggleDetailsEl = document.getElementById('toggle-details');
+  toggleDetailsEl.checked = showCalendarDetails;
+  toggleDetailsEl.addEventListener('change', function(){
+    showCalendarDetails = toggleDetailsEl.checked;
+    localStorage.setItem('japan-trip-planner-show-details-v1', showCalendarDetails ? '1' : '0');
+    render();
+  });
+
+  var toggleSuggestedEl = document.getElementById('toggle-suggested');
+  toggleSuggestedEl.checked = showSuggestedRoute;
+  toggleSuggestedEl.addEventListener('change', function(){
+    showSuggestedRoute = toggleSuggestedEl.checked;
+    localStorage.setItem('japan-trip-planner-show-suggested-v1', showSuggestedRoute ? '1' : '0');
+    buildPool();
+    render();
+  });
+
+  // ---- create-card form ----
+  var createToggleBtn = document.getElementById('create-toggle');
+  var createForm = document.getElementById('create-form');
+  var typeBaseBtn = document.getElementById('type-base-btn');
+  var typeTourBtn = document.getElementById('type-tour-btn');
+  var cfColor = document.getElementById('cf-color');
+
+  COLOR_OPTIONS.forEach(function(c){
+    var opt = document.createElement('option');
+    opt.value = c.key; opt.textContent = c.label;
+    cfColor.appendChild(opt);
+  });
+
+  createToggleBtn.addEventListener('click', function(){
+    createForm.classList.toggle('open');
+  });
+
+  function setFormType(type){
+    createForm.dataset.type = type;
+    typeBaseBtn.classList.toggle('active', type === 'base');
+    typeTourBtn.classList.toggle('active', type === 'tour');
+  }
+  typeBaseBtn.addEventListener('click', function(){ setFormType('base'); });
+  typeTourBtn.addEventListener('click', function(){ setFormType('tour'); });
+
+  document.getElementById('cf-submit').addEventListener('click', function(){
+    var type = createForm.dataset.type;
+    var name = document.getElementById('cf-name').value.trim();
+    if(!name){ alert('Dá um nome pro card antes de criar.'); return; }
+    var emoji = document.getElementById('cf-emoji').value.trim() || '📍';
+    var color = cfColor.value;
+    var bulletsRaw = document.getElementById('cf-bullets').value.trim();
+    var bullets = bulletsRaw ? bulletsRaw.split('\n').map(function(s){ return s.trim(); }).filter(Boolean) : [];
+    var id = 'custom-' + Date.now();
+
+    if(type === 'base'){
+      var baseDef = {icon:emoji, label:name, sleepCity:name, colorKey:color, bullets:bullets, custom:true};
+      customStore.bases[id] = baseDef;
+    } else {
+      var hours = parseFloat(document.getElementById('cf-hours').value) || 2;
+      var travel = document.getElementById('cf-travel').value.trim() || null;
+      var tourDef = {icon:emoji, label:name, hours:hours, region:'custom', colorKey:color, bullets:bullets, travel:travel, custom:true};
+      customStore.tours[id] = tourDef;
+    }
+
+    saveCustom();
+
+    document.getElementById('cf-name').value = '';
+    document.getElementById('cf-emoji').value = '';
+    document.getElementById('cf-bullets').value = '';
+    document.getElementById('cf-travel').value = '';
+  });
+
+  // ---- saved roteiro snapshots ----
+  var SAVED_KEY = 'japan-trip-planner-saved-v1';
+  var savedList = [];
+  function loadSaved(){
+    try{
+      var raw = localStorage.getItem(SAVED_KEY);
+      if(raw){
+        var parsed = JSON.parse(raw);
+        var changed = false;
+        parsed.forEach(function(version){
+          if(version.plan && migrateTourCards(version.plan)) changed = true;
+        });
+        if(changed) sharedSet(SAVED_KEY, JSON.stringify(parsed));
+        return parsed;
+      }
+    }catch(e){}
+    return [];
+  }
+  function persistSaved(){ sharedSet(SAVED_KEY, JSON.stringify(savedList)); }
+
+  function formatSavedDate(iso){
+    var dt = new Date(iso);
+    return dt.toLocaleDateString('pt-BR') + ' ' + dt.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+  }
+
+  function renderSavedList(){
+    var el = document.getElementById('saved-list');
+    if(savedList.length === 0){
+      el.innerHTML = '<div class="saved-empty">Nenhum roteiro salvo ainda.</div>';
+      return;
+    }
+    el.innerHTML = '';
+    savedList.slice().reverse().forEach(function(v){
+      var row = document.createElement('div');
+      row.className = 'saved-item';
+      row.innerHTML = '<div class="info"><div class="name">'+v.name+'</div><div class="date">'+formatSavedDate(v.savedAt)+'</div></div>'
+        + '<div class="actions"><button class="load-version">Carregar</button><button class="del-version">Apagar</button></div>';
+      row.querySelector('.load-version').addEventListener('click', function(){
+        if(confirm('Carregar "'+v.name+'"? Isso substitui o roteiro que está no calendário agora (o atual não se perde se já estiver salvo).')){
+          plan = JSON.parse(JSON.stringify(v.plan));
+          selectedDate = null;
+          savePlan();
+        }
+      });
+      row.querySelector('.del-version').addEventListener('click', function(){
+        if(confirm('Apagar o roteiro salvo "'+v.name+'"?')){
+          savedList = savedList.filter(function(x){ return x.id !== v.id; });
+          persistSaved();
+          renderSavedList();
+        }
+      });
+      el.appendChild(row);
+    });
+  }
+
+  savedList = loadSaved();
+  renderSavedList();
+
+  document.getElementById('save-version-btn').addEventListener('click', function(){
+    var nameInput = document.getElementById('save-name');
+    var name = nameInput.value.trim() || ('Roteiro ' + (savedList.length + 1));
+    savedList.push({ id: 'v-' + Date.now(), name: name, plan: JSON.parse(JSON.stringify(plan)), savedAt: new Date().toISOString() });
+    persistSaved();
+    renderSavedList();
+    nameInput.value = '';
+  });
+
+  // ---- export current state as text (to hand back to the assistant / another device) ----
+  document.getElementById('export-state-btn').addEventListener('click', function(){
+    var output = document.getElementById('export-output');
+    var hint = document.getElementById('copy-hint');
+    var json = JSON.stringify(plan);
+    output.value = json;
+    output.classList.add('show');
+    output.focus();
+    output.select();
+    hint.classList.remove('show');
+    try{
+      if(document.execCommand('copy')){
+        hint.classList.add('show');
+      }
+    }catch(e){ /* clipboard copy not available — user can still copy manually from the textarea */ }
+  });
+
+  // ---- PDF export (print) ----
+  function buildPrintView(){
+    var printEl = document.getElementById('print-view');
+    var html = '<h1>✈️ Roteiro Japão — Nov 2026</h1>';
+    html += '<div class="p-sub">Chegada: Haneda 08/Nov 23h55 · Partida: Narita 27/Nov 16h55</div>';
+    html += '<div class="p-stays"><h2>Onde dormimos · entrada → saída</h2>';
+    var printStays = getStaySegments();
+    if(!printStays.length){
+      html += '<div class="p-stay-row"><span>Nenhum pernoite definido</span><b>—</b></div>';
+    } else {
+      printStays.forEach(function(stay){
+        html += '<div class="p-stay-row"><span><b>'+stay.city+'</b> · '+formatShortDate(stay.start)+' → '+formatShortDate(stay.checkout)+'</span><b>'+stay.nights+' noite'+(stay.nights>1?'s':'')+'</b></div>';
+      });
+    }
+    html += '</div>';
+
+    allDates.filter(inRange).forEach(function(iso){
+      var lbl = dayLabel(iso);
+      var locked = lockedInfo[iso];
+      if(locked){
+        var lockedPrintEntry = plan[iso] || emptyDay();
+        html += '<div class="p-day p-locked"><div class="p-date">'+lbl.num+'/Nov ('+lbl.wd+') — ✈️ '+(locked.type==='arrival'?'Chegada':'Partida')+'</div>'
+          + '<div class="p-tour">'+locked.text+'</div>';
+        if(locked.type === 'arrival' && lockedPrintEntry.base && BASE_DEFS[lockedPrintEntry.base]){
+          html += '<div class="p-base">'+BASE_DEFS[lockedPrintEntry.base].icon+' Primeira noite em '+BASE_DEFS[lockedPrintEntry.base].label+'</div>';
+        }
+        (lockedPrintEntry.tours || []).forEach(function(tid){
+          var lockedTour = TOUR_DEFS[tid];
+          if(lockedTour) html += '<div class="p-tour">• '+lockedTour.icon+' '+lockedTour.label+' (~'+lockedTour.hours+'h)</div>';
+        });
+        html += '</div>';
+        return;
+      }
+      var entry = plan[iso] || emptyDay();
+      html += '<div class="p-day">';
+      html += '<div class="p-date">'+lbl.num+'/Nov ('+lbl.wd+')</div>';
+      if(entry.base && BASE_DEFS[entry.base]){
+        var bd = BASE_DEFS[entry.base];
+        html += '<div class="p-base">'+bd.icon+' Dorme em '+bd.label+'</div>';
+        if(bd.bullets && bd.bullets.length){ html += bulletsHtml(bd.bullets).replace('<ul class="bullets">','<ul class="p-bullets">'); }
+      } else {
+        html += '<div class="p-base">Pernoite: não definido</div>';
+      }
+      if(entry.note){ html += '<div class="p-tour">'+entry.note+'</div>'; }
+      if(entry.tours && entry.tours.length){
+        entry.tours.forEach(function(tid){
+          var td = TOUR_DEFS[tid];
+          if(!td) return;
+          var travelTxt = td.travel ? td.travel : '🏠 mesma cidade da base';
+          html += '<div class="p-tour-block"><div class="p-tour">• '+td.icon+' '+td.label+' (~'+td.hours+'h) — <span class="p-travel">'+travelTxt+'</span></div>';
+          if(td.bullets && td.bullets.length){ html += bulletsHtml(td.bullets).replace('<ul class="bullets">','<ul class="p-bullets">'); }
+          html += '</div>';
+        });
+        var hrs = dayHours(entry);
+        html += '<div class="p-total">Total do dia: '+hrs+'h</div>';
+      } else {
+        html += '<div class="p-empty">Sem passeio definido ainda.</div>';
+      }
+      html += '</div>';
+    });
+
+    var suggestedEntries = [];
+    allDates.filter(inRange).forEach(function(iso){
+      var entry = plan[iso];
+      if(!entry || !entry.tours) return;
+      entry.tours.forEach(function(tid){
+        var td = TOUR_DEFS[tid];
+        if(td && td.suggested && td.suggested.length){
+          suggestedEntries.push({iso:iso, tour:td});
+        }
+      });
+    });
+    if(suggestedEntries.length){
+      html += '<div class="p-suggested"><h2>Roteiros sugeridos</h2><div class="p-suggested-intro">Sequência recomendada para os cards incluídos neste roteiro.</div>';
+      suggestedEntries.forEach(function(item){
+        var lbl = dayLabel(item.iso);
+        html += '<div class="p-suggested-card"><div class="p-suggested-title">'+lbl.num+'/Nov ('+lbl.wd+') · '+item.tour.icon+' '+item.tour.label+'</div><ol>';
+        item.tour.suggested.forEach(function(step){ html += '<li>'+step+'</li>'; });
+        html += '</ol></div>';
+      });
+      html += '</div>';
+    }
+
+    var usedTourIds = {};
+    allDates.filter(inRange).forEach(function(iso){
+      var entry = plan[iso];
+      (entry && entry.tours || []).forEach(function(tid){ usedTourIds[tid] = true; });
+    });
+    var unusedByRegion = {};
+    Object.keys(TOUR_DEFS).forEach(function(tid){
+      var td = TOUR_DEFS[tid];
+      if(td.region === 'transport' || usedTourIds[tid]) return;
+      if(!unusedByRegion[td.region]) unusedByRegion[td.region] = [];
+      unusedByRegion[td.region].push(td);
+    });
+    var unusedCount = Object.keys(unusedByRegion).reduce(function(total, region){ return total + unusedByRegion[region].length; }, 0);
+    html += '<div class="p-unused"><h2>Atividades não incluídas no calendário</h2>';
+    if(!unusedCount){
+      html += '<div class="p-unused-intro">Todas as atividades disponíveis foram incluídas.</div>';
+    } else {
+      html += '<div class="p-unused-intro">Alternativas que continuam disponíveis no planner, mas não aparecem no roteiro atual.</div>';
+      REGION_ORDER.filter(function(region){ return region !== 'transport'; }).forEach(function(region){
+        var items = unusedByRegion[region] || [];
+        if(!items.length) return;
+        html += '<div class="p-unused-region">'+(REGION_LABELS[region] || region)+'</div>';
+        items.forEach(function(td){
+          var travelTxt = td.travel || 'mesma cidade da base';
+          html += '<div class="p-unused-item"><div class="p-unused-name">'+td.icon+' '+td.label+' · ~'+td.hours+'h</div><div class="p-unused-meta">'+travelTxt+'</div></div>';
+        });
+      });
+    }
+    html += '</div>';
+
+    printEl.innerHTML = html;
+  }
+
+  document.getElementById('export-pdf-btn').addEventListener('click', function(){
+    buildPrintView();
+    setTimeout(function(){ window.print(); }, 50);
+  });
+
+  buildPool();
+  render();
+}
+initPlanner();
+</script>
+
+</body>
+</html>
