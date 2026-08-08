@@ -314,6 +314,52 @@
     return entry && entry.base && api.baseDefs[entry.base] ? api.baseDefs[entry.base] : null;
   }
   function stepsFor(iso) {
+    if (iso === "2026-11-10") {
+      return [
+        {
+          key: iso + "|fixed|0",
+          time: "09:00",
+          place: "Kuromon Ichiba Market",
+          note: "Café da manhã e comidas do mercado.",
+        },
+        {
+          key: iso + "|fixed|1",
+          time: "11:00",
+          place: "Denden Town",
+          note: "Caminhada por eletrônicos, games e cultura pop.",
+        },
+        {
+          key: iso + "|fixed|2",
+          time: "12:30",
+          place: "Shinsekai + almoço",
+          note: "Tsutenkaku e almoço de kushikatsu.",
+        },
+        {
+          key: iso + "|fixed|3",
+          time: "14:30",
+          place: "Castelo de Osaka",
+          note: "Parque e área externa; entrar apenas se houver interesse.",
+        },
+        {
+          key: iso + "|fixed|4",
+          time: "17:00",
+          place: "Umeda Sky Building",
+          note: "Mirante próximo ao pôr do sol.",
+        },
+        {
+          key: iso + "|fixed|5",
+          time: "18:30",
+          place: "Pokémon Center Osaka",
+          note: "Compras no Daimaru Umeda antes do jantar.",
+        },
+        {
+          key: iso + "|fixed|6",
+          time: "19:30",
+          place: "Jantar em Umeda",
+          note: "Depois, retorno ao Comfort Hotel Shin-Osaka.",
+        },
+      ];
+    }
     var entry = plan()[iso] || { tours: [] },
       steps = [];
     (entry.tours || []).forEach(function (id, ti) {
@@ -363,6 +409,16 @@
     );
   }
   function pointsFor(iso) {
+    if (iso === "2026-11-10") {
+      return [
+        { name: "Kuromon Ichiba Market", lat: 34.6654, lng: 135.5065, tourId: "fixed-day10" },
+        { name: "Denden Town", lat: 34.6597, lng: 135.5061, tourId: "fixed-day10" },
+        { name: "Shinsekai", lat: 34.6525, lng: 135.5063, tourId: "fixed-day10" },
+        { name: "Osaka Castle", lat: 34.6873, lng: 135.5262, tourId: "fixed-day10" },
+        { name: "Umeda Sky Building", lat: 34.7053, lng: 135.49, tourId: "fixed-day10" },
+        { name: "Pokémon Center Osaka", lat: 34.7026, lng: 135.4965, tourId: "fixed-day10" },
+      ];
+    }
     var entry = plan()[iso] || { tours: [] },
       seen = {},
       points = [];
