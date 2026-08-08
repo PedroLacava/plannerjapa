@@ -1956,7 +1956,7 @@ async function initPlanner(){
     document.getElementById('calendar').addEventListener('click', function(e){
       if(window.innerWidth > 760) return;
       if(e.target.closest('.guide-link')) return;
-      if(e.target.closest('.day')) setView('detail');
+      if(e.target.closest('.day-cell')) setView('detail');
     });
     setView('cal');
   })();
