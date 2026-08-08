@@ -460,6 +460,36 @@
 
   .layout-with-guide{ grid-template-rows: auto auto; }
 
+  /* ---- mobile: calendário primeiro, demais blocos ocultos em abas ---- */
+  .mobile-tabs{ display:none; }
+  @media (max-width: 760px){
+    body{ padding:10px; }
+    h1{ font-size:17px; }
+    .subtitle{ display:none; }
+    .mobile-tabs{
+      display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:6px;
+      position:sticky; top:0; z-index:30; background:var(--bg,#faf8f3); padding:6px 0 8px;
+    }
+    .mobile-tabs button{
+      font-size:11.5px; font-weight:700; padding:8px 4px; border-radius:8px;
+      border:1px solid var(--line); background:#fff; color:#6b6456; cursor:pointer;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .mobile-tabs button.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+    .layout{ display:block; }
+    .layout > .panel{ margin-bottom:12px; }
+    .calendar-panel{ order:-1; }
+    /* por padrão só o calendário aparece */
+    body:not(.m-pool) #pool-panel{ display:none; }
+    body:not(.m-detail) #detail-panel{ display:none; }
+    body.m-pool .calendar-panel, body.m-detail .calendar-panel{ display:none; }
+    body.m-pool #detail-panel{ display:none; }
+    body.m-detail #pool-panel{ display:none; }
+    .guide-gallery{ grid-template-columns: 1fr 1fr; }
+    .guide-gallery img{ height:100px; }
+  }
+
+
 </style>
 </head>
 <body>
