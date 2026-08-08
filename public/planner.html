@@ -751,16 +751,16 @@ async function initPlanner(){
 
   // ---- BASES: onde vocês dormem (1 por dia) ----
   var BASE_DEFS = {
-    tokyo:  {icon:'🗼', label:'Tóquio', sleepCity:'Tóquio', colorKey:'tokyo',
-             bullets:['Base urbana, metrô fácil','Boas regiões p/ ficar: Nakameguro, Ebisu, Shibuya']},
+    tokyo:  {icon:'🏨', label:'Hotel Sunroute Asakusa', sleepCity:'Tóquio', colorKey:'tokyo',
+             bullets:['1-8-5 Kaminarimon, Taito-ku, Tokyo 111-0034','東京都台東区雷門1-8-5','Tawaramachi (Ginza Line): 1 min a pé · Asakusa: 7 min']},
     'hotel-sunroute-asakusa': {icon:'🏨', label:'Hotel Sunroute Asakusa', sleepCity:'Tóquio', colorKey:'tokyo',
              bullets:['1-8-5 Kaminarimon, Taito-ku, Tokyo 111-0034','東京都台東区雷門1-8-5','Tawaramachi (Ginza Line): 1 min a pé · Asakusa: 7 min']},
-    hakone: {icon:'♨️', label:'Hakone (Ryokan)', sleepCity:'Hakone', colorKey:'hakone',
-             bullets:['Único trecho com ryokan + onsen','Reserve com 4+ meses de antecedência']},
+    hakone: {icon:'♨️', label:'Gekkoen Yugetsusanso — Arima Onsen', sleepCity:'Arima Onsen', colorKey:'hakone',
+             bullets:['318 Arimacho, Kita-ku, Kobe, Hyogo 651-1401','兵庫県神戸市北区有馬町318','Shuttle gratuito da estação/bus stop de Arima Onsen, 8h–19h']},
     'gekkoen-arima': {icon:'♨️', label:'Gekkoen Yugetsusanso — Arima Onsen', sleepCity:'Arima Onsen', colorKey:'hakone',
              bullets:['318 Arimacho, Kita-ku, Kobe, Hyogo 651-1401','兵庫県神戸市北区有馬町318','Shuttle gratuito da estação/bus stop de Arima Onsen, 8h–19h']},
-    osaka:  {icon:'🍜', label:'Osaka', sleepCity:'Osaka', colorKey:'osaka',
-             bullets:['Mais barato que Kyoto','Ótima base p/ day trips no Kansai (Kyoto ~30min de trem)']},
+    osaka:  {icon:'🏨', label:'Comfort Hotel Shin-Osaka', sleepCity:'Osaka', colorKey:'osaka',
+             bullets:['5-3-7 Nishinakajima, Yodogawa-ku, Osaka 532-0011','大阪府大阪市淀川区西中島5-3-7','Shin-Osaka: cerca de 5–8 min a pé · ótima base para os bate-voltas']},
     'comfort-shin-osaka': {icon:'🏨', label:'Comfort Hotel Shin-Osaka', sleepCity:'Osaka', colorKey:'osaka',
              bullets:['5-3-7 Nishinakajima, Yodogawa-ku, Osaka 532-0011','大阪府大阪市淀川区西中島5-3-7','Shin-Osaka: cerca de 5–8 min a pé · ótima base para os bate-voltas']},
     kyoto:  {icon:'⛩️', label:'Kyoto (pernoite)', sleepCity:'Kyoto', colorKey:'kyoto',
@@ -826,6 +826,8 @@ async function initPlanner(){
                           bullets:['Sair após o café e deixar a mala pronta para a troca de hotel','Shinkansen Shin-Osaka → Shin-Kobe; depois metrô/linha Hokushin até Tanigami','Tanigami → Arimaguchi → Arima Onsen pela Kobe Electric Railway','Ao chegar, ligar para o shuttle do Gekkoen: 078-904-1737 (8h–19h)']},
     'transport-arima-tokyo': {icon:'🚅', label:'Arima Onsen → Hotel Sunroute Asakusa', hours:4.5, region:'transport', colorKey:'transport', travel:'Gekkoen → Shin-Kobe → Tokyo → Tawaramachi · apenas ida',
                           bullets:['Usar o shuttle do ryokan até o ponto/estação de Arima Onsen','Seguir para Shin-Kobe; confirmar ônibus direto ou conexão via Tanigami no dia anterior','Shin-Kobe → Tokyo: reservar Shinkansen Hikari; Nozomi exige suplemento','Tokyo Station → Ueno pela JR e Ginza Line até Tawaramachi; hotel a 1 min']},
+    'transport-arima-hakone': {icon:'🚅', label:'Arima Onsen → Hakone', hours:4.5, region:'transport', colorKey:'transport', travel:'Gekkoen → Shin-Kobe → Odawara → Hakone · apenas ida',
+                          bullets:['Sair cedo e usar o shuttle do Gekkoen até o ponto/estação','Seguir para Shin-Kobe e reservar Shinkansen até Odawara','Guardar as malas em Odawara para não carregá-las no circuito de Hakone','Este deslocamento torna o dia apertado; cabe apenas um dos passeios de Hakone']},
     'transport-tokyo-narita': {icon:'✈️', label:'Tóquio → Aeroporto de Narita', hours:1.5, region:'transport', colorKey:'transport', travel:'Tokyo Station → Narita Airport · Narita Express',
                           bullets:['JR Pass: cobre integralmente o Narita Express','Reserva de assento obrigatória','Para o voo das 16h55, sair do centro entre 12h e 12h30','Confirmar terminal e horário do trem na véspera']},
 
@@ -1052,12 +1054,13 @@ async function initPlanner(){
       entry.tours.forEach(function(id){
         var mapped = TOUR_MIGRATION[id] || id;
         if(mapped !== id) changed = true;
-        if(!TOUR_DEFS[mapped] && !(entry.customTours && entry.customTours[mapped])){ changed = true; return; }
+        // Preserve IDs created by a newer app version. An older tab must never erase
+        // shared cards merely because it does not know how to render them yet.
         if(next.indexOf(mapped) === -1) next.push(mapped);
         else changed = true;
       });
       entry.tours = next;
-      if(entry.base && !BASE_DEFS[entry.base] && !(entry.customBases && entry.customBases[entry.base])){ entry.base = null; changed = true; }
+      // The same forward-compatibility rule applies to hotel/base IDs.
     });
 
     return changed;
@@ -1161,6 +1164,50 @@ async function initPlanner(){
     return true;
   }
 
+  function repairSharedPlanV2(sourcePlan){
+    sourcePlan._updates = sourcePlan._updates || {};
+    if(sourcePlan._updates.sharedPlanRepairV2) return false;
+    function ensure(iso){
+      if(!sourcePlan[iso]) sourcePlan[iso] = emptyDay();
+      if(!Array.isArray(sourcePlan[iso].tours)) sourcePlan[iso].tours = [];
+      return sourcePlan[iso];
+    }
+    Object.keys(sourcePlan).forEach(function(iso){
+      if(iso.charAt(0) === '_' || !sourcePlan[iso]) return;
+      if(iso >= '2026-11-09' && iso <= '2026-11-17') sourcePlan[iso].base = 'osaka';
+      if(iso >= '2026-11-18' && iso <= '2026-11-26') sourcePlan[iso].base = 'tokyo';
+    });
+    ensure('2026-11-08').base = 'tokyo';
+    ensure('2026-11-17').base = 'hakone';
+    ensure('2026-11-27').base = null;
+    function setTransports(iso, before, after){
+      var entry = ensure(iso);
+      var activities = entry.tours.filter(function(id){ return id.indexOf('transport-') !== 0; });
+      entry.tours = before.concat(activities, after);
+    }
+    setTransports('2026-11-08', ['transport-haneda-tokyo'], []);
+    setTransports('2026-11-09', ['transport-tokyo-osaka'], []);
+    setTransports('2026-11-11', ['transport-osaka-kyoto-out'], ['transport-kyoto-osaka-return']);
+    setTransports('2026-11-12', ['transport-osaka-kyoto-out'], ['transport-kyoto-osaka-return']);
+    setTransports('2026-11-13', ['transport-osaka-nara-out'], ['transport-nara-uji','transport-uji-osaka-return']);
+    setTransports('2026-11-14', ['transport-osaka-himeji-out'], ['transport-himeji-kobe','transport-kobe-osaka-return']);
+    setTransports('2026-11-16', ['transport-osaka-hiroshima-out'], ['transport-hiroshima-osaka-return']);
+    setTransports('2026-11-27', [], ['transport-tokyo-narita']);
+    var day10 = ensure('2026-11-10');
+    day10.tours = ['kuromon','osaka-central-highlights','pokemon-osaka'].concat(day10.tours.filter(function(id){
+      return ['kuromon','osaka-central-highlights','pokemon-osaka'].indexOf(id) === -1;
+    }));
+    day10.note = 'Dia inteiro em Osaka: Kuromon → Denden Town → Shinsekai → Castelo de Osaka → Umeda';
+    var day17 = ensure('2026-11-17');
+    day17.tours = ['transport-osaka-arima','arima-onsen-stay'];
+    day17.note = 'Comfort Hotel Shin-Osaka → Gekkoen Yugetsusanso; tarde e noite em Arima Onsen';
+    var day18 = ensure('2026-11-18');
+    day18.tours = ['transport-arima-hakone','hakone-ropeway','transport-hakone-tokyo'];
+    day18.note = 'Dia apertado: Arima → Hakone; Ropeway + Lake Ashi; Hakone → Hotel Sunroute Asakusa';
+    sourcePlan._updates.sharedPlanRepairV2 = true;
+    return true;
+  }
+
   // default proposal
   var defaultPlan = {
     '2026-11-08': {base:'tokyo', tours:['transport-haneda-tokyo'], note:'Chegada tarde — primeira noite em Tóquio; reservar transfer'},
@@ -1202,6 +1249,7 @@ async function initPlanner(){
           if(applyArrivalAndTeamLabUpdate(parsed)) changed = true;
           if(applyDirectionalTransportUpdate(parsed)) changed = true;
           if(applyHotelBasesAndArimaUpdate(parsed)) changed = true;
+          if(repairSharedPlanV2(parsed)) changed = true;
           if(changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
           return parsed;
         }
@@ -1211,6 +1259,7 @@ async function initPlanner(){
     applyArrivalAndTeamLabUpdate(freshPlan);
     applyDirectionalTransportUpdate(freshPlan);
     applyHotelBasesAndArimaUpdate(freshPlan);
+    repairSharedPlanV2(freshPlan);
     return freshPlan;
   }
   function savePlan(){
