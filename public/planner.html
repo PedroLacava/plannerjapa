@@ -1934,7 +1934,34 @@ async function initPlanner(){
 
   buildPool();
   render();
+
+  // ---- abas do mobile: calendário primeiro, demais blocos ocultos ----
+  (function setupMobileTabs(){
+    var tabs = document.getElementById('mobile-tabs');
+    if(!tabs) return;
+    function setView(view){
+      document.body.classList.remove('m-pool','m-detail');
+      if(view === 'pool') document.body.classList.add('m-pool');
+      if(view === 'detail') document.body.classList.add('m-detail');
+      tabs.querySelectorAll('button').forEach(function(b){
+        b.classList.toggle('active', b.getAttribute('data-mview') === view);
+      });
+      window.scrollTo(0, 0);
+    }
+    tabs.addEventListener('click', function(e){
+      var btn = e.target.closest('button[data-mview]');
+      if(btn) setView(btn.getAttribute('data-mview'));
+    });
+    // ao clicar num dia no celular, mostrar o detalhe automaticamente
+    document.getElementById('calendar').addEventListener('click', function(e){
+      if(window.innerWidth > 760) return;
+      if(e.target.closest('.guide-link')) return;
+      if(e.target.closest('.day')) setView('detail');
+    });
+    setView('cal');
+  })();
 }
+
 initPlanner();
 </script>
 
