@@ -503,7 +503,7 @@
       <div class="hint">Passeios criados aparecem em "Seus passeios" no final da lista. Cards criados podem ser apagados pelo × no canto.</div>
     </div>
     <div class="legend-note">Os cards do painel não somem ao arrastar — use quantas vezes quiser.<br><br>
-      <b>Cores:</b> 🚆 deslocamentos azul-petróleo · 🗼 Tóquio azul · ♨️ Hakone verde · 🏯 Nagoya dourado · 🍜 Osaka rosa · ⛩️ Kyoto laranja · 🏛️ Koyasan roxo · 🕊️ Hiroshima/Miyajima petróleo (day trip de Osaka) · day trips mais longes em marrom-âmbar.<br>
+      <b>Cores:</b> 🚆 deslocamentos azul-petróleo · 🗼 Tóquio azul · ♨️ Hakone verde · 🍜 Osaka rosa · ⛩️ Kyoto laranja · 🏛️ Koyasan roxo · 🕊️ Hiroshima/Miyajima petróleo (day trip de Osaka) · day trips mais longes em marrom-âmbar.<br>
       Borda sólida = onde dormem. Borda tracejada = passeio (day trip).<br>
       🚄 = precisa de trem (day trip) · 🏠 = mesma cidade, sem deslocamento.</div>
   </div>
@@ -665,7 +665,6 @@ async function initPlanner(){
   var COLOR_OPTIONS = [
     {key:'tokyo', label:'Azul (Tóquio)'},
     {key:'hakone', label:'Verde (Hakone)'},
-    {key:'nagoya', label:'Dourado (Nagoya)'},
     {key:'osaka', label:'Rosa (Osaka)'},
     {key:'kyoto', label:'Laranja (Kyoto)'},
     {key:'koyasan', label:'Roxo (Koyasan)'},
@@ -699,8 +698,6 @@ async function initPlanner(){
              bullets:['Base urbana, metrô fácil','Boas regiões p/ ficar: Nakameguro, Ebisu, Shibuya']},
     hakone: {icon:'♨️', label:'Hakone (Ryokan)', sleepCity:'Hakone', colorKey:'hakone',
              bullets:['Único trecho com ryokan + onsen','Reserve com 4+ meses de antecedência']},
-    nagoya: {icon:'🏯', label:'Nagoya', sleepCity:'Nagoya', colorKey:'nagoya',
-             bullets:['Base prática entre Tóquio e Kansai','Boa conexão de Shinkansen com Tóquio, Hakone e Osaka','Especialidades locais: hitsumabushi, miso katsu, tebasaki e kishimen']},
     osaka:  {icon:'🍜', label:'Osaka', sleepCity:'Osaka', colorKey:'osaka',
              bullets:['Mais barato que Kyoto','Ótima base p/ day trips no Kansai (Kyoto ~30min de trem)']},
     kyoto:  {icon:'⛩️', label:'Kyoto (pernoite)', sleepCity:'Kyoto', colorKey:'kyoto',
@@ -716,16 +713,6 @@ async function initPlanner(){
                           bullets:['JR Pass: provavelmente inviável neste horário','Após imigração e bagagem, Tokyo Monorail e trens JR devem estar encerrados','Recomendação: táxi ou transfer reservado até o hotel','Confirmar o horário real das últimas partidas perto da viagem']},
     'transport-tokyo-hakone': {icon:'🚅', label:'Tóquio → Hakone', hours:2, region:'transport', colorKey:'transport', travel:'Tokyo/Shinagawa → Odawara → Hakone-Yumoto',
                           bullets:['JR Pass: cobre o Shinkansen Hikari ou Kodama até Odawara','Não usar Nozomi sem comprar o bilhete complementar','Odawara → Hakone-Yumoto: Hakone Tozan Railway, fora do JR Pass','Reservar assento no trecho de Shinkansen']},
-    'transport-tokyo-nagoya': {icon:'🚅', label:'Tóquio → Nagoya', hours:2, region:'transport', colorKey:'transport', travel:'Tokyo/Shinagawa → Nagoya · cerca de 2h',
-                          bullets:['JR Pass: cobre Hikari e Kodama','Nozomi exige bilhete complementar específico','Reservar assento, especialmente com bagagem grande','A chegada na Nagoya Station combina com Toyota Museum, Noritake ou jantar no centro']},
-    'transport-hakone-nagoya': {icon:'🚅', label:'Hakone → Nagoya', hours:2.5, region:'transport', colorKey:'transport', travel:'Hakone-Yumoto → Odawara → Nagoya · cerca de 2h30',
-                          bullets:['JR Pass: cobertura parcial','Hakone-Yumoto → Odawara: Hakone Tozan Railway, fora do passe','Odawara → Nagoya: Hikari ou Kodama coberto','Conferir os horários, pois nem todo Hikari para em Odawara']},
-    'transport-nagoya-osaka': {icon:'🚅', label:'Nagoya → Osaka', hours:1.25, region:'transport', colorKey:'transport', travel:'Nagoya → Shin-Osaka · cerca de 1h15',
-                          bullets:['JR Pass: cobre Hikari e Kodama','Nozomi exige bilhete complementar específico','Reservar assento no Shinkansen','Somar o deslocamento urbano entre Shin-Osaka e a hospedagem']},
-    'transport-osaka-nagoya': {icon:'🚅', label:'Osaka ↔ Nagoya', hours:2.5, region:'transport', colorKey:'transport', travel:'Shin-Osaka ↔ Nagoya · ida e volta',
-                          bullets:['JR Pass: cobre Hikari e Kodama nos dois sentidos','Nozomi exige bilhete complementar específico','Útil se Nagoya for um day trip em vez de pernoite','Reservar ida cedo e retorno depois do jantar']},
-    'transport-nagoya-ghibli': {icon:'🚇', label:'Nagoya ↔ Ghibli Park', hours:2, region:'transport', colorKey:'transport', travel:'Metrô Higashiyama + Linimo · cerca de 45-60min por sentido',
-                          bullets:['JR Pass: não cobre o trajeto recomendado','Nagoya Station → Fujigaoka pela linha Higashiyama','Fujigaoka → Ai-Chikyuhaku Kinen Koen pelo Linimo','Ingressos têm data e horário: reservar com antecedência']},
     'transport-hakone-osaka': {icon:'🚅', label:'Hakone → Osaka', hours:3.5, region:'transport', colorKey:'transport', travel:'Hakone-Yumoto → Odawara → Shin-Osaka',
                           bullets:['JR Pass: cobertura parcial','Hakone-Yumoto → Odawara: Hakone Tozan Railway, fora do passe','Odawara → Shin-Osaka: Hikari ou Kodama coberto','Alguns horários exigem conexão; reservar assentos e conferir o trajeto no dia anterior']},
     'transport-osaka-kyoto': {icon:'🚆', label:'Osaka ↔ Kyoto', hours:1, region:'transport', colorKey:'transport', travel:'Osaka Station ↔ Kyoto Station · ida e volta',
@@ -840,21 +827,6 @@ async function initPlanner(){
     'hakone-ropeway':    {icon:'🚡', label:'Ropeway + Lake Ashi', hours:5, region:'hakone', colorKey:'hakone', travel:null,
                           bullets:['Teleférico sobre vulcão ativo','Lake Ashi com reflexo do Fuji','Onsen + sake à noite']},
 
-    'nagoya-station-toyota': {icon:'⚙️', label:'Nagoya Station + Toyota + Noritake', hours:5, region:'nagoya', colorKey:'nagoya', travel:null,
-                          bullets:['Toyota Commemorative Museum of Industry and Technology','Noritake Garden e centro de artesanato','JR Central Towers e mirantes da região da estação','Termine com jantar de especialidades de Nagoya'],
-                          suggested:['Comece pelo Toyota Commemorative Museum','Siga a pé ou de ônibus para o Noritake Garden','Volte à Nagoya Station para lojas e mirantes','Jante hitsumabushi, miso katsu, tebasaki ou kishimen']},
-    'nagoya-castle-tokugawa': {icon:'🏯', label:'Nagoya Castle + Tokugawa', hours:5, region:'nagoya', colorKey:'nagoya', travel:null,
-                          bullets:['Nagoya Castle e Honmaru Palace','Tokugawa Art Museum e seus tesouros samurais','Tokugawa Garden','Um dia focado na história do clã Owari-Tokugawa'],
-                          suggested:['Visite Nagoya Castle pela manhã','Almoce na região do castelo','Siga para o Tokugawa Art Museum','Termine caminhando pelo Tokugawa Garden']},
-    'nagoya-sakae-osu': {icon:'🌆', label:'Sakae + Osu', hours:5, region:'nagoya', colorKey:'nagoya', travel:null,
-                          bullets:['Oasis 21 e Chubu Electric Power MIRAI TOWER','Nagoya City Science Museum como opção','Osu Kannon e galerias comerciais de Osu','Bairro bom para compras, cultura pop e comida de rua'],
-                          suggested:['Comece em Sakae e no Oasis 21','Escolha o MIRAI TOWER ou o Science Museum','Caminhe até Osu Kannon','Explore as galerias de Osu e termine com jantar']},
-    'nagoya-scmaglev': {icon:'🚄', label:'SCMAGLEV and Railway Park', hours:4, region:'nagoya', colorKey:'nagoya', travel:'~30min da Nagoya Station · Aonami Line (fora do JR Pass)',
-                          bullets:['História e evolução do Tokaido Shinkansen','Trens históricos e veículo maglev em exposição','Simuladores sujeitos a disponibilidade','Excelente meio dia para quem gosta de ferrovias']},
-    'nagoya-ghibli-park': {icon:'🌳', label:'Ghibli Park', hours:9, region:'nagoya', colorKey:'nagoya', travel:'~45-60min por sentido · metrô + Linimo (fora do JR Pass)',
-                          bullets:['Passeio de dia inteiro no Aichi Expo Memorial Park','Áreas temáticas e Ghibli’s Grand Warehouse','Ingresso com data e horário: reservar com antecedência','Use junto com o card de deslocamento Nagoya ↔ Ghibli Park']},
-    'nagoya-atsuta': {icon:'⛩️', label:'Atsuta Jingu + Shirotori Garden', hours:4, region:'nagoya', colorKey:'nagoya', travel:null,
-                          bullets:['Atsuta Jingu, um dos santuários xintoístas mais importantes do Japão','Shirotori Garden e paisagismo tradicional','Roteiro mais leve e tranquilo','Boa combinação com almoço de hitsumabushi']},
 
     'fushimi-inari':     {icon:'⛩️', label:'Fushimi Inari (torii)', hours:2, region:'kyoto', colorKey:'kyoto', travel:'🚄 ~30min de Osaka · JR Rapid (JR Pass)',
                           bullets:['Milhares de torii vermelhos na montanha','Melhor ao amanhecer/anoitecer','1º trem de Osaka ~5h30']},
@@ -894,12 +866,12 @@ async function initPlanner(){
 
   var REGION_LABELS = {
     transport:'Deslocamentos — priorizando JR Pass',
-    tokyo:'Passeios em Tóquio', hakone:'Passeios em Hakone', nagoya:'Passeios em Nagoya',
+    tokyo:'Passeios em Tóquio', hakone:'Passeios em Hakone',
     kyoto:'Passeios em Kyoto (day trip de Osaka)', osaka:'Passeios em Osaka',
     far:'Day trips mais longos (Nara, Kobe/Himeji, Okayama)', hiro:'Hiroshima + Miyajima (day trip de Osaka)',
     custom:'Seus passeios criados'
   };
-  var REGION_ORDER = ['transport','tokyo','hakone','nagoya','kyoto','osaka','far','hiro','custom'];
+  var REGION_ORDER = ['transport','tokyo','hakone','kyoto','osaka','far','hiro','custom'];
 
   // ---- custom cards created by the user, persisted separately from the plan ----
   var customStore = {bases:{}, tours:{}};
