@@ -753,10 +753,16 @@ async function initPlanner(){
   var BASE_DEFS = {
     tokyo:  {icon:'🗼', label:'Tóquio', sleepCity:'Tóquio', colorKey:'tokyo',
              bullets:['Base urbana, metrô fácil','Boas regiões p/ ficar: Nakameguro, Ebisu, Shibuya']},
+    'hotel-sunroute-asakusa': {icon:'🏨', label:'Hotel Sunroute Asakusa', sleepCity:'Tóquio', colorKey:'tokyo',
+             bullets:['1-8-5 Kaminarimon, Taito-ku, Tokyo 111-0034','東京都台東区雷門1-8-5','Tawaramachi (Ginza Line): 1 min a pé · Asakusa: 7 min']},
     hakone: {icon:'♨️', label:'Hakone (Ryokan)', sleepCity:'Hakone', colorKey:'hakone',
              bullets:['Único trecho com ryokan + onsen','Reserve com 4+ meses de antecedência']},
+    'gekkoen-arima': {icon:'♨️', label:'Gekkoen Yugetsusanso — Arima Onsen', sleepCity:'Arima Onsen', colorKey:'hakone',
+             bullets:['318 Arimacho, Kita-ku, Kobe, Hyogo 651-1401','兵庫県神戸市北区有馬町318','Shuttle gratuito da estação/bus stop de Arima Onsen, 8h–19h']},
     osaka:  {icon:'🍜', label:'Osaka', sleepCity:'Osaka', colorKey:'osaka',
              bullets:['Mais barato que Kyoto','Ótima base p/ day trips no Kansai (Kyoto ~30min de trem)']},
+    'comfort-shin-osaka': {icon:'🏨', label:'Comfort Hotel Shin-Osaka', sleepCity:'Osaka', colorKey:'osaka',
+             bullets:['5-3-7 Nishinakajima, Yodogawa-ku, Osaka 532-0011','大阪府大阪市淀川区西中島5-3-7','Shin-Osaka: cerca de 5–8 min a pé · ótima base para os bate-voltas']},
     kyoto:  {icon:'⛩️', label:'Kyoto (pernoite)', sleepCity:'Kyoto', colorKey:'kyoto',
              bullets:['Único jeito de ver o amanhecer sem pressa','Mais caro que ficar em Osaka','Hospedagem em machiya tradicional']},
     koyasan:{icon:'🏛️', label:'Koyasan (templo)', sleepCity:'Koyasan', colorKey:'koyasan',
@@ -816,8 +822,15 @@ async function initPlanner(){
                           bullets:['Shin-Osaka → Odawara: Hikari ou conexão coberta pelo JR Pass nacional','Odawara → Hakone-Yumoto: Hakone Tozan Railway, fora do JR Pass','Reservar assento e confirmar a conexão','Mudança de base para Hakone']},
     'transport-hakone-tokyo': {icon:'🚅', label:'Hakone → Tóquio', hours:2, region:'transport', colorKey:'transport', travel:'Hakone-Yumoto → Odawara → Tokyo Station · apenas ida',
                           bullets:['Hakone-Yumoto → Odawara: Hakone Tozan Railway, fora do JR Pass','Odawara → Tokyo: Hikari ou Kodama coberto pelo JR Pass nacional','Deixar Hakone após a atividade da manhã','Mudança de base para Tóquio']},
+    'transport-osaka-arima': {icon:'🚆', label:'Comfort Shin-Osaka → Arima Onsen', hours:1.5, region:'transport', colorKey:'transport', travel:'Hotel → Shin-Osaka → Shin-Kobe → Tanigami → Arima Onsen · apenas ida',
+                          bullets:['Sair após o café e deixar a mala pronta para a troca de hotel','Shinkansen Shin-Osaka → Shin-Kobe; depois metrô/linha Hokushin até Tanigami','Tanigami → Arimaguchi → Arima Onsen pela Kobe Electric Railway','Ao chegar, ligar para o shuttle do Gekkoen: 078-904-1737 (8h–19h)']},
+    'transport-arima-tokyo': {icon:'🚅', label:'Arima Onsen → Hotel Sunroute Asakusa', hours:4.5, region:'transport', colorKey:'transport', travel:'Gekkoen → Shin-Kobe → Tokyo → Tawaramachi · apenas ida',
+                          bullets:['Usar o shuttle do ryokan até o ponto/estação de Arima Onsen','Seguir para Shin-Kobe; confirmar ônibus direto ou conexão via Tanigami no dia anterior','Shin-Kobe → Tokyo: reservar Shinkansen Hikari; Nozomi exige suplemento','Tokyo Station → Ueno pela JR e Ginza Line até Tawaramachi; hotel a 1 min']},
     'transport-tokyo-narita': {icon:'✈️', label:'Tóquio → Aeroporto de Narita', hours:1.5, region:'transport', colorKey:'transport', travel:'Tokyo Station → Narita Airport · Narita Express',
                           bullets:['JR Pass: cobre integralmente o Narita Express','Reserva de assento obrigatória','Para o voo das 16h55, sair do centro entre 12h e 12h30','Confirmar terminal e horário do trem na véspera']},
+
+    'arima-onsen-stay': {icon:'♨️', label:'Arima Onsen + Gekkoen Yugetsusanso', hours:6, region:'hakone', colorKey:'hakone', travel:null,
+                          bullets:['Passeio leve pelo centro histórico de Arima Onsen e ruas Yumotozaka/Nene','Check-in no Gekkoen a partir das 15h','Reservar a tarde para os banhos termais e aproveitar o ryokan sem pressa','Jantar e café conforme o plano da reserva; confirmar horários no check-in']},
 
     'shibuya-harajuku':  {icon:'🛍️', label:'Shibuya + Harajuku + Omotesando', hours:7, region:'tokyo', colorKey:'tokyo', travel:null,
                           bullets:['Meiji Jingu cedo + Harajuku e Cat Street','Beams, United Arrows e lojas de Omotesando','Shibuya Crossing + Shibuya Sky','Nintendo Tokyo + Pokémon Center Shibuya','Hands, Loft e Mega Don Quijote'],
@@ -1119,6 +1132,35 @@ async function initPlanner(){
     return true;
   }
 
+  function applyHotelBasesAndArimaUpdate(sourcePlan){
+    sourcePlan._updates = sourcePlan._updates || {};
+    if(sourcePlan._updates.hotelBasesArimaV1) return false;
+    if(!sourcePlan['2026-11-09'] || !sourcePlan['2026-11-17'] || !sourcePlan['2026-11-18']) return false;
+    Object.keys(sourcePlan).forEach(function(iso){
+      if(iso.charAt(0) === '_') return;
+      var entry = sourcePlan[iso];
+      if(!entry) return;
+      if(entry.base === 'osaka') entry.base = 'comfort-shin-osaka';
+      if(entry.base === 'tokyo') entry.base = 'hotel-sunroute-asakusa';
+    });
+    var day17 = sourcePlan['2026-11-17'];
+    day17.base = 'gekkoen-arima';
+    day17.tours = (day17.tours || []).filter(function(id){
+      return ['transport-osaka-hakone','transport-hakone-osaka','hakone-museum-onsen','hakone-ropeway','arima-onsen-stay','transport-osaka-arima'].indexOf(id) === -1;
+    });
+    day17.tours = ['transport-osaka-arima','arima-onsen-stay'].concat(day17.tours);
+    day17.note = 'Troca de base: Comfort Hotel Shin-Osaka → Gekkoen Yugetsusanso; tarde e noite em Arima Onsen';
+    var day18 = sourcePlan['2026-11-18'];
+    day18.base = 'hotel-sunroute-asakusa';
+    day18.tours = (day18.tours || []).filter(function(id){
+      return ['transport-hakone-tokyo','transport-tokyo-hakone','transport-arima-tokyo'].indexOf(id) === -1;
+    });
+    day18.tours.unshift('transport-arima-tokyo');
+    day18.note = 'Café e manhã tranquila no ryokan; Arima Onsen → Hotel Sunroute Asakusa';
+    sourcePlan._updates.hotelBasesArimaV1 = true;
+    return true;
+  }
+
   // default proposal
   var defaultPlan = {
     '2026-11-08': {base:'tokyo', tours:['transport-haneda-tokyo'], note:'Chegada tarde — primeira noite em Tóquio; reservar transfer'},
@@ -1159,6 +1201,7 @@ async function initPlanner(){
           var changed = migrateTourCards(parsed);
           if(applyArrivalAndTeamLabUpdate(parsed)) changed = true;
           if(applyDirectionalTransportUpdate(parsed)) changed = true;
+          if(applyHotelBasesAndArimaUpdate(parsed)) changed = true;
           if(changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
           return parsed;
         }
@@ -1167,6 +1210,7 @@ async function initPlanner(){
     var freshPlan = JSON.parse(JSON.stringify(defaultPlan));
     applyArrivalAndTeamLabUpdate(freshPlan);
     applyDirectionalTransportUpdate(freshPlan);
+    applyHotelBasesAndArimaUpdate(freshPlan);
     return freshPlan;
   }
   function savePlan(){

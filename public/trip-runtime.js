@@ -8,8 +8,11 @@
 
   var BASE_COORDS = {
     tokyo: { name: "Tóquio", lat: 35.6812, lng: 139.7671 },
+    "hotel-sunroute-asakusa": { name: "Hotel Sunroute Asakusa", lat: 35.71075, lng: 139.79178 },
     hakone: { name: "Hakone", lat: 35.2324, lng: 139.1069 },
+    "gekkoen-arima": { name: "Gekkoen Yugetsusanso", lat: 34.7974, lng: 135.2489 },
     osaka: { name: "Osaka", lat: 34.7025, lng: 135.4959 },
+    "comfort-shin-osaka": { name: "Comfort Hotel Shin-Osaka", lat: 34.7303, lng: 135.4992 },
     kyoto: { name: "Kyoto", lat: 35.0116, lng: 135.7681 },
     koyasan: { name: "Koyasan", lat: 34.2142, lng: 135.5841 },
   };
@@ -103,6 +106,24 @@
     "transport-hakone-tokyo": [
       ["Hakone-Yumoto Station", 35.2333, 139.1037],
       ["Tokyo Station", 35.6812, 139.7671],
+    ],
+    "transport-osaka-arima": [
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+      ["Shin-Osaka Station", 34.7335, 135.5002],
+      ["Shin-Kobe Station", 34.7067, 135.1958],
+      ["Arima Onsen Station", 34.7994, 135.245],
+      ["Gekkoen Yugetsusanso", 34.7974, 135.2489],
+    ],
+    "transport-arima-tokyo": [
+      ["Gekkoen Yugetsusanso", 34.7974, 135.2489],
+      ["Shin-Kobe Station", 34.7067, 135.1958],
+      ["Tokyo Station", 35.6812, 139.7671],
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+    ],
+    "arima-onsen-stay": [
+      ["Arima Onsen Station", 34.7994, 135.245],
+      ["Yumotozaka", 34.7978, 135.247],
+      ["Gekkoen Yugetsusanso", 34.7974, 135.2489],
     ],
     "transport-tokyo-narita": [
       ["Tokyo Station", 35.6812, 139.7671],
