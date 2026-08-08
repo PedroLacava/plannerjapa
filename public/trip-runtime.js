@@ -434,11 +434,13 @@
     return points;
   }
   function mapsSearch(name) {
-    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(name);
+    return "https://www.google.com/maps/search/?api=1&hl=pt-BR&query=" + encodeURIComponent(name);
   }
-  function walkingLink(a, b) {
+  function directionsLink(a, b, mode) {
     return (
-      "https://www.google.com/maps/dir/?api=1&travelmode=walking&origin=" +
+      "https://www.google.com/maps/dir/?api=1&hl=pt-BR&travelmode=" +
+      mode +
+      "&origin=" +
       a.lat +
       "," +
       a.lng +
@@ -448,7 +450,7 @@
       b.lng
     );
   }
-  function fullRoute(points) {
+  function fullRoute(points, mode) {
     if (points.length < 2) return points[0] ? mapsSearch(points[0].name) : "#";
     var mid = points
       .slice(1, -1)
@@ -458,7 +460,9 @@
       })
       .join("|");
     return (
-      "https://www.google.com/maps/dir/?api=1&travelmode=walking&origin=" +
+      "https://www.google.com/maps/dir/?api=1&hl=pt-BR&travelmode=" +
+      mode +
+      "&origin=" +
       points[0].lat +
       "," +
       points[0].lng +
@@ -471,6 +475,11 @@
   }
   function mapBlock(id, iso) {
     var points = pointsFor(iso);
+    var entry = plan()[iso] || { tours: [] };
+    var isTransportDay = (entry.tours || []).some(function (tourId) {
+      return tourId.indexOf("transport-") === 0;
+    });
+    var mode = isTransportDay ? "transit" : "walking";
     if (!points.length)
       return '<div class="map-empty">Ainda não há coordenadas confiáveis para este dia.<br>Use a busca de cada card no Google Maps.</div>';
     var links = points
@@ -488,9 +497,10 @@
       .slice(0, -1)
       .map(function (p, i) {
         return (
-          '<a target="_blank" rel="noopener" href="' +
-          walkingLink(p, points[i + 1]) +
-          '">Caminhar ' +
+          '<a target="_blank" rel="noopener noreferrer" href="' +
+          directionsLink(p, points[i + 1], mode) +
+          '">' +
+          (isTransportDay ? "Ir " : "Caminhar ") +
           (i + 1) +
           " → " +
           (i + 2) +
@@ -506,9 +516,9 @@
       '"></div><div class="map-actions">' +
       links +
       walks +
-      '<a target="_blank" rel="noopener" href="' +
-      fullRoute(points) +
-      '">Abrir rota completa</a></div>'
+      '<a class="google-maps-primary" target="_blank" rel="noopener noreferrer" href="' +
+      fullRoute(points, mode) +
+      '"><span>Abrir este dia no Google Maps</span><small>Abre no app quando instalado</small></a></div>'
     );
   }
   function mountMap(id, iso) {
@@ -517,9 +527,9 @@
     if (!el || !points.length || !window.L) return;
     var map = L.map(el, { scrollWheelZoom: false });
     maps.push(map);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
       maxZoom: 19,
-      attribution: "&copy; OpenStreetMap",
+      attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
     }).addTo(map);
     var bounds = [];
     points.forEach(function (p, i) {

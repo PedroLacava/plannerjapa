@@ -205,6 +205,24 @@ body.desktop-today .today-view {
   text-decoration: none;
   background: #f7f9ff;
 }
+.map-actions .google-maps-primary {
+  flex: 1 0 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 13px;
+  color: #fff;
+  background: #1769e0;
+  border-color: #1769e0;
+  font-size: 13px;
+}
+.google-maps-primary small {
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.85;
+}
 .numbered-marker {
   display: grid !important;
   place-items: center;
