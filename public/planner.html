@@ -920,11 +920,14 @@ async function initPlanner(){
       entry.tours.forEach(function(id){
         var mapped = TOUR_MIGRATION[id] || id;
         if(mapped !== id) changed = true;
+        if(!TOUR_DEFS[mapped] && !(entry.customTours && entry.customTours[mapped])){ changed = true; return; }
         if(next.indexOf(mapped) === -1) next.push(mapped);
         else changed = true;
       });
       entry.tours = next;
+      if(entry.base && !BASE_DEFS[entry.base] && !(entry.customBases && entry.customBases[entry.base])){ entry.base = null; changed = true; }
     });
+
     return changed;
   }
 
