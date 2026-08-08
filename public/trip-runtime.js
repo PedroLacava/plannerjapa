@@ -814,7 +814,7 @@
       todayISO = clampDay(tokyoNow().iso);
       document.getElementById("open-today-desktop").addEventListener("click", showToday);
       setupInstall();
-      showToday();
+      showCalendar();
     },
     renderEnhancements: function (selected) {
       if (!api) return;
