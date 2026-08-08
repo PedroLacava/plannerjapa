@@ -1,0 +1,307 @@
+.today-toolbar {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin: 10px 0;
+}
+.today-toolbar button,
+.today-action,
+.day-nav button,
+.install-dialog button {
+  border: 1px solid #d8cfbf;
+  background: #fff;
+  color: #2b2620;
+  border-radius: 9px;
+  padding: 9px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.today-toolbar button:first-child,
+.today-action.primary {
+  background: #2b2620;
+  color: #fff;
+  border-color: #2b2620;
+}
+.today-view {
+  display: none;
+  max-width: 1180px;
+  margin: 0 auto 14px;
+}
+body.desktop-today .layout,
+body.desktop-today #card-guide {
+  display: none;
+}
+body.desktop-today .today-view {
+  display: block;
+}
+.today-shell {
+  display: grid;
+  gap: 12px;
+}
+.today-hero {
+  background: linear-gradient(135deg, #2b2620, #4b4035);
+  color: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(43, 38, 32, 0.14);
+}
+.today-eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+.today-hero h2 {
+  font-size: 24px;
+  margin: 4px 0;
+}
+.today-hero p {
+  margin: 4px 0 0;
+  opacity: 0.88;
+}
+.today-notice {
+  background: #fff7df;
+  border: 1px solid #e6ca7a;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #5f4a15;
+  font-size: 13px;
+}
+.today-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.85fr);
+  gap: 12px;
+}
+.today-card {
+  background: #fff;
+  border: 1px solid #ddd4c4;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 4px 14px rgba(43, 38, 32, 0.05);
+}
+.today-card h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+}
+.today-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.today-pill {
+  background: #f4efe6;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.next-step {
+  border-left: 4px solid #3b5dc9;
+  background: #eef3ff;
+}
+.next-step .time {
+  font-weight: 800;
+  color: #3b5dc9;
+  margin-right: 6px;
+}
+.timeline {
+  display: grid;
+  gap: 7px;
+}
+.timeline-step {
+  display: grid;
+  grid-template-columns: auto 50px 1fr;
+  gap: 9px;
+  align-items: start;
+  padding: 8px;
+  border-radius: 9px;
+  background: #faf7f1;
+}
+.timeline-step.done {
+  opacity: 0.55;
+  text-decoration: line-through;
+}
+.timeline-step input {
+  margin-top: 3px;
+}
+.timeline-time {
+  font-weight: 800;
+  color: #3b5dc9;
+  font-size: 12px;
+}
+.timeline-place {
+  font-weight: 750;
+}
+.timeline-note {
+  font-size: 11px;
+  color: #6b6456;
+  margin-top: 2px;
+}
+.day-nav {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.day-nav button {
+  flex: 1;
+  min-width: 110px;
+}
+.day-nav button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.weather-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.weather-temp {
+  font-size: 24px;
+  font-weight: 800;
+}
+.weather-muted {
+  color: #756c5d;
+  font-size: 12px;
+}
+.rain-alert {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 9px;
+  background: #eaf0ff;
+  border: 1px solid #9db3ee;
+}
+.rain-alert ul {
+  margin: 7px 0 0;
+  padding-left: 18px;
+}
+.daily-map {
+  height: 330px;
+  border-radius: 11px;
+  overflow: hidden;
+  background: #eee8dc;
+}
+.map-empty {
+  display: grid;
+  place-items: center;
+  height: 180px;
+  color: #756c5d;
+  text-align: center;
+  padding: 15px;
+}
+.map-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+}
+.map-actions a {
+  font-size: 11px;
+  font-weight: 700;
+  color: #254cad;
+  border: 1px solid #9db3ee;
+  border-radius: 8px;
+  padding: 7px 9px;
+  text-decoration: none;
+  background: #f7f9ff;
+}
+.numbered-marker {
+  display: grid !important;
+  place-items: center;
+  background: #3b5dc9;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  font-weight: 800;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.35);
+}
+.detail-extension {
+  margin-top: 12px;
+}
+.detail-extension .daily-map {
+  height: 260px;
+}
+.install-dialog {
+  position: fixed;
+  inset: 0;
+  background: rgba(22, 20, 17, 0.55);
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+.install-dialog[hidden] {
+  display: none;
+}
+.install-dialog-card {
+  max-width: 420px;
+  background: #fff;
+  border-radius: 15px;
+  padding: 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+.install-dialog-card h2 {
+  margin: 0 0 8px;
+}
+.install-dialog-card ol {
+  padding-left: 20px;
+  line-height: 1.6;
+}
+.install-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+@media (max-width: 760px) {
+  .mobile-tabs {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+  .today-toolbar {
+    justify-content: stretch;
+  }
+  .today-toolbar #open-today-desktop {
+    display: none;
+  }
+  .today-toolbar button {
+    flex: 1;
+    font-size: 11px;
+  }
+  .today-grid {
+    grid-template-columns: 1fr;
+  }
+  .today-view {
+    margin: 0;
+  }
+  .today-hero {
+    border-radius: 12px;
+    padding: 15px;
+  }
+  .today-hero h2 {
+    font-size: 20px;
+  }
+  body:not(.m-today) #today-view {
+    display: none;
+  }
+  body.m-today #today-view {
+    display: block;
+  }
+  body.m-today .layout,
+  body.m-today #card-guide {
+    display: none;
+  }
+  body.m-pool #today-view,
+  body.m-detail #today-view {
+    display: none;
+  }
+  .daily-map {
+    height: 280px;
+  }
+  .today-card {
+    padding: 12px;
+  }
+}
+@media (min-width: 761px) {
+  .today-view.active {
+    display: block;
+  }
+}

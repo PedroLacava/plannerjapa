@@ -1,0 +1,25 @@
+{
+  "name": "PlannerJapa",
+  "short_name": "PlannerJapa",
+  "description": "Roteiro inteligente da viagem ao Japão",
+  "start_url": "/?mode=today",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#faf7f1",
+  "theme_color": "#2b2620",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
