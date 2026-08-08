@@ -52,6 +52,58 @@
       ["Shin-Osaka Station", 34.7335, 135.5002],
       ["Tokyo Station", 35.6812, 139.7671],
     ],
+    "transport-tokyo-osaka": [
+      ["Tokyo Station", 35.6812, 139.7671],
+      ["Shin-Osaka Station", 34.7335, 135.5002],
+    ],
+    "transport-osaka-kyoto-out": [
+      ["Osaka Station", 34.7025, 135.4959],
+      ["Kyoto Station", 34.9858, 135.7588],
+    ],
+    "transport-kyoto-osaka-return": [
+      ["Kyoto Station", 34.9858, 135.7588],
+      ["Osaka Station", 34.7025, 135.4959],
+    ],
+    "transport-osaka-nara-out": [
+      ["Osaka Station", 34.7025, 135.4959],
+      ["JR Nara Station", 34.6809, 135.8189],
+    ],
+    "transport-nara-uji": [
+      ["JR Nara Station", 34.6809, 135.8189],
+      ["Uji Station", 34.8904, 135.8],
+    ],
+    "transport-uji-osaka-return": [
+      ["Uji Station", 34.8904, 135.8],
+      ["Osaka Station", 34.7025, 135.4959],
+    ],
+    "transport-osaka-himeji-out": [
+      ["Shin-Osaka Station", 34.7335, 135.5002],
+      ["Himeji Station", 34.8276, 134.6908],
+    ],
+    "transport-himeji-kobe": [
+      ["Himeji Station", 34.8276, 134.6908],
+      ["Sannomiya Station", 34.6947, 135.1955],
+    ],
+    "transport-kobe-osaka-return": [
+      ["Sannomiya Station", 34.6947, 135.1955],
+      ["Osaka Station", 34.7025, 135.4959],
+    ],
+    "transport-osaka-hiroshima-out": [
+      ["Shin-Osaka Station", 34.7335, 135.5002],
+      ["Hiroshima Station", 34.3978, 132.4753],
+    ],
+    "transport-hiroshima-osaka-return": [
+      ["Hiroshima Station", 34.3978, 132.4753],
+      ["Shin-Osaka Station", 34.7335, 135.5002],
+    ],
+    "transport-osaka-hakone": [
+      ["Shin-Osaka Station", 34.7335, 135.5002],
+      ["Hakone-Yumoto Station", 35.2333, 139.1037],
+    ],
+    "transport-hakone-tokyo": [
+      ["Hakone-Yumoto Station", 35.2333, 139.1037],
+      ["Tokyo Station", 35.6812, 139.7671],
+    ],
     "transport-tokyo-narita": [
       ["Tokyo Station", 35.6812, 139.7671],
       ["Narita International Airport", 35.772, 140.3929],
@@ -114,6 +166,12 @@
     "nishiki-market": [["Nishiki Market", 35.005, 135.7649]],
     "denim-shopping": [["Kojima Jeans Street", 34.4625, 133.8026]],
     "pokemon-osaka": [["Pokémon Center Osaka", 34.7026, 135.4965]],
+    "osaka-central-highlights": [
+      ["Denden Town", 34.6597, 135.5061],
+      ["Shinsekai", 34.6525, 135.5063],
+      ["Osaka Castle", 34.6873, 135.5262],
+      ["Umeda Sky Building", 34.7053, 135.49],
+    ],
     okonomimura: [["Okonomimura Hiroshima", 34.3927, 132.4637]],
     "nara-uji": [
       ["Nara Park", 34.6851, 135.843],
