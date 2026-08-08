@@ -7,6 +7,7 @@
   var PROGRESS_KEY = "japan-trip-planner-progress-v1";
 
   var BASE_COORDS = {
+    "henn-haneda": { name: "Henn na Hotel Tokyo Haneda", lat: 35.5523, lng: 139.7397 },
     tokyo: { name: "Hotel Sunroute Asakusa", lat: 35.71075, lng: 139.79178 },
     "hotel-sunroute-asakusa": { name: "Hotel Sunroute Asakusa", lat: 35.71075, lng: 139.79178 },
     hakone: { name: "Gekkoen Yugetsusanso", lat: 34.7974, lng: 135.2489 },
@@ -19,7 +20,14 @@
   var LOCATIONS = {
     "transport-haneda-tokyo": [
       ["Haneda Airport", 35.5494, 139.7798],
-      ["Tokyo Station", 35.6812, 139.7671],
+      ["Henn na Hotel Tokyo Haneda", 35.5523, 139.7397],
+    ],
+    "transport-haneda-hotel-osaka": [
+      ["Henn na Hotel Tokyo Haneda", 35.5523, 139.7397],
+      ["Otorii Station", 35.5528, 139.7405],
+      ["Shinagawa Station", 35.6285, 139.7387],
+      ["Shin-Osaka Station", 34.7335, 135.5002],
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
     ],
     "transport-tokyo-hakone": [
       ["Tokyo Station", 35.6812, 139.7671],

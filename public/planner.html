@@ -751,6 +751,8 @@ async function initPlanner(){
 
   // ---- BASES: onde vocês dormem (1 por dia) ----
   var BASE_DEFS = {
+    'henn-haneda': {icon:'🦖', label:'Henn na Hotel Tokyo Haneda', sleepCity:'Haneda', colorKey:'tokyo',
+             bullets:['2-11-18 Higashikojiya, Ota-ku, Tokyo 144-0033','東京都大田区東糀谷2-11-18','Shuttle gratuito de Haneda à noite · Otorii Station: cerca de 7 min a pé']},
     tokyo:  {icon:'🏨', label:'Hotel Sunroute Asakusa', sleepCity:'Tóquio', colorKey:'tokyo',
              bullets:['1-8-5 Kaminarimon, Taito-ku, Tokyo 111-0034','東京都台東区雷門1-8-5','Tawaramachi (Ginza Line): 1 min a pé · Asakusa: 7 min']},
     'hotel-sunroute-asakusa': {icon:'🏨', label:'Hotel Sunroute Asakusa', sleepCity:'Tóquio', colorKey:'tokyo',
@@ -772,8 +774,8 @@ async function initPlanner(){
   // ---- TOURS: passeios, independentes de onde vocês dormem ----
   // travel: null = sem deslocamento (mesma cidade da base) · string = tempo médio de trem partindo da base típica
   var TOUR_DEFS = {
-    'transport-haneda-tokyo': {icon:'🌙', label:'Haneda → hotel em Tóquio', hours:1.5, region:'transport', colorKey:'transport', travel:'Chegada 23h55 · traslado noturno',
-                          bullets:['JR Pass: provavelmente inviável neste horário','Após imigração e bagagem, Tokyo Monorail e trens JR devem estar encerrados','Recomendação: táxi ou transfer reservado até o hotel','Confirmar o horário real das últimas partidas perto da viagem']},
+    'transport-haneda-tokyo': {icon:'🌙', label:'Haneda → Henn na Hotel Tokyo Haneda', hours:1.5, region:'transport', colorKey:'transport', travel:'Terminal 3 → shuttle gratuito do hotel · chegada 23h55',
+                          bullets:['Após imigração e bagagem, procurar o ponto do shuttle do Henn na Hotel','Saídas previstas do Terminal 3 à 0h30 e 1h30; confirmar novamente perto da viagem','Serviço por ordem de chegada e limitado a uma mala por pessoa','Táxi é o plano B se o shuttle lotar ou o desembarque atrasar']},
     'transport-tokyo-hakone': {icon:'🚅', label:'Tóquio → Hakone', hours:2, region:'transport', colorKey:'transport', travel:'Tokyo/Shinagawa → Odawara → Hakone-Yumoto',
                           bullets:['JR Pass: cobre o Shinkansen Hikari ou Kodama até Odawara','Não usar Nozomi sem comprar o bilhete complementar','Odawara → Hakone-Yumoto: Hakone Tozan Railway, fora do JR Pass','Reservar assento no trecho de Shinkansen']},
     'transport-hakone-osaka': {icon:'🚅', label:'Hakone → Osaka', hours:3.5, region:'transport', colorKey:'transport', travel:'Hakone-Yumoto → Odawara → Shin-Osaka',
@@ -798,6 +800,8 @@ async function initPlanner(){
                           bullets:['JR Pass: cobre Hikari','Nozomi exige bilhete complementar específico','Reservar assentos e manter as malas dentro das dimensões permitidas','Chegada na Tokyo Station combina com Marunouchi, Ginza e Nihonbashi']},
     'transport-tokyo-osaka': {icon:'🚅', label:'Tóquio → Osaka', hours:3, region:'transport', colorKey:'transport', travel:'Tokyo Station → Shin-Osaka · apenas ida',
                           bullets:['Usar Hikari no Tokaido Shinkansen com o JR Pass nacional','Reservar assentos e conferir regras para malas grandes','Em Shin-Osaka, seguir de metrô ou JR até o hotel','Este card representa apenas a ida']},
+    'transport-haneda-hotel-osaka': {icon:'🚅', label:'Henn na Hotel Haneda → Comfort Hotel Shin-Osaka', hours:4, region:'transport', colorKey:'transport', travel:'Hotel → Otorii → Shinagawa → Shin-Osaka · apenas ida',
+                          bullets:['Check-out pela manhã e caminhada de cerca de 7 min até Otorii','Keikyu Airport Line de Otorii até Shinagawa','Shinagawa → Shin-Osaka: reservar Hikari; Nozomi exige suplemento','Comfort Hotel fica a aproximadamente 5–8 min a pé de Shin-Osaka']},
     'transport-osaka-kyoto-out': {icon:'🚆', label:'Osaka → Kyoto', hours:0.5, region:'transport', colorKey:'transport', travel:'Osaka Station → Kyoto Station · ida',
                           bullets:['JR Kyoto Line Special Rapid: cerca de 30min','Coberto pelo JR Pass nacional','Checar a estação mais prática conforme o hotel','Este card representa apenas a ida']},
     'transport-kyoto-osaka-return': {icon:'🚆', label:'Kyoto → Osaka', hours:0.5, region:'transport', colorKey:'transport', travel:'Kyoto Station → Osaka Station · volta',
@@ -1208,6 +1212,23 @@ async function initPlanner(){
     return true;
   }
 
+  function applyHanedaHotelUpdate(sourcePlan){
+    sourcePlan._updates = sourcePlan._updates || {};
+    if(sourcePlan._updates.hanedaHotelV1) return false;
+    var day8 = sourcePlan['2026-11-08'] || (sourcePlan['2026-11-08'] = emptyDay());
+    day8.base = 'henn-haneda';
+    day8.tours = ['transport-haneda-tokyo'];
+    day8.note = 'Chegada em Haneda às 23h55; shuttle para o Henn na Hotel Tokyo Haneda';
+    var day9 = sourcePlan['2026-11-09'] || (sourcePlan['2026-11-09'] = emptyDay());
+    day9.base = 'osaka';
+    day9.tours = ['transport-haneda-hotel-osaka'].concat((day9.tours || []).filter(function(id){
+      return id !== 'transport-tokyo-osaka' && id !== 'transport-osaka-tokyo' && id !== 'transport-haneda-hotel-osaka';
+    }));
+    day9.note = 'Henn na Hotel Haneda → Comfort Hotel Shin-Osaka; Dotonbori leve após check-in';
+    sourcePlan._updates.hanedaHotelV1 = true;
+    return true;
+  }
+
   // default proposal
   var defaultPlan = {
     '2026-11-08': {base:'tokyo', tours:['transport-haneda-tokyo'], note:'Chegada tarde — primeira noite em Tóquio; reservar transfer'},
@@ -1250,6 +1271,7 @@ async function initPlanner(){
           if(applyDirectionalTransportUpdate(parsed)) changed = true;
           if(applyHotelBasesAndArimaUpdate(parsed)) changed = true;
           if(repairSharedPlanV2(parsed)) changed = true;
+          if(applyHanedaHotelUpdate(parsed)) changed = true;
           if(changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
           return parsed;
         }
@@ -1260,6 +1282,7 @@ async function initPlanner(){
     applyDirectionalTransportUpdate(freshPlan);
     applyHotelBasesAndArimaUpdate(freshPlan);
     repairSharedPlanV2(freshPlan);
+    applyHanedaHotelUpdate(freshPlan);
     return freshPlan;
   }
   function savePlan(){
