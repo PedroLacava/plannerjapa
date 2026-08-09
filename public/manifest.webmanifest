@@ -1,6 +1,6 @@
 {
-  "name": "PlannerJapa",
-  "short_name": "PlannerJapa",
+  "name": "Japlanner",
+  "short_name": "Japlanner",
   "description": "Roteiro inteligente da viagem ao Japão",
   "start_url": "/?mode=today",
   "scope": "/",
@@ -9,6 +9,12 @@
   "background_color": "#faf7f1",
   "theme_color": "#2b2620",
   "icons": [
+    {
+      "src": "/icons/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "/icons/icon-192.png",
       "sizes": "192x192",

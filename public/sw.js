@@ -1,10 +1,11 @@
-const CACHE = "plannerjapa-shell-v10";
+const CACHE = "japlanner-shell-v11";
 const SHELL = [
   "/",
   "/planner.html",
   "/trip-runtime.css",
   "/trip-runtime.js",
   "/manifest.webmanifest",
+  "/icons/icon-180.png",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
 ];
