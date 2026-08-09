@@ -218,6 +218,7 @@
     ],
     "ginza-nihonbashi": [
       ["Tokyo Station", 35.6812, 139.7671],
+      ["Gentle Monster Tokyo Ginza", 35.6728543, 139.7649767],
       ["Ginza Six", 35.6697, 139.764],
       ["Nihonbashi", 35.6839, 139.7744],
     ],
