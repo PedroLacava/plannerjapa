@@ -222,7 +222,21 @@
       ["Ginza Six", 35.6697, 139.764],
       ["Nihonbashi", 35.6839, 139.7744],
     ],
+    "imperial-palace": [
+      ["Jardins Leste do Palácio Imperial", 35.6852, 139.7568],
+      ["Ponte Nijubashi", 35.6801, 139.7521],
+    ],
+    "hamarikyu-tsukiji": [
+      ["Mercado Externo de Tsukiji", 35.6655, 139.7707],
+      ["Jardins Hamarikyu", 35.6597, 139.7635],
+    ],
+    "asakusa-ueno": [
+      ["Templo Senso-ji", 35.7148, 139.7967],
+      ["Parque Ueno", 35.7148, 139.7732],
+      ["Museu Nacional de Tóquio", 35.7188, 139.7765],
+    ],
     "teamlab-planets": [["teamLab Planets", 35.6491, 139.7898]],
+    disney: [["Tokyo DisneySea", 35.6267, 139.8851]],
     "hakone-museum-onsen": [
       ["Hakone Open-Air Museum", 35.2448, 139.0514],
       ["Hakone-Yumoto", 35.2333, 139.1037],
@@ -280,6 +294,9 @@
     "asakusa-ryogoku",
     "ueno-yanaka",
     "ginza-nihonbashi",
+    "imperial-palace",
+    "hamarikyu-tsukiji",
+    "asakusa-ueno",
     "shinjuku",
     "dotonbori",
     "denim-shopping",
