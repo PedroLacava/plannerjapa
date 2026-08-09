@@ -4,12 +4,12 @@ import { useEffect, useRef } from "react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Japan Trip Planner" },
+      { title: "Japlanner" },
       {
         name: "description",
         content: "Planejador interativo (drag-and-drop) da viagem ao Japão, Nov 2026.",
       },
-      { property: "og:title", content: "Japan Trip Planner" },
+      { property: "og:title", content: "Japlanner" },
       {
         property: "og:description",
         content: "Planejador interativo (drag-and-drop) da viagem ao Japão, Nov 2026.",
