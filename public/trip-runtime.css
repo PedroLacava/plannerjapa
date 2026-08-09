@@ -176,7 +176,7 @@ body.desktop-today .today-view {
   padding-left: 18px;
 }
 .daily-map {
-  height: 330px;
+  height: 430px;
   border-radius: 11px;
   overflow: hidden;
   background: #eee8dc;
@@ -233,11 +233,16 @@ body.desktop-today .today-view {
   font-weight: 800;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.35);
 }
+.numbered-marker.repeated-marker {
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: -0.02em;
+}
 .detail-extension {
   margin-top: 12px;
 }
 .detail-extension .daily-map {
-  height: 260px;
+  height: 380px;
 }
 .install-dialog {
   position: fixed;
@@ -312,7 +317,7 @@ body.desktop-today .today-view {
     display: none;
   }
   .daily-map {
-    height: 280px;
+    height: min(390px, 54vh);
   }
   .today-card {
     padding: 12px;

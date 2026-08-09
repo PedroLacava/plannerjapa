@@ -29,6 +29,82 @@
       ["Estação Shin-Osaka", 34.7335, 135.5002],
       ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
       ["Dotonbori", 34.6687, 135.5013],
+      ["Estação Namba", 34.6663, 135.5004],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+    ],
+    "2026-11-10": [
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Estação Namba", 34.6663, 135.5004],
+      ["Mercado Kuromon Ichiba", 34.6654, 135.5065],
+      ["Denden Town", 34.6597, 135.5061],
+      ["Shinsekai", 34.6525, 135.5063],
+      ["Castelo de Osaka", 34.6873, 135.5262],
+      ["Umeda Sky Building", 34.7053, 135.49],
+      ["Pokémon Center Osaka", 34.7026, 135.4965],
+      ["Estação Osaka", 34.7025, 135.4959],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+    ],
+    "2026-11-11": [
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Estação Kyoto", 34.9858, 135.7588],
+      ["Fushimi Inari Taisha", 34.9671, 135.7727],
+      ["Estação Kyoto", 34.9858, 135.7588],
+      ["Estação Saga-Arashiyama", 35.0188, 135.6813],
+      ["Bosque de Bambu de Arashiyama", 35.017, 135.6713],
+      ["Estação Saga-Arashiyama", 35.0188, 135.6813],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+    ],
+    "2026-11-12": [
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Estação Kyoto", 34.9858, 135.7588],
+      ["Gion", 35.0037, 135.7785],
+      ["Mercado Nishiki", 35.005, 135.7649],
+      ["Estação Karasuma", 35.0048, 135.7594],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+    ],
+    "2026-11-13": [
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Estação JR Nara", 34.6809, 135.8189],
+      ["Parque de Nara", 34.6851, 135.843],
+      ["Estação JR Nara", 34.6809, 135.8189],
+      ["Estação Uji", 34.8904, 135.8],
+      ["Templo Byodoin", 34.8893, 135.8077],
+      ["Estação Uji", 34.8904, 135.8],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+    ],
+    "2026-11-14": [
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Estação Himeji", 34.8276, 134.6908],
+      ["Castelo de Himeji", 34.8394, 134.6939],
+      ["Estação Himeji", 34.8276, 134.6908],
+      ["Estação Sannomiya", 34.6947, 135.1955],
+      ["Kobe Harborland", 34.6796, 135.183],
+      ["Estação Kobe", 34.6795, 135.178],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+    ],
+    "2026-11-15": [
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+    ],
+    "2026-11-16": [
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Estação Hiroshima", 34.3978, 132.4753],
+      ["Museu Memorial da Paz de Hiroshima", 34.3915, 132.4523],
+      ["Cúpula da Bomba Atômica", 34.3955, 132.4536],
+      ["Okonomimura", 34.3927, 132.4637],
+      ["Estação Hiroshima", 34.3978, 132.4753],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
       ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
     ],
     "2026-11-17": [
@@ -40,6 +116,7 @@
     ],
     "2026-11-18": [
       ["Gekkoen Yugetsusanso", 34.7974, 135.2489],
+      ["Estação Arima Onsen", 34.7994, 135.245],
       ["Estação Shin-Kobe", 34.7067, 135.1958],
       ["Estação Odawara", 35.2564, 139.155],
       ["Estação Gora", 35.2509, 139.0484],
@@ -47,11 +124,113 @@
       ["Lago Ashi", 35.2048, 139.0253],
       ["Estação Odawara", 35.2564, 139.155],
       ["Estação de Tóquio", 35.6812, 139.7671],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+    ],
+    "2026-11-19": [
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Estação Otemachi", 35.6846, 139.7668],
+      ["Jardins Leste do Palácio Imperial", 35.6852, 139.7568],
+      ["Ponte Nijubashi", 35.6801, 139.7521],
+      ["Estação de Tóquio", 35.6812, 139.7671],
+      ["Gentle Monster Tokyo Ginza", 35.6728543, 139.7649767],
+      ["Ginza Six", 35.6697, 139.764],
+      ["Nihonbashi", 35.6839, 139.7744],
+      ["Estação Nihombashi", 35.6827, 139.7744],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+    ],
+    "2026-11-20": [
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Estação Shimbashi", 35.6663, 139.7586],
+      ["Estação Shin-Toyosu", 35.6488, 139.7901],
+      ["teamLab Planets", 35.6491, 139.7898],
+      ["Mercado Externo de Tsukiji", 35.6655, 139.7707],
+      ["Jardins Hamarikyu", 35.6597, 139.7635],
+      ["Estação Shimbashi", 35.6663, 139.7586],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+    ],
+    "2026-11-21": [
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Estação Omotesando", 35.6652, 139.7124],
+      ["Meiji Jingu", 35.6764, 139.6993],
+      ["Takeshita Street", 35.6716, 139.703],
+      ["Omotesando", 35.6652, 139.7124],
+      ["Shibuya Crossing", 35.6595, 139.7005],
+      ["Estação Shibuya", 35.658, 139.7016],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+    ],
+    "2026-11-22": [
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Estação Asakusa", 35.7107, 139.7976],
+      ["Templo Senso-ji", 35.7148, 139.7967],
+      ["Estação Asakusa", 35.7107, 139.7976],
+      ["Estação Ueno", 35.7138, 139.7773],
+      ["Parque Ueno", 35.7148, 139.7732],
+      ["Museu Nacional de Tóquio", 35.7188, 139.7765],
+      ["Kanda Myojin", 35.702, 139.7679],
+      ["Akihabara", 35.6984, 139.7731],
+      ["Estação Akihabara", 35.6984, 139.7731],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+    ],
+    "2026-11-23": [
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Estação Shinjuku-gyoemmae", 35.6886, 139.7107],
+      ["Shinjuku Gyoen", 35.6852, 139.71],
+      ["Omoide Yokocho", 35.693, 139.6995],
+      ["Golden Gai", 35.6941, 139.7047],
+      ["Estação Shinjuku-sanchome", 35.6906, 139.7046],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+    ],
+    "2026-11-24": [
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Estação de Tóquio · Saída Yaesu", 35.6812, 139.7671],
+      ["Mitsui Outlet Park Kisarazu", 35.4379, 139.9295],
+      ["Terminal de ônibus Kisarazu Outlet", 35.4377, 139.9291],
+      ["Estação de Tóquio · Saída Yaesu", 35.6812, 139.7671],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+    ],
+    "2026-11-25": [
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Estação Ueno", 35.7138, 139.7773],
+      ["Estação de Tóquio", 35.6812, 139.7671],
+      ["Estação Maihama", 35.6361, 139.8837],
+      ["Tokyo DisneySea", 35.6267, 139.8851],
+      ["Estação Maihama", 35.6361, 139.8837],
+      ["Estação de Tóquio", 35.6812, 139.7671],
+      ["Estação Ueno", 35.7138, 139.7773],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+    ],
+    "2026-11-26": [
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Estação Shibuya", 35.658, 139.7016],
+      ["Estação Nakameguro", 35.6443, 139.6987],
+      ["Daikanyama T-Site", 35.6488, 139.6998],
+      ["Yebisu Garden Place", 35.6421, 139.7135],
+      ["Estação Ebisu", 35.6467, 139.7101],
+      ["Estação Ueno", 35.7138, 139.7773],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
       ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
     ],
     "2026-11-27": [
       ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
-      ["Estação de Tóquio", 35.6812, 139.7671],
+      ["Estação Tawaramachi", 35.7099, 139.7908],
+      ["Estação Ueno", 35.7138, 139.7773],
+      ["Estação Keisei Ueno", 35.7114, 139.7732],
       ["Aeroporto Internacional de Narita", 35.772, 140.3929],
     ],
   };
@@ -630,35 +809,55 @@
       },
     ).addTo(map);
     var bounds = [];
-    var renderedCoordinates = {};
+    var coordinateGroups = {};
     points.forEach(function (p, i) {
       var coordinateKey = p.lat + "," + p.lng;
-      if (renderedCoordinates[coordinateKey]) {
-        bounds.push([p.lat, p.lng]);
-        return;
-      }
-      renderedCoordinates[coordinateKey] = true;
+      if (!coordinateGroups[coordinateKey]) coordinateGroups[coordinateKey] = [];
+      coordinateGroups[coordinateKey].push({ point: p, number: i + 1 });
+      bounds.push([p.lat, p.lng]);
+    });
+    L.polyline(bounds, {
+      color: "#3b5dc9",
+      weight: 3,
+      opacity: 0.75,
+      dashArray: "7 6",
+    }).addTo(map);
+    Object.keys(coordinateGroups).forEach(function (coordinateKey) {
+      var group = coordinateGroups[coordinateKey];
+      var p = group[0].point;
+      var labels = group.map(function (item) {
+        return item.number;
+      });
+      var markerLabel = labels.join("/");
       var icon = L.divIcon({
-        className: "numbered-marker",
-        html: String(i + 1),
-        iconSize: [28, 28],
-        iconAnchor: [14, 14],
+        className: "numbered-marker" + (labels.length > 1 ? " repeated-marker" : ""),
+        html: markerLabel,
+        iconSize: labels.length > 1 ? [44, 28] : [28, 28],
+        iconAnchor: labels.length > 1 ? [22, 14] : [14, 14],
       });
       L.marker([p.lat, p.lng], { icon: icon })
         .addTo(map)
         .bindPopup(
-          "<b>" +
+          "<b>Pin " +
+            markerLabel +
+            " · " +
             esc(p.name) +
             '</b><br><a target="_blank" rel="noopener" href="' +
             mapsSearch(p.name) +
             '">Abrir no Google Maps</a>',
         );
-      bounds.push([p.lat, p.lng]);
     });
-    map.fitBounds(bounds, { padding: [25, 25], maxZoom: 14 });
-    setTimeout(function () {
+    function frameCompleteRoute() {
       map.invalidateSize();
-    }, 50);
+      map.fitBounds(L.latLngBounds(bounds), {
+        paddingTopLeft: [42, 42],
+        paddingBottomRight: [42, 42],
+        maxZoom: 15,
+        animate: false,
+      });
+    }
+    requestAnimationFrame(frameCompleteRoute);
+    setTimeout(frameCompleteRoute, 250);
   }
   function clearMaps() {
     maps.forEach(function (m) {
