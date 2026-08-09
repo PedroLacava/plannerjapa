@@ -17,6 +17,44 @@
     kyoto: { name: "Kyoto", lat: 35.0116, lng: 135.7681 },
     koyasan: { name: "Koyasan", lat: 34.2142, lng: 135.5841 },
   };
+  var DATE_ROUTES = {
+    "2026-11-08": [
+      ["Aeroporto de Haneda", 35.5494, 139.7798],
+      ["Henn na Hotel Tokyo Haneda", 35.5523, 139.7397],
+    ],
+    "2026-11-09": [
+      ["Henn na Hotel Tokyo Haneda", 35.5523, 139.7397],
+      ["Estação Otorii", 35.5528, 139.7405],
+      ["Estação Shinagawa", 35.6285, 139.7387],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+      ["Dotonbori", 34.6687, 135.5013],
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+    ],
+    "2026-11-17": [
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+      ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Estação Shin-Kobe", 34.7067, 135.1958],
+      ["Estação Arima Onsen", 34.7994, 135.245],
+      ["Gekkoen Yugetsusanso", 34.7974, 135.2489],
+    ],
+    "2026-11-18": [
+      ["Gekkoen Yugetsusanso", 34.7974, 135.2489],
+      ["Estação Shin-Kobe", 34.7067, 135.1958],
+      ["Estação Odawara", 35.2564, 139.155],
+      ["Estação Gora", 35.2509, 139.0484],
+      ["Owakudani", 35.2442, 139.0207],
+      ["Lago Ashi", 35.2048, 139.0253],
+      ["Estação Odawara", 35.2564, 139.155],
+      ["Estação de Tóquio", 35.6812, 139.7671],
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+    ],
+    "2026-11-27": [
+      ["Hotel Sunroute Asakusa", 35.71075, 139.79178],
+      ["Estação de Tóquio", 35.6812, 139.7671],
+      ["Aeroporto Internacional de Narita", 35.772, 140.3929],
+    ],
+  };
   var LOCATIONS = {
     "transport-haneda-tokyo": [
       ["Haneda Airport", 35.5494, 139.7798],
@@ -409,20 +447,45 @@
     );
   }
   function pointsFor(iso) {
+    if (DATE_ROUTES[iso]) {
+      return DATE_ROUTES[iso].map(function (p) {
+        return { name: p[0], lat: p[1], lng: p[2], tourId: "route-" + iso };
+      });
+    }
     if (iso === "2026-11-10") {
       return [
+        { name: "Comfort Hotel Shin-Osaka", lat: 34.7303, lng: 135.4992, tourId: "fixed-day10" },
         { name: "Kuromon Ichiba Market", lat: 34.6654, lng: 135.5065, tourId: "fixed-day10" },
         { name: "Denden Town", lat: 34.6597, lng: 135.5061, tourId: "fixed-day10" },
         { name: "Shinsekai", lat: 34.6525, lng: 135.5063, tourId: "fixed-day10" },
         { name: "Osaka Castle", lat: 34.6873, lng: 135.5262, tourId: "fixed-day10" },
         { name: "Umeda Sky Building", lat: 34.7053, lng: 135.49, tourId: "fixed-day10" },
         { name: "Pokémon Center Osaka", lat: 34.7026, lng: 135.4965, tourId: "fixed-day10" },
+        { name: "Comfort Hotel Shin-Osaka", lat: 34.7303, lng: 135.4992, tourId: "fixed-day10" },
       ];
     }
     var entry = plan()[iso] || { tours: [] },
       seen = {},
       points = [];
+    var currentBase = entry.base && BASE_COORDS[entry.base] ? BASE_COORDS[entry.base] : null;
+    var previous = new Date(iso + "T12:00:00Z");
+    previous.setUTCDate(previous.getUTCDate() - 1);
+    var previousEntry = plan()[previous.toISOString().slice(0, 10)] || {};
+    var startBase =
+      previousEntry.base && BASE_COORDS[previousEntry.base]
+        ? BASE_COORDS[previousEntry.base]
+        : currentBase;
+    if (startBase) {
+      seen[startBase.lat + "," + startBase.lng] = 1;
+      points.push({
+        name: startBase.name,
+        lat: startBase.lat,
+        lng: startBase.lng,
+        tourId: "hotel-start",
+      });
+    }
     (entry.tours || []).forEach(function (id) {
+      if (id.indexOf("transport-") === 0) return;
       (LOCATIONS[id] || []).forEach(function (p) {
         var k = p[1] + "," + p[2];
         if (!seen[k]) {
@@ -431,6 +494,14 @@
         }
       });
     });
+    if (currentBase) {
+      points.push({
+        name: currentBase.name,
+        lat: currentBase.lat,
+        lng: currentBase.lng,
+        tourId: "hotel-return",
+      });
+    }
     return points;
   }
   function mapsSearch(name) {
@@ -479,6 +550,12 @@
     var isTransportDay = (entry.tours || []).some(function (tourId) {
       return tourId.indexOf("transport-") === 0;
     });
+    if (!isTransportDay) {
+      isTransportDay = points.slice(0, -1).some(function (point, index) {
+        var next = points[index + 1];
+        return Math.hypot(point.lat - next.lat, point.lng - next.lng) > 0.045;
+      });
+    }
     var mode = isTransportDay ? "transit" : "walking";
     if (!points.length)
       return '<div class="map-empty">Ainda não há coordenadas confiáveis para este dia.<br>Use a busca de cada card no Google Maps.</div>';
@@ -535,7 +612,14 @@
       },
     ).addTo(map);
     var bounds = [];
+    var renderedCoordinates = {};
     points.forEach(function (p, i) {
+      var coordinateKey = p.lat + "," + p.lng;
+      if (renderedCoordinates[coordinateKey]) {
+        bounds.push([p.lat, p.lng]);
+        return;
+      }
+      renderedCoordinates[coordinateKey] = true;
       var icon = L.divIcon({
         className: "numbered-marker",
         html: String(i + 1),
