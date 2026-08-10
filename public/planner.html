@@ -1817,13 +1817,24 @@
           },
           hakone: {
             icon: "♨️",
-            label: "Gekkoen Yugetsusanso — Arima Onsen",
-            sleepCity: "Arima Onsen",
+            label: "Gora Kadan — Hakone",
+            sleepCity: "Hakone",
             colorKey: "hakone",
             bullets: [
-              "318 Arimacho, Kita-ku, Kobe, Hyogo 651-1401",
-              "兵庫県神戸市北区有馬町318",
-              "Shuttle gratuito da estação/bus stop de Arima Onsen, 8h–19h",
+              "1300 Gora, Hakone-machi, Kanagawa 250-0408",
+              "〒250-0408 神奈川県足柄下郡箱根町強羅1300",
+              "Gora Station: cerca de 3 min a pé · shuttle gratuito disponível",
+            ],
+          },
+          "gora-kadan": {
+            icon: "♨️",
+            label: "Gora Kadan — Hakone",
+            sleepCity: "Hakone",
+            colorKey: "hakone",
+            bullets: [
+              "1300 Gora, Hakone-machi, Kanagawa 250-0408",
+              "〒250-0408 神奈川県足柄下郡箱根町強羅1300",
+              "Gora Station: cerca de 3 min a pé · shuttle gratuito disponível",
             ],
           },
           "gekkoen-arima": {
@@ -2231,12 +2242,12 @@
             hours: 3.5,
             region: "transport",
             colorKey: "transport",
-            travel: "Shin-Osaka → Odawara → Hakone-Yumoto · apenas ida",
+            travel: "Comfort Hotel → Shin-Osaka → Odawara → Chokoku-no-Mori · apenas ida",
             bullets: [
               "Shin-Osaka → Odawara: Hikari ou conexão coberta pelo JR Pass nacional",
-              "Odawara → Hakone-Yumoto: Hakone Tozan Railway, fora do JR Pass",
+              "Odawara → Hakone-Yumoto → Chokoku-no-Mori: Hakone Tozan, fora do JR Pass",
               "Reservar assento e confirmar a conexão",
-              "Mudança de base para Hakone",
+              "Visitar o museu antes do check-in no Gora Kadan; organizar envio ou guarda das malas",
             ],
           },
           "transport-hakone-tokyo": {
@@ -2245,12 +2256,12 @@
             hours: 2,
             region: "transport",
             colorKey: "transport",
-            travel: "Hakone-Yumoto → Odawara → Tokyo Station · apenas ida",
+            travel: "Gora Kadan → Gora → Hakone-Yumoto → Odawara → Tokyo → Tawaramachi · apenas ida",
             bullets: [
-              "Hakone-Yumoto → Odawara: Hakone Tozan Railway, fora do JR Pass",
+              "Gora → Hakone-Yumoto → Odawara: Hakone Tozan, fora do JR Pass",
               "Odawara → Tokyo: Hikari ou Kodama coberto pelo JR Pass nacional",
-              "Deixar Hakone após a atividade da manhã",
-              "Mudança de base para Tóquio",
+              "Deixar Hakone após Ropeway, Owakudani e Lago Ashi",
+              "Tokyo Station → Tawaramachi; terminar no Hotel Sunroute Asakusa",
             ],
           },
           "transport-osaka-arima": {
@@ -7547,6 +7558,23 @@
           return true;
         }
 
+        function applyGoraKadanUpdate(sourcePlan) {
+          sourcePlan._updates = sourcePlan._updates || {};
+          if (sourcePlan._updates.goraKadanV1) return false;
+          var day17 = sourcePlan["2026-11-17"] || (sourcePlan["2026-11-17"] = emptyDay());
+          day17.base = "gora-kadan";
+          day17.tours = ["transport-osaka-hakone", "hakone-museum-onsen"];
+          day17.note =
+            "Comfort Hotel Shin-Osaka → Museu ao Ar Livre de Hakone → Gora Kadan; check-in e jantar no ryokan";
+          var day18 = sourcePlan["2026-11-18"] || (sourcePlan["2026-11-18"] = emptyDay());
+          day18.base = "hotel-sunroute-asakusa";
+          day18.tours = ["hakone-ropeway", "transport-hakone-tokyo"];
+          day18.note =
+            "Café e check-out no Gora Kadan; Ropeway → Owakudani → Lago Ashi → Hotel Sunroute Asakusa";
+          sourcePlan._updates.goraKadanV1 = true;
+          return true;
+        }
+
         function applyHanedaHotelUpdate(sourcePlan) {
           sourcePlan._updates = sourcePlan._updates || {};
           if (sourcePlan._updates.hanedaHotelV1) return false;
@@ -7675,6 +7703,7 @@
                 if (applyDirectionalTransportUpdate(parsed)) changed = true;
                 if (applyHotelBasesAndArimaUpdate(parsed)) changed = true;
                 if (repairSharedPlanV2(parsed)) changed = true;
+                if (applyGoraKadanUpdate(parsed)) changed = true;
                 if (applyHanedaHotelUpdate(parsed)) changed = true;
                 if (changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
                 return parsed;
@@ -7686,6 +7715,7 @@
           applyDirectionalTransportUpdate(freshPlan);
           applyHotelBasesAndArimaUpdate(freshPlan);
           repairSharedPlanV2(freshPlan);
+          applyGoraKadanUpdate(freshPlan);
           applyHanedaHotelUpdate(freshPlan);
           return freshPlan;
         }
