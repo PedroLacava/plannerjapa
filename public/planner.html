@@ -1481,17 +1481,20 @@
     <div class="mobile-tabs screen-only" id="mobile-tabs">
       <button type="button" data-mview="today">Hoje</button>
       <button type="button" data-mview="cal" class="active">🗓️ Roteiro</button>
+      <button type="button" data-mview="transport">Transportes</button>
       <button type="button" data-mview="pool">🎴 Cards</button>
       <button type="button" data-mview="detail">📋 Detalhes</button>
     </div>
 
     <div class="today-toolbar screen-only">
       <button type="button" id="open-today-desktop">Abrir modo Hoje</button>
+      <button type="button" id="open-transport-view">Transportes e JR Pass</button>
       <button type="button" id="install-app-button" hidden>Instalar aplicativo</button>
       <button type="button" id="install-help-button">Como instalar</button>
     </div>
 
     <section id="today-view" class="today-view screen-only" aria-live="polite"></section>
+    <section id="transport-view" class="transport-view screen-only" aria-live="polite"></section>
 
     <div class="layout screen-only">
       <!-- POOL -->
@@ -9222,8 +9225,13 @@
           var tabs = document.getElementById("mobile-tabs");
           if (!tabs) return;
           function setView(view) {
-            document.body.classList.remove("m-today", "m-pool", "m-detail");
+            document.body.classList.remove("m-today", "m-pool", "m-detail", "m-transport");
+            document.body.classList.remove("transport-open");
             if (view === "today") document.body.classList.add("m-today");
+            if (view === "transport") {
+              document.body.classList.add("m-transport");
+              if (window.plannerShowTransport) window.plannerShowTransport(true);
+            }
             if (view === "pool") document.body.classList.add("m-pool");
             if (view === "detail") document.body.classList.add("m-detail");
             tabs.querySelectorAll("button").forEach(function (b) {
@@ -9256,5 +9264,6 @@
         });
       }
     </script>
+    <script src="/transport-view.js"></script>
   </body>
 </html>
