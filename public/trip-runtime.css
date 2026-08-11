@@ -36,6 +36,7 @@ body.desktop-today .today-view {
 }
 .transport-view { display: none; max-width: 1240px; margin: 0 auto 20px; }
 .activities-view { display: none; max-width: 1240px; margin: 0 auto 20px; }
+.budget-view { display: none; max-width: 1240px; margin: 0 auto 20px; }
 body.transport-open .layout,
 body.transport-open #card-guide,
 body.transport-open #today-view { display: none !important; }
@@ -44,6 +45,12 @@ body.activities-open .layout,
 body.activities-open #card-guide,
 body.activities-open #today-view { display: none !important; }
 body.activities-open .activities-view { display: block; }
+body.budget-open .layout,
+body.budget-open #card-guide,
+body.budget-open #today-view { display:none !important; }
+body.budget-open .budget-view { display:block; }
+.budget-type { display:inline-block; padding:3px 7px; border-radius:999px; background:#e7f3f8; color:#285c75; font-size:11px; font-weight:800; }
+.budget-activity .budget-type { background:#f1e8fb; color:#6a3fa0; }
 .activity-table .activity-status { display:inline-block; padding:3px 7px; border-radius:999px; background:#f0ede4; font-size:11px; font-weight:800; }
 .activity-table td:last-child span { display:block; margin-top:4px; }
 .activity-table a { color:#285c75; font-weight:700; }
@@ -325,7 +332,7 @@ body.activities-open .activities-view { display: block; }
 }
 @media (max-width: 760px) {
   .mobile-tabs {
-    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
   }
   .today-toolbar {
     justify-content: stretch;
@@ -370,6 +377,9 @@ body.activities-open .activities-view { display: block; }
   body.m-activities .layout,
   body.m-activities #today-view { display:none !important; }
   body.m-activities .activities-view { display:block; }
+  body.m-budget .layout,
+  body.m-budget #today-view { display:none !important; }
+  body.m-budget .budget-view { display:block; }
   .transport-hero { align-items:flex-start; padding:15px; }
   .transport-hero h2 { font-size:21px; }
   .transport-hero button { display:none; }

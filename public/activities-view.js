@@ -45,6 +45,7 @@
     ["26/11", "Nakameguro, Daikanyama e Ebisu", "Tóquio", 0, "Livre", "Compras, cafés e refeições à parte", "no", "https://www.gotokyo.org/en/destinations/southern-tokyo/ebisu-daikanyama-and-meguro/index.html"],
     ["26/11", "Kyu Asakura House", "Tóquio", 100, "Opcional", "Somente se houver tempo no roteiro", "no", "https://www.city.shibuya.tokyo.jp/eng/est/asakura.html"],
   ];
+  window.JaplannerActivitiesData = { activities: ACTIVITIES };
 
   function yen(n) { return "¥" + Math.round(n).toLocaleString("pt-BR"); }
   function esc(x) { return String(x == null ? "" : x).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;"); }
