@@ -35,10 +35,18 @@ body.desktop-today .today-view {
   display: block;
 }
 .transport-view { display: none; max-width: 1240px; margin: 0 auto 20px; }
+.activities-view { display: none; max-width: 1240px; margin: 0 auto 20px; }
 body.transport-open .layout,
 body.transport-open #card-guide,
 body.transport-open #today-view { display: none !important; }
 body.transport-open .transport-view { display: block; }
+body.activities-open .layout,
+body.activities-open #card-guide,
+body.activities-open #today-view { display: none !important; }
+body.activities-open .activities-view { display: block; }
+.activity-table .activity-status { display:inline-block; padding:3px 7px; border-radius:999px; background:#f0ede4; font-size:11px; font-weight:800; }
+.activity-table td:last-child span { display:block; margin-top:4px; }
+.activity-table a { color:#285c75; font-weight:700; }
 .transport-shell { display: grid; gap: 14px; }
 .transport-hero { display: flex; justify-content: space-between; gap: 20px; align-items: center; padding: 20px; border-radius: 16px; background: linear-gradient(135deg,#173f46,#276773); color: #fff; }
 .transport-hero h2 { margin: 4px 0; font-size: 26px; }
@@ -317,7 +325,7 @@ body.transport-open .transport-view { display: block; }
 }
 @media (max-width: 760px) {
   .mobile-tabs {
-    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
   }
   .today-toolbar {
     justify-content: stretch;
@@ -359,6 +367,9 @@ body.transport-open .transport-view { display: block; }
   body.m-transport .layout,
   body.m-transport #today-view { display:none !important; }
   body.m-transport .transport-view { display:block; }
+  body.m-activities .layout,
+  body.m-activities #today-view { display:none !important; }
+  body.m-activities .activities-view { display:block; }
   .transport-hero { align-items:flex-start; padding:15px; }
   .transport-hero h2 { font-size:21px; }
   .transport-hero button { display:none; }
