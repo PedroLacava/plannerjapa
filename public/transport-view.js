@@ -103,6 +103,7 @@
     ["18/11", "Togendai", "Gotemba Premium Outlets", "Ônibus via Sengoku/Gotemba", "Hakone Tozan/Odakyu", 1500, "no", "Alternativa ao retorno por Hakone-Yumoto"],
     ["18/11", "Gotemba Premium Outlets", "Tokyo", "Ônibus rodoviário direto", "JR Bus/operadora parceira", 2000, "no", "Confirmar horário e reservar quando abrir"],
   ];
+  window.JaplannerTransportData = { legs: LEGS, gotemba: GOTEMBA };
 
   function yen(n) {
     return "¥" + Math.round(n).toLocaleString("pt-BR");
