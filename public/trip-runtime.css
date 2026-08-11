@@ -52,6 +52,15 @@ body.budget-open .budget-view { display:block; }
 .budget-type { display:inline-block; padding:3px 7px; border-radius:999px; background:#e7f3f8; color:#285c75; font-size:11px; font-weight:800; }
 .budget-activity .budget-type { background:#f1e8fb; color:#6a3fa0; }
 .budget-source { display:block; margin-top:5px; color:#285c75; font-weight:800; }
+.budget-categories { display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; }
+.budget-category { display:inline-block; padding:2px 6px; border-radius:999px; background:#f0ede4; color:#625b50; font-size:10px; font-weight:800; }
+.budget-details summary { cursor:pointer; color:#285c75; font-weight:800; white-space:nowrap; }
+.budget-details ul { min-width:320px; margin:8px 0 0; padding:0; list-style:none; }
+.budget-details li { padding:7px 0; border-top:1px solid #eee8da; }
+.budget-details li b,.budget-details li span,.budget-details li a { display:block; }
+.budget-details li a { margin-top:3px; color:#285c75; font-weight:800; }
+.detail-kind { display:inline-block !important; width:max-content; margin-bottom:3px; padding:2px 5px; border-radius:999px; background:#e7f3f8; color:#285c75; font-size:9px; font-weight:800; text-transform:uppercase; }
+.detail-kind.activity { background:#f1e8fb; color:#6a3fa0; }
 .activity-table .activity-status { display:inline-block; padding:3px 7px; border-radius:999px; background:#f0ede4; font-size:11px; font-weight:800; }
 .activity-table td:last-child span { display:block; margin-top:4px; }
 .activity-table a { color:#285c75; font-weight:700; }
@@ -392,6 +401,7 @@ body.budget-open .budget-view { display:block; }
   .transport-table tr { margin-bottom:9px; background:#fff; border:1px solid #ddd4c4; border-radius:10px; padding:7px; }
   .transport-table td { display:grid; grid-template-columns:82px 1fr; border:0; padding:5px; }
   .transport-table td:before { content:attr(data-label); font-weight:800; color:#756c5d; }
+  .budget-details ul { min-width:0; }
   .daily-map {
     height: min(390px, 54vh);
   }
