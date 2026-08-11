@@ -1483,6 +1483,7 @@
       <button type="button" data-mview="today">Hoje</button>
       <button type="button" data-mview="cal" class="active">🗓️ Roteiro</button>
       <button type="button" data-mview="budget">Custos</button>
+      <button type="button" data-mview="reservations">Reservas</button>
       <button type="button" data-mview="pool">🎴 Cards</button>
       <button type="button" data-mview="detail">📋 Detalhes</button>
     </div>
@@ -1490,6 +1491,7 @@
     <div class="today-toolbar screen-only">
       <button type="button" id="open-today-desktop">Abrir modo Hoje</button>
       <button type="button" id="open-budget-view">Transportes e passeios</button>
+      <button type="button" id="open-reservations-view">Checklist e reservas</button>
       <button type="button" id="install-app-button" hidden>Instalar aplicativo</button>
       <button type="button" id="install-help-button">Como instalar</button>
     </div>
@@ -1498,6 +1500,7 @@
     <section id="transport-view" class="transport-view screen-only" aria-live="polite"></section>
     <section id="activities-view" class="activities-view screen-only" aria-live="polite"></section>
     <section id="budget-view" class="budget-view screen-only" aria-live="polite"></section>
+    <section id="reservations-view" class="reservations-view screen-only" aria-live="polite"></section>
 
     <div class="layout screen-only">
       <!-- POOL -->
@@ -1634,6 +1637,7 @@
         "japan-trip-planner-custom-v1",
         "japan-trip-planner-saved-v1",
         "japan-trip-planner-progress-v1",
+        "japan-trip-planner-reservations-v1",
       ];
       var sharedRevision = 0;
       var sharedDirty = false;
@@ -1684,6 +1688,10 @@
         clearTimeout(sharedTimer);
         sharedTimer = setTimeout(pushSharedState, 450);
       }
+      window.JaplannerSharedStore = {
+        get: function (key) { return localStorage.getItem(key); },
+        set: sharedSet,
+      };
 
       async function loadSharedState() {
         try {
@@ -9228,8 +9236,8 @@
           var tabs = document.getElementById("mobile-tabs");
           if (!tabs) return;
           function setView(view) {
-            document.body.classList.remove("m-today", "m-pool", "m-detail", "m-transport", "m-activities", "m-budget");
-            document.body.classList.remove("transport-open", "activities-open", "budget-open");
+            document.body.classList.remove("m-today", "m-pool", "m-detail", "m-transport", "m-activities", "m-budget", "m-reservations");
+            document.body.classList.remove("transport-open", "activities-open", "budget-open", "reservations-open");
             if (view === "today") document.body.classList.add("m-today");
             if (view === "transport") {
               document.body.classList.add("m-transport");
@@ -9242,6 +9250,10 @@
             if (view === "budget") {
               document.body.classList.add("m-budget");
               if (window.plannerShowBudget) window.plannerShowBudget(true);
+            }
+            if (view === "reservations") {
+              document.body.classList.add("m-reservations");
+              if (window.plannerShowReservations) window.plannerShowReservations(true);
             }
             if (view === "pool") document.body.classList.add("m-pool");
             if (view === "detail") document.body.classList.add("m-detail");
@@ -9286,6 +9298,7 @@
     </script>
     <script src="/transport-view.js?v=17"></script>
     <script src="/activities-view.js?v=17"></script>
-    <script src="/budget-view.js?v=20"></script>
+    <script src="/reservations-view.js?v=22"></script>
+    <script src="/budget-view.js?v=22"></script>
   </body>
 </html>
