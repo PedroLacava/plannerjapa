@@ -63,6 +63,8 @@ body.budget-open .budget-view { display:block; }
 .detail-kind.activity { background:#f1e8fb; color:#6a3fa0; }
 .final-transfer-select { flex:1 0 100%; }
 .final-transfer-select select { width:100%; }
+#scroll-top-hit { display:none; }
+#app-title { cursor:pointer; }
 .activity-table .activity-status { display:inline-block; padding:3px 7px; border-radius:999px; background:#f0ede4; font-size:11px; font-weight:800; }
 .activity-table td:last-child span { display:block; margin-top:4px; }
 .activity-table a { color:#285c75; font-weight:700; }
@@ -343,6 +345,18 @@ body.budget-open .budget-view { display:block; }
   gap: 8px;
 }
 @media (max-width: 760px) {
+  #scroll-top-hit {
+    display:block;
+    position:fixed;
+    z-index:10000;
+    top:0;
+    left:0;
+    width:100%;
+    height:max(18px, env(safe-area-inset-top));
+    padding:0;
+    border:0;
+    background:transparent;
+  }
   .mobile-tabs {
     grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
   }
