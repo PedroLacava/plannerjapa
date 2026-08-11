@@ -1466,7 +1466,8 @@
     </style>
   </head>
   <body>
-    <h1 class="screen-only">
+    <button type="button" id="scroll-top-hit" aria-label="Voltar ao topo" title="Voltar ao topo"></button>
+    <h1 class="screen-only" id="app-title" title="Voltar ao topo">
       ✈️ Planejador Japão — Nov 2026
       <span id="sync-status" class="sync-status">● Compartilhado</span>
     </h1>
@@ -9273,6 +9274,15 @@
           navigator.serviceWorker.register("/sw.js");
         });
       }
+      (function () {
+        function goTop() {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        }
+        var topHit = document.getElementById("scroll-top-hit");
+        var appTitle = document.getElementById("app-title");
+        if (topHit) topHit.addEventListener("click", goTop);
+        if (appTitle) appTitle.addEventListener("click", goTop);
+      })();
     </script>
     <script src="/transport-view.js?v=17"></script>
     <script src="/activities-view.js?v=17"></script>
