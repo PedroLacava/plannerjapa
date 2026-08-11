@@ -122,7 +122,7 @@
   }
   function row(x) {
     var badge = x[6] === "yes" ? "Coberto" : x[6] === "partial" ? "Parcial" : "Não coberto";
-    return '<tr><td data-label="Data">' + esc(x[0]) + '</td><td data-label="Trecho"><b>' + esc(x[1]) + '</b><span>→ ' + esc(x[2]) + '</span></td><td data-label="Transporte">' + esc(x[3]) + '<span>' + esc(x[4]) + '</span></td><td data-label="Custo">' + yen(x[5]) + '</td><td data-label="JR Pass"><span class="jr-badge jr-' + x[6] + '">' + badge + '</span></td><td data-label="Observação">' + esc(x[7]) + '</td></tr>';
+    return '<tr><td data-label="Data">' + esc(x[0]) + '</td><td data-label="Trecho"><b>' + esc(x[1]) + '</b><span>→ ' + esc(x[2]) + '</span></td><td data-label="Transporte">' + esc(x[3]) + '<span>' + esc(x[4]) + '</span></td><td data-label="Custo"><b>' + yen(x[5]) + '</b><span data-transport-brl data-yen="' + x[5] + '"></span></td><td data-label="JR Pass"><span class="jr-badge jr-' + x[6] + '">' + badge + '</span></td><td data-label="Observação">' + esc(x[7]) + '</td></tr>';
   }
   function render() {
     var host = document.getElementById("transport-view");
@@ -149,6 +149,10 @@
       host.querySelector("[data-group]").textContent = yen(adjusted * people);
       host.querySelector("[data-single-brl]").textContent = "≈ R$ " + Math.round(adjusted / rate).toLocaleString("pt-BR");
       host.querySelector("[data-group-brl]").textContent = "≈ R$ " + Math.round(adjusted * people / rate).toLocaleString("pt-BR");
+      host.querySelectorAll("[data-transport-brl]").forEach(function (el) {
+        var value = Number(el.getAttribute("data-yen")) || 0;
+        el.textContent = value ? "≈ R$ " + (value / rate).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "R$ 0,00";
+      });
       host.querySelector(".gotemba-scenario").hidden = !gotemba;
     }
     host.querySelectorAll("input").forEach(function (input) { input.addEventListener("input", update); input.addEventListener("change", update); });
