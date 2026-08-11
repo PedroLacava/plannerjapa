@@ -51,6 +51,7 @@ body.budget-open #today-view { display:none !important; }
 body.budget-open .budget-view { display:block; }
 .budget-type { display:inline-block; padding:3px 7px; border-radius:999px; background:#e7f3f8; color:#285c75; font-size:11px; font-weight:800; }
 .budget-activity .budget-type { background:#f1e8fb; color:#6a3fa0; }
+.budget-source { display:block; margin-top:5px; color:#285c75; font-weight:800; }
 .activity-table .activity-status { display:inline-block; padding:3px 7px; border-radius:999px; background:#f0ede4; font-size:11px; font-weight:800; }
 .activity-table td:last-child span { display:block; margin-top:4px; }
 .activity-table a { color:#285c75; font-weight:700; }
