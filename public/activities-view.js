@@ -53,7 +53,7 @@
   function row(a) {
     var price = a[3] ? yen(a[3]) : "Grátis";
     var link = a[7] ? '<a href="' + esc(a[7]) + '" target="_blank" rel="noopener">Fonte oficial</a>' : "—";
-    return '<tr><td data-label="Data">' + esc(a[0]) + '</td><td data-label="Passeio"><b>' + esc(a[1]) + '</b><span>' + esc(a[2]) + '</span></td><td data-label="Valor"><b>' + price + '</b><span>por adulto</span></td><td data-label="Status"><span class="activity-status">' + esc(a[4]) + '</span></td><td data-label="Reserva">' + (a[6] === "yes" ? "Reservar" : "Não obrigatória") + '</td><td data-label="Observação">' + esc(a[5]) + '<span>' + link + '</span></td></tr>';
+    return '<tr><td data-label="Data">' + esc(a[0]) + '</td><td data-label="Passeio"><b>' + esc(a[1]) + '</b><span>' + esc(a[2]) + '</span></td><td data-label="Valor"><b>' + price + '</b><span data-activity-brl data-yen="' + a[3] + '"></span></td><td data-label="Status"><span class="activity-status">' + esc(a[4]) + '</span></td><td data-label="Reserva">' + (a[6] === "yes" ? "Reservar" : "Não obrigatória") + '</td><td data-label="Observação">' + esc(a[5]) + '<span>' + link + '</span></td></tr>';
   }
   function render() {
     var host = document.getElementById("activities-view");
@@ -72,6 +72,10 @@
       host.querySelector("[data-activity-group]").textContent = yen(base * people);
       host.querySelector("[data-activity-single-brl]").textContent = "≈ R$ " + Math.round(base / rate).toLocaleString("pt-BR");
       host.querySelector("[data-activity-group-brl]").textContent = "≈ R$ " + Math.round(base * people / rate).toLocaleString("pt-BR");
+      host.querySelectorAll("[data-activity-brl]").forEach(function (el) {
+        var value = Number(el.getAttribute("data-yen")) || 0;
+        el.textContent = value ? "≈ R$ " + (value / rate).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "R$ 0,00";
+      });
     }
     host.querySelectorAll("input").forEach(function (input) { input.addEventListener("input", update); });
     host.querySelector("[data-close-activities]").addEventListener("click", function () { window.plannerShowActivities(false); });
