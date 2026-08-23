@@ -8579,12 +8579,22 @@
           );
         }
 
+        function canonicalStayBaseId(baseId) {
+          var aliases = {
+            tokyo: "hotel-sunroute-asakusa",
+            osaka: "comfort-shin-osaka",
+            hakone: "gora-kadan",
+          };
+          return aliases[baseId] || baseId;
+        }
+
         function getStaySegments() {
           var stays = [];
           var current = null;
           allDates.filter(inRange).forEach(function (iso) {
             var entry = plan[iso];
-            var baseId = entry && entry.base && BASE_DEFS[entry.base] ? entry.base : null;
+            var rawBaseId = entry && entry.base && BASE_DEFS[entry.base] ? entry.base : null;
+            var baseId = rawBaseId ? canonicalStayBaseId(rawBaseId) : null;
             if (
               baseId &&
               current &&
@@ -8602,7 +8612,7 @@
             if (baseId) {
               current = {
                 baseId: baseId,
-                city: BASE_DEFS[baseId].sleepCity,
+                city: BASE_DEFS[rawBaseId].sleepCity,
                 start: iso,
                 lastNight: iso,
                 nights: 1,
