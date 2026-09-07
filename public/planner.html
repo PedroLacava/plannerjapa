@@ -1809,24 +1809,24 @@
           },
           tokyo: {
             icon: "🏨",
-            label: "Hotel Sunroute Asakusa",
+            label: "Ginza Capital Hotel Moegi",
             sleepCity: "Tóquio",
             colorKey: "tokyo",
             bullets: [
-              "1-8-5 Kaminarimon, Taito-ku, Tokyo 111-0034",
-              "東京都台東区雷門1-8-5",
-              "Tawaramachi (Ginza Line): 1 min a pé · Asakusa: 7 min",
+              "3-3-1 Tsukiji, Chuo-ku, Tokyo 104-0045",
+              "〒104-0045 東京都中央区築地3-3-1",
+              "Tsukiji (Hibiya Line), saída 3 · Shintomicho (Yurakucho Line), saída 4: cerca de 1 min a pé",
             ],
           },
-          "hotel-sunroute-asakusa": {
+          "ginza-capital-moegi": {
             icon: "🏨",
-            label: "Hotel Sunroute Asakusa",
+            label: "Ginza Capital Hotel Moegi",
             sleepCity: "Tóquio",
             colorKey: "tokyo",
             bullets: [
-              "1-8-5 Kaminarimon, Taito-ku, Tokyo 111-0034",
-              "東京都台東区雷門1-8-5",
-              "Tawaramachi (Ginza Line): 1 min a pé · Asakusa: 7 min",
+              "3-3-1 Tsukiji, Chuo-ku, Tokyo 104-0045",
+              "〒104-0045 東京都中央区築地3-3-1",
+              "Tsukiji (Hibiya Line), saída 3 · Shintomicho (Yurakucho Line), saída 4: cerca de 1 min a pé",
             ],
           },
           hakone: {
@@ -2270,12 +2270,12 @@
             hours: 2,
             region: "transport",
             colorKey: "transport",
-            travel: "Gora Kadan → Gora → Hakone-Yumoto → Odawara → Tokyo → Tawaramachi · apenas ida",
+            travel: "Gora Kadan → Gora → Hakone-Yumoto → Odawara → Tokyo → Tsukiji · apenas ida",
             bullets: [
               "Gora → Hakone-Yumoto → Odawara: Hakone Tozan, fora do JR Pass",
               "Odawara → Tokyo: Hikari ou Kodama coberto pelo JR Pass nacional",
               "Deixar Hakone após Ropeway, Owakudani e Lago Ashi",
-              "Tokyo Station → Tawaramachi; terminar no Hotel Sunroute Asakusa",
+              "Tokyo Station → Ginza → Tsukiji; terminar no Ginza Capital Hotel Moegi",
             ],
           },
           "transport-osaka-arima": {
@@ -2294,16 +2294,16 @@
           },
           "transport-arima-tokyo": {
             icon: "🚅",
-            label: "Arima Onsen → Hotel Sunroute Asakusa",
+            label: "Arima Onsen → Ginza Capital Hotel Moegi",
             hours: 4.5,
             region: "transport",
             colorKey: "transport",
-            travel: "Gekkoen → Shin-Kobe → Tokyo → Tawaramachi · apenas ida",
+            travel: "Gekkoen → Shin-Kobe → Tokyo → Tsukiji · apenas ida",
             bullets: [
               "Usar o shuttle do ryokan até o ponto/estação de Arima Onsen",
               "Seguir para Shin-Kobe; confirmar ônibus direto ou conexão via Tanigami no dia anterior",
               "Shin-Kobe → Tokyo: reservar Shinkansen Hikari; Nozomi exige suplemento",
-              "Tokyo Station → Ueno pela JR e Ginza Line até Tawaramachi; hotel a 1 min",
+              "Tokyo Station → Ginza pela Marunouchi Line → Tsukiji pela Hibiya Line; hotel a 1 min",
             ],
           },
           "transport-arima-hakone": {
@@ -7467,7 +7467,7 @@
             var entry = sourcePlan[iso];
             if (!entry) return;
             if (entry.base === "osaka") entry.base = "comfort-shin-osaka";
-            if (entry.base === "tokyo") entry.base = "hotel-sunroute-asakusa";
+            if (entry.base === "tokyo") entry.base = "ginza-capital-moegi";
           });
           var day17 = sourcePlan["2026-11-17"];
           day17.base = "gekkoen-arima";
@@ -7487,7 +7487,7 @@
           day17.note =
             "Troca de base: Comfort Hotel Shin-Osaka → Gekkoen Yugetsusanso; tarde e noite em Arima Onsen";
           var day18 = sourcePlan["2026-11-18"];
-          day18.base = "hotel-sunroute-asakusa";
+          day18.base = "ginza-capital-moegi";
           day18.tours = (day18.tours || []).filter(function (id) {
             return (
               ["transport-hakone-tokyo", "transport-tokyo-hakone", "transport-arima-tokyo"].indexOf(
@@ -7496,7 +7496,7 @@
             );
           });
           day18.tours.unshift("transport-arima-tokyo");
-          day18.note = "Café e manhã tranquila no ryokan; Arima Onsen → Hotel Sunroute Asakusa";
+          day18.note = "Café e manhã tranquila no ryokan; Arima Onsen → Ginza Capital Hotel Moegi";
           sourcePlan._updates.hotelBasesArimaV1 = true;
           return true;
         }
@@ -7567,7 +7567,7 @@
           var day18 = ensure("2026-11-18");
           day18.tours = ["transport-arima-hakone", "hakone-ropeway", "transport-hakone-tokyo"];
           day18.note =
-            "Dia apertado: Arima → Hakone; Ropeway + Lake Ashi; Hakone → Hotel Sunroute Asakusa";
+            "Dia apertado: Arima → Hakone; Ropeway + Lake Ashi; Hakone → Ginza Capital Hotel Moegi";
           sourcePlan._updates.sharedPlanRepairV2 = true;
           return true;
         }
@@ -7581,10 +7581,10 @@
           day17.note =
             "Comfort Hotel Shin-Osaka → Museu ao Ar Livre de Hakone → Gora Kadan; check-in e jantar no ryokan";
           var day18 = sourcePlan["2026-11-18"] || (sourcePlan["2026-11-18"] = emptyDay());
-          day18.base = "hotel-sunroute-asakusa";
+          day18.base = "ginza-capital-moegi";
           day18.tours = ["hakone-ropeway", "transport-hakone-tokyo"];
           day18.note =
-            "Café e check-out no Gora Kadan; Ropeway → Owakudani → Lago Ashi → Hotel Sunroute Asakusa";
+            "Café e check-out no Gora Kadan; Ropeway → Owakudani → Lago Ashi → Ginza Capital Hotel Moegi";
           sourcePlan._updates.goraKadanV1 = true;
           return true;
         }
@@ -7610,6 +7610,18 @@
           day9.note =
             "Henn na Hotel Haneda → Comfort Hotel Shin-Osaka; Dotonbori leve após check-in";
           sourcePlan._updates.hanedaHotelV1 = true;
+          return true;
+        }
+
+        function applyMoegiHotelUpdate(sourcePlan) {
+          sourcePlan._updates = sourcePlan._updates || {};
+          if (sourcePlan._updates.moegiHotelV1) return false;
+          Object.keys(sourcePlan).forEach(function (iso) {
+            if (iso >= "2026-11-18" && iso <= "2026-11-26" && sourcePlan[iso]) {
+              sourcePlan[iso].base = "ginza-capital-moegi";
+            }
+          });
+          sourcePlan._updates.moegiHotelV1 = true;
           return true;
         }
 
@@ -7719,6 +7731,7 @@
                 if (repairSharedPlanV2(parsed)) changed = true;
                 if (applyGoraKadanUpdate(parsed)) changed = true;
                 if (applyHanedaHotelUpdate(parsed)) changed = true;
+                if (applyMoegiHotelUpdate(parsed)) changed = true;
                 if (changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
                 return parsed;
               }
@@ -7731,6 +7744,7 @@
           repairSharedPlanV2(freshPlan);
           applyGoraKadanUpdate(freshPlan);
           applyHanedaHotelUpdate(freshPlan);
+          applyMoegiHotelUpdate(freshPlan);
           return freshPlan;
         }
         function savePlan() {
@@ -8642,7 +8656,7 @@
 
         function canonicalStayBaseId(baseId) {
           var aliases = {
-            tokyo: "hotel-sunroute-asakusa",
+            tokyo: "ginza-capital-moegi",
             osaka: "comfort-shin-osaka",
             hakone: "gora-kadan",
           };
@@ -9367,9 +9381,9 @@
         if (appTitle) appTitle.addEventListener("click", goTop);
       })();
     </script>
-    <script src="/transport-view.js?v=17"></script>
+    <script src="/transport-view.js?v=24"></script>
     <script src="/activities-view.js?v=17"></script>
     <script src="/reservations-view.js?v=23"></script>
-    <script src="/budget-view.js?v=22"></script>
+    <script src="/budget-view.js?v=24"></script>
   </body>
 </html>

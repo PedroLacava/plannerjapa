@@ -14,7 +14,7 @@ accommodations:[
  ["Henn na Hotel Tokyo Haneda","08/11","09/11",1],
  ["Comfort Hotel Shin-Osaka","09/11","17/11",8],
  ["Gora Kadan","17/11","18/11",1],
- ["Hotel Sunroute Asakusa","18/11","27/11",9]
+ ["Ginza Capital Hotel Moegi","18/11","27/11",9]
 ].map(function(x,i){return{id:"h"+i,name:x[0],checkin:x[1],checkout:x[2],nights:x[3],currency:"BRL",amount:"",status:"Pendente"};}),
 bookings:{}};
 
@@ -52,7 +52,7 @@ var ITEMS=[
 ];
 
 function clone(x){return JSON.parse(JSON.stringify(x));}
-function load(){var s=null;try{s=JSON.parse(localStorage.getItem(KEY));}catch(e){}if(!s||!s.checklist||!s.reservations||!s.accommodations)s=clone(DEFAULTS);if(!s.bookings||typeof s.bookings!=="object")s.bookings={};return s;}
+function load(){var s=null;try{s=JSON.parse(localStorage.getItem(KEY));}catch(e){}if(!s||!s.checklist||!s.reservations||!s.accommodations)s=clone(DEFAULTS);if(!s.bookings||typeof s.bookings!=="object")s.bookings={};var tokyoStay=s.accommodations.filter(function(a){return a.id==="h3";})[0];if(tokyoStay)tokyoStay.name="Ginza Capital Hotel Moegi";return s;}
 function save(s){if(window.JaplannerSharedStore)window.JaplannerSharedStore.set(KEY,JSON.stringify(s));else localStorage.setItem(KEY,JSON.stringify(s));}
 function esc(x){return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function yen(n){return"¥"+Math.round(n).toLocaleString("pt-BR");}

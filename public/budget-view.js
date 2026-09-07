@@ -54,7 +54,7 @@
       if(finalMode!=="public") {
         var option=FINAL_OPTIONS[finalMode];
         legs=legs.filter(function(x){return x[0]!=="27/11";});
-        legs.push(["27/11","Hotel Sunroute Asakusa","Narita Airport",option.label,finalMode==="transfer"?"Transfer reservado":finalMode==="uber"?"Uber":"Táxi",option.cost/Math.max(1,people),"no",option.note,option.source]);
+        legs.push(["27/11","Ginza Capital Hotel Moegi","Narita Airport",option.label,finalMode==="transfer"?"Transfer reservado":finalMode==="uber"?"Uber":"Táxi",option.cost/Math.max(1,people),"no",option.note,option.source]);
       }
       return legs;
     }
