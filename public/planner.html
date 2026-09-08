@@ -1484,6 +1484,7 @@
       <button type="button" data-mview="cal" class="active">🗓️ Roteiro</button>
       <button type="button" data-mview="budget">Custos</button>
       <button type="button" data-mview="reservations">Reservas</button>
+      <button type="button" data-mview="shopping">Compras</button>
       <button type="button" data-mview="pool">🎴 Cards</button>
       <button type="button" data-mview="detail">📋 Detalhes</button>
     </div>
@@ -1492,6 +1493,7 @@
       <button type="button" id="open-today-desktop">Abrir modo Hoje</button>
       <button type="button" id="open-budget-view">Transportes e passeios</button>
       <button type="button" id="open-reservations-view">Reservas e ingressos</button>
+      <button type="button" id="open-shopping-view">Lista de compras</button>
       <button type="button" id="install-app-button" hidden>Instalar aplicativo</button>
       <button type="button" id="install-help-button">Como instalar</button>
     </div>
@@ -1501,6 +1503,7 @@
     <section id="activities-view" class="activities-view screen-only" aria-live="polite"></section>
     <section id="budget-view" class="budget-view screen-only" aria-live="polite"></section>
     <section id="reservations-view" class="reservations-view screen-only" aria-live="polite"></section>
+    <section id="shopping-view" class="shopping-view screen-only" aria-live="polite"></section>
 
     <div class="layout screen-only">
       <!-- POOL -->
@@ -1638,6 +1641,7 @@
         "japan-trip-planner-saved-v1",
         "japan-trip-planner-progress-v1",
         "japan-trip-planner-reservations-v1",
+        "japan-trip-planner-shopping-v1",
       ];
       var sharedRevision = 0;
       var sharedDirty = false;
@@ -9321,8 +9325,8 @@
           var tabs = document.getElementById("mobile-tabs");
           if (!tabs) return;
           function setView(view) {
-            document.body.classList.remove("m-today", "m-pool", "m-detail", "m-transport", "m-activities", "m-budget", "m-reservations");
-            document.body.classList.remove("transport-open", "activities-open", "budget-open", "reservations-open");
+            document.body.classList.remove("m-today", "m-pool", "m-detail", "m-transport", "m-activities", "m-budget", "m-reservations", "m-shopping");
+            document.body.classList.remove("transport-open", "activities-open", "budget-open", "reservations-open", "shopping-open");
             if (view === "today") document.body.classList.add("m-today");
             if (view === "transport") {
               document.body.classList.add("m-transport");
@@ -9339,6 +9343,10 @@
             if (view === "reservations") {
               document.body.classList.add("m-reservations");
               if (window.plannerShowReservations) window.plannerShowReservations(true);
+            }
+            if (view === "shopping") {
+              document.body.classList.add("m-shopping");
+              if (window.plannerShowShopping) window.plannerShowShopping(true);
             }
             if (view === "pool") document.body.classList.add("m-pool");
             if (view === "detail") document.body.classList.add("m-detail");
@@ -9385,5 +9393,6 @@
     <script src="/activities-view.js?v=17"></script>
     <script src="/reservations-view.js?v=23"></script>
     <script src="/budget-view.js?v=24"></script>
+    <script src="/shopping-view.js?v=1"></script>
   </body>
 </html>
