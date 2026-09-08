@@ -41,7 +41,7 @@
   }
   function categoryFor(name, brand) {
     var t = plain(name + " " + brand);
-    if (/kit kat|sanduiche|shoyu|agua/.test(t)) return "Alimentos";
+    if (/kit kat|sanduiche|shoyu|\bagua\b/.test(t)) return "Alimentos";
     if (/tenis|adidas|uniqlo|onitsuka/.test(t)) return "Moda e calçados";
     if (/second|secound|bolsa/.test(t)) return "Segunda mão";
     if (/papelaria|muji/.test(t)) return "Papelaria";
