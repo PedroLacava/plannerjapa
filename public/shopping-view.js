@@ -33,14 +33,36 @@
     "Moda e calçados": { store:"Kisarazu Outlet", area:"Kisarazu", day:"24/11", query:"Mitsui Outlet Park Kisarazu", source:"https://mitsui-shopping-park.com/mop/kisarazu/english/" },
     "Segunda mão": { store:"2nd STREET", area:"Shinjuku", day:"23/11", query:"2nd Street Shinjuku Tokyo", source:"https://www.2ndstreet.jp/shop/search" },
     "Papelaria": { store:"MUJI Ginza", area:"Ginza", day:"19/11", query:"MUJI Ginza", source:"https://www.muji.com/jp/ja/shop/detail/046604" },
-    "Outros": { store:"Don Quijote Ginza", area:"Ginza", day:"19/11", query:"Don Quijote Ginza Honkan", source:"https://www.donki.com/en/store/shop_detail.php?shop_id=421" }
+    "Esporte e outdoor": { store:"", area:"", day:"", query:"", source:"" },
+    "Outros": { store:"", area:"", day:"", query:"", source:"" }
   };
+
+  var RESEARCH_PROFILES = [
+    {
+      match:function(t){ return /\bleki\b/.test(t) && /bastao|caminhada|trekking|pole/.test(t); },
+      category:"Esporte e outdoor",
+      confidence:"Produto confirmado online",
+      tone:"confirmed",
+      summary:"A LEKI tem uma linha ampla de bastões no Japão. O catálogo oficial da distribuidora japonesa lista modelos e preços; a Yodobashi também possui página da marca. Estoque físico ainda precisa ser confirmado para o modelo escolhido.",
+      price:"¥11.000 a ¥36.850 no catálogo consultado",
+      checked:"09/09/2026",
+      sources:[
+        {label:"Catálogo LEKI no Japão",url:"https://www.caravan-web.com/c/brand/leki",kind:"Catálogo oficial"},
+        {label:"LEKI na Yodobashi",url:"https://www.yodobashi.com/maker/5000011641/",kind:"Varejista"}
+      ],
+      candidates:[
+        {store:"Yodobashi Shinjuku / Ishii Sports",area:"Shinjuku",day:"23/11",query:"LEKI trekking pole Yodobashi Shinjuku",reason:"A rede vende LEKI online e a unidade fica no roteiro. Verifique retirada/estoque no site antes de ir.",stock:"Estoque da unidade não confirmado"},
+        {store:"Caravan Sugamo",area:"Sugamo",day:"Dia livre em Tóquio",query:"Caravan Sugamo Tokyo",reason:"Loja da distribuidora japonesa; parte da linha é exclusiva do e-commerce ou desta unidade.",stock:"Modelos variam por loja"}
+      ]
+    }
+  ];
 
   function plain(value) {
     return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   }
   function categoryFor(name, brand) {
     var t = plain(name + " " + brand);
+    if (/bastao|caminhada|trekking|hiking pole|trail pole|outdoor|\bleki\b/.test(t)) return "Esporte e outdoor";
     if (/kit kat|sanduiche|shoyu|\bagua\b/.test(t)) return "Alimentos";
     if (/tenis|adidas|uniqlo|onitsuka/.test(t)) return "Moda e calçados";
     if (/second|secound|bolsa/.test(t)) return "Segunda mão";
@@ -71,6 +93,9 @@
     try { state = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
     if (!state || !Array.isArray(state.items)) state = clone(DEFAULTS);
     if (!state.rate) state.rate = 29;
+    state.items.forEach(function(item){
+      if (!item.category || item.category === "Outros") item.category = categoryFor(item.name,item.brand);
+    });
     return state;
   }
   function save(state) {
@@ -83,6 +108,11 @@
   function yen(n) { return "¥" + Math.round(Number(n) || 0).toLocaleString("pt-BR"); }
   function brl(n) { return "R$ " + Number(n || 0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}); }
   function mapUrl(query) { return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query); }
+  function searchUrl(item, site) {
+    var term = [item.brand,item.name].filter(Boolean).join(" ");
+    var suffix = site ? " site:"+site : " Japan buy price stock";
+    return "https://www.google.com/search?q="+encodeURIComponent(term+suffix);
+  }
   function unique(list) { return list.filter(function(x,i){ return x && list.indexOf(x) === i; }); }
   function optionList(values, selected) { return values.map(function(x){ return '<option '+(x===selected?'selected':'')+'>'+esc(x)+'</option>'; }).join(""); }
 
@@ -95,18 +125,45 @@
       (filters.category === "Todas" || item.category === filters.category) &&
       (!filters.detail || item.needsDetail);
   }
-  function suggestion(item) { return STORE_GUIDE[item.category] || STORE_GUIDE.Outros; }
+  function researchFor(item) {
+    var t=plain(item.brand+" "+item.name+" "+item.variant);
+    var profile=RESEARCH_PROFILES.find(function(x){return x.match(t);});
+    if(profile) return profile;
+    var guide=STORE_GUIDE[item.category] || STORE_GUIDE.Outros;
+    if (item.foundStore || safeUrl(item.sourceUrl)) return {
+      confidence:item.foundStore && safeUrl(item.sourceUrl)?"Registrado com fonte":"Informação parcial",
+      tone:item.foundStore && safeUrl(item.sourceUrl)?"confirmed":"partial",
+      summary:"Resultado registrado pelo grupo. Confirme se o link demonstra o produto, o preço e a unidade da loja.",
+      checked:item.checkedAt || "Data não informada",price:item.foundPrice?yen(item.foundPrice):"Preço não informado",
+      sources:safeUrl(item.sourceUrl)?[{label:"Fonte adicionada",url:safeUrl(item.sourceUrl),kind:"Fonte do grupo"}]:[],
+      candidates:item.foundStore?[{store:item.foundStore,area:guide.area||"",day:guide.day||"",query:item.foundStore+" Japan",reason:"Loja registrada pelo grupo.",stock:safeUrl(item.sourceUrl)?"Verificar evidência no link":"Estoque não confirmado"}]:[]
+    };
+    if (guide.store) return {
+      confidence:"Loja compatível com a categoria",tone:"partial",
+      summary:"A loja vende esta categoria, mas o produto e o estoque não foram encontrados. Trate-a apenas como uma possibilidade.",
+      checked:"Não pesquisado",price:"Preço não pesquisado",sources:[],
+      candidates:[{store:guide.store,area:guide.area,day:guide.day,query:guide.query,reason:"Compatível com "+item.category+" e próxima ao roteiro.",stock:"Produto e estoque não confirmados"}]
+    };
+    return {confidence:"Sem resultado confiável",tone:"unverified",summary:"Ainda não há evidência de produto, preço ou loja. Use as pesquisas direcionadas abaixo; o app não atribuirá uma loja automaticamente.",checked:"Não pesquisado",price:"Preço não pesquisado",sources:[],candidates:[]};
+  }
+  function evidenceHtml(item,research) {
+    var sources=research.sources.map(function(s){return '<a href="'+esc(s.url)+'" target="_blank" rel="noopener noreferrer"><b>'+esc(s.label)+'</b><small>'+esc(s.kind)+'</small></a>';}).join("");
+    var candidates=research.candidates.map(function(c){return '<div class="shop-candidate"><div><b>'+esc(c.store)+'</b><span>'+esc([c.area,c.day&&("roteiro de "+c.day)].filter(Boolean).join(" · "))+'</span><p>'+esc(c.reason)+'</p><small>'+esc(c.stock)+'</small></div><div class="shop-candidate-actions">'+(item.foundStore&&safeUrl(item.sourceUrl)?'<a href="'+esc(mapUrl(c.query))+'" target="_blank" rel="noopener noreferrer">Mapa</a>':'')+'</div></div>';}).join("");
+    return '<section class="shop-research '+esc(research.tone)+'"><div class="shop-research-head"><div><small>Pesquisa do produto</small><b>'+esc(research.confidence)+'</b></div><span>Verificado: '+esc(research.checked)+'</span></div><p>'+esc(research.summary)+'</p>'+
+      (research.price?'<div class="shop-research-price">'+esc(research.price)+'</div>':'')+
+      (sources?'<div class="shop-sources">'+sources+'</div>':'')+(candidates?'<div class="shop-candidates">'+candidates+'</div>':'')+
+      '<div class="shop-query-actions"><a href="'+esc(searchUrl(item,""))+'" target="_blank" rel="noopener noreferrer">Pesquisar produto exato</a><a href="'+esc(searchUrl(item,"yodobashi.com"))+'" target="_blank" rel="noopener noreferrer">Yodobashi</a><a href="'+esc(searchUrl(item,"amazon.co.jp"))+'" target="_blank" rel="noopener noreferrer">Amazon Japão</a><a href="'+esc(searchUrl(item,"rakuten.co.jp"))+'" target="_blank" rel="noopener noreferrer">Rakuten</a></div></section>';
+  }
   function itemCard(item, rate) {
-    var guide = suggestion(item), price = Number(item.foundPrice)||0, max = Number(item.maxPrice)||0;
-    var store = item.foundStore || guide.store, source = safeUrl(item.sourceUrl) || guide.source;
+    var research = researchFor(item), price = Number(item.foundPrice)||0, max = Number(item.maxPrice)||0;
     var priceMeta = price ? yen(price)+" · "+brl(price/rate) : "Preço não pesquisado";
     var compare = price && max ? (price <= max ? "Dentro do limite" : "Acima do limite") : "";
     return '<article class="shop-item '+(item.status==="Comprado"?'bought':'')+'" data-shop-card="'+esc(item.id)+'">'+
       '<div class="shop-item-head"><div><small>'+esc(item.category)+'</small><h3>'+esc(item.name)+'</h3><p>'+esc(item.brand || "Marca não informada")+(item.variant?' · '+esc(item.variant):'')+'</p></div>'+
       (item.needsDetail?'<span class="shop-detail-flag">Precisa detalhar</span>':'')+'</div>'+
       '<div class="shop-chips"><span>'+esc(item.owner || "Sem responsável")+'</span><span>'+esc(item.priority)+'</span><span>Qtd. '+esc(item.quantity)+'</span></div>'+
-      '<div class="shop-price"><div><small>Preço encontrado</small><b>'+priceMeta+'</b><span>'+esc(compare)+'</span></div><div><small>Onde procurar primeiro</small><b>'+esc(store)+'</b><span>'+esc(guide.area)+' · roteiro de '+esc(guide.day)+'</span></div></div>'+
-      '<div class="shop-actions"><select data-shop-status="'+esc(item.id)+'">'+optionList(STATUSES,item.status)+'</select><button type="button" data-shop-edit="'+esc(item.id)+'">Editar</button><a href="'+esc(mapUrl(store+' '+guide.area+' Japan'))+'" target="_blank" rel="noopener noreferrer">Mapa</a><a href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">Fonte</a></div>'+
+      '<div class="shop-price"><div><small>Preço registrado</small><b>'+priceMeta+'</b><span>'+esc(compare)+'</span></div><div><small>Confiabilidade da busca</small><b>'+esc(research.confidence)+'</b><span>'+esc(research.tone==="confirmed"?"Há evidência; confirme o estoque da unidade.":"Nenhum estoque foi presumido.")+'</span></div></div>'+evidenceHtml(item,research)+
+      '<div class="shop-actions"><select data-shop-status="'+esc(item.id)+'">'+optionList(STATUSES,item.status)+'</select><button type="button" data-shop-edit="'+esc(item.id)+'">Editar</button></div>'+
       '<div class="shop-editor" data-shop-editor="'+esc(item.id)+'" hidden>'+editorFields(item)+'</div></article>';
   }
   function editorFields(item) {
@@ -129,9 +186,9 @@
     var bought = state.items.filter(function(x){return x.status==="Comprado";}).length;
     var foundTotal = state.items.reduce(function(s,x){return s+(Number(x.foundPrice)||0)*(Number(x.quantity)||1);},0);
     var need = state.items.filter(function(x){return x.needsDetail;}).length;
-    host.innerHTML = '<div class="shopping-shell"><div class="transport-hero shopping-hero"><div><div class="today-eyebrow">Lista colaborativa</div><h2>Compras no Japão</h2><p>Produtos, responsáveis, limites de preço e lojas encaixadas no roteiro.</p></div><button type="button" data-close-shopping>Voltar ao calendário</button></div>'+
+    host.innerHTML = '<div class="shopping-shell"><div class="transport-hero shopping-hero"><div><div class="today-eyebrow">Lista colaborativa</div><h2>Compras no Japão</h2><p>Produtos, responsáveis, preços e pesquisa com evidências.</p></div><button type="button" data-close-shopping>Voltar ao calendário</button></div>'+
       '<section class="shop-summary"><div><small>Itens</small><b>'+state.items.length+'</b></div><div><small>Comprados</small><b>'+bought+'</b></div><div><small>Precisam detalhar</small><b>'+need+'</b></div><div><small>Preço pesquisado</small><b>'+yen(foundTotal)+'</b><span>'+brl(foundTotal/rate)+'</span></div></section>'+
-      '<section class="shop-add"><div><h3>Adicionar item</h3><p>Digite o que procura. Categoria e loja inicial serão sugeridas automaticamente.</p></div><div class="shop-add-grid"><input data-new-shop="name" placeholder="Produto"><input data-new-shop="brand" placeholder="Marca, se souber"><input data-new-shop="owner" placeholder="Responsável"><select data-new-shop="priority">'+optionList(PRIORITIES,"Quero")+'</select><button type="button" data-shop-add>Adicionar</button></div><p class="shop-add-message" data-shop-message></p></section>'+
+      '<section class="shop-add"><div><h3>Adicionar item</h3><p>Quanto mais específico, melhor: produto, marca, modelo, tamanho ou cor. Só mostraremos loja quando houver evidência.</p></div><div class="shop-add-grid"><input data-new-shop="name" placeholder="Produto e modelo"><input data-new-shop="brand" placeholder="Marca"><input data-new-shop="owner" placeholder="Responsável"><select data-new-shop="priority">'+optionList(PRIORITIES,"Quero")+'</select><button type="button" data-shop-add>Adicionar</button></div><p class="shop-add-message" data-shop-message></p></section>'+
       '<section class="shop-filter"><input type="search" data-shop-filter="search" value="'+esc(filters.search)+'" placeholder="Buscar produto, marca ou pessoa"><select data-shop-filter="owner">'+owners.map(function(x){return '<option '+(x===filters.owner?'selected':'')+'>'+esc(x)+'</option>';}).join('')+'</select><select data-shop-filter="status">'+["Todos"].concat(STATUSES).map(function(x){return '<option '+(x===filters.status?'selected':'')+'>'+esc(x)+'</option>';}).join('')+'</select><select data-shop-filter="category">'+categories.map(function(x){return '<option '+(x===filters.category?'selected':'')+'>'+esc(x)+'</option>';}).join('')+'</select><label><input type="checkbox" data-shop-filter="detail" '+(filters.detail?'checked':'')+'> Precisa detalhar</label><label class="shop-rate">¥ por R$ 1<input type="number" min="1" step=".1" data-shop-rate value="'+esc(rate)+'"></label></section>'+
       '<div class="shop-list">'+(items.length?items.map(function(x){return itemCard(x,rate);}).join(''):'<p class="bk-empty">Nenhum item com esses filtros.</p>')+'</div></div>';
     bind(host,state);
