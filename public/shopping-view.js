@@ -318,6 +318,34 @@
       candidates:[{store:"Adidas Factory Outlet Kisarazu",area:"Kisarazu",day:"24/11",query:"Adidas Factory Outlet Kisarazu",reason:"Loja confirmada no outlet já previsto no roteiro.",stock:"Produto e tamanho não definidos"}]
     },
     {
+      match:function(t){ return /oura/.test(t) && /anel|ring/.test(t); },category:"Outros",canonical:"Oura Ring 5 ou Oura Ring 4",
+      confidence:"Produto confirmado; geração, tamanho e acabamento pendentes",tone:"partial",checked:"09/09/2026",price:"Ring 5: US$399 em Silver/Black; US$499 nos demais acabamentos",
+      summary:"O modelo atual é o Oura Ring 5, com 6–9 dias de bateria. A compra exige definir tamanho e acabamento, e o uso completo exige assinatura após o primeiro mês. O Japão é atendido por varejistas autorizados; não presuma estoque físico sem confirmar.",
+      sources:[{label:"Oura Ring 5",url:"https://ouraring.com/store/rings/oura-ring-5",kind:"Oura oficial"},{label:"Países atendidos",url:"https://support.ouraring.com/hc/articles/41056787356307-Supported-Countries",kind:"Oura oficial"},{label:"Compra e tamanho",url:"https://support.ouraring.com/hc/en-us/articles/42984195317779-Retail-Purchases",kind:"Oura oficial"}],
+      candidates:[{store:"SoftBank Ginza",area:"Ginza",day:"19/11",query:"SoftBank Ginza Oura Ring",reason:"A Oura anunciou a unidade como canal japonês. Telefone antes para confirmar Ring 5, kit de tamanho, acabamento e estoque.",stock:"Estoque atual do Ring 5 não confirmado"}]
+    },
+    {
+      match:function(t){ return /ray.?ban/.test(t) && /meta/.test(t); },category:"Outros",canonical:"Ray-Ban Meta Gen 2",
+      confidence:"Produto e venda oficial no Japão confirmados; armação e lente pendentes",tone:"partial",checked:"09/09/2026",price:"Wayfarer Gen 2 desde ¥79.200; outras configurações chegam a ¥89.100",
+      summary:"A linha Gen 2 é vendida oficialmente no Japão. Escolha primeiro formato, tamanho e lente; versões transparentes, solares e polarizadas mudam bastante de preço. Recursos de Meta AI podem variar por país, idioma e conta, então a economia não deve ser o único critério.",
+      sources:[{label:"Ray-Ban Meta Japão",url:"https://www.ray-ban.com/japan/ray-ban-meta-ai-glasses",kind:"Ray-Ban oficial"},{label:"Wayfarer Gen 2",url:"https://www.ray-ban.com/japan/electronics/RW4012ray-ban%20meta%20wayfarer%20-%20gen%202-%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF/8056262721391",kind:"Ray-Ban oficial"}],
+      candidates:[{store:"Ray-Ban Shibuya",area:"Shibuya",day:"21/11",query:"Ray-Ban Shibuya",reason:"Loja oficial adequada para provar formato e tamanho. Confirme Meta Gen 2 antes de ir.",stock:"Modelo e lente não confirmados"},{store:"Ray-Ban Kisarazu",area:"Kisarazu",day:"24/11",query:"Ray-Ban Mitsui Outlet Park Kisarazu",reason:"A loja oficial existe no outlet do roteiro, mas não há evidência de que Ray-Ban Meta participe dos descontos.",stock:"Meta e desconto não confirmados"}]
+    },
+    {
+      match:function(t){ return /booster/.test(t); },category:"Cuidados com a pele",canonical:"Medicube AGE-R Booster Pro",
+      confidence:"Correção provável; precisa confirmar",tone:"partial",checked:"09/09/2026",price:"Loja oficial: ¥45.000; referência @cosme: ¥28.000",
+      summary:"O produto mais provável é o aparelho facial Medicube AGE-R Booster Pro, com quatro modos principais e uso orientado pelo aplicativo. Como 'Booster' também pode significar sérum ou outro aparelho, confirme esta identificação antes de remover o aviso.",
+      sources:[{label:"Booster Pro",url:"https://themedicube.jp/products/boosterpro",kind:"Medicube Japão"},{label:"Referência de varejo",url:"https://www.cosme.net/products/10252345/",kind:"@cosme"}],
+      candidates:[{store:"@cosme TOKYO",area:"Harajuku",day:"22/11",query:"@cosme TOKYO Medicube AGE-R Booster Pro",reason:"O varejista mantém uma página do produto, mas confirme por telefone ou estoque online antes de deslocar-se.",stock:"Estoque da unidade não confirmado"}]
+    },
+    {
+      match:function(t){ return /garmin/.test(t); },category:"Esporte e outdoor",canonical:"Garmin Forerunner, modelo a escolher; comparar COROS APEX 4",
+      confidence:"Linha pesquisada; modelo pendente",tone:"partial",checked:"09/09/2026",price:"165 ¥39.800; 265 ¥60.800; 570 ¥74.800; 965 ¥84.800; 970 ¥121.800",
+      summary:"165 é a opção básica. 265 é o melhor equilíbrio para corrida e triatlo, com GPS multibanda, mas sem mapas. 570 atualiza sensores e adiciona chamadas, porém continua sem mapas. 965 adiciona mapas e tem até 31 h de GPS. 970 reúne mapas, sensor mais novo, ECG e lanterna, mas custa muito mais. Para trilhas longas, compare 970/965 com o COROS APEX 4: mapas globais e 41 h de GPS no 42 mm ou 65 h no 46 mm, desde US$429. Para quem já usa o 265, o 570 é uma evolução pequena; 970 ou APEX 4 produzem uma mudança mais relevante.",
+      sources:[{label:"Comparação Forerunner",url:"https://www.garmin.co.jp/minisite/forerunner/series/",kind:"Garmin Japão"},{label:"Forerunner 970",url:"https://www.garmin.co.jp/products/wearables/forerunner-970-black/",kind:"Garmin Japão"},{label:"COROS APEX 4",url:"https://coros.com/apex4",kind:"COROS oficial"},{label:"Especificações APEX 4",url:"https://coros.com/apex4/specs",kind:"COROS oficial"}],
+      candidates:[{store:"Garmin Store Ginza",area:"Ginza",day:"19/11",query:"Garmin Store Ginza",reason:"Use a loja oficial para experimentar 42/47 mm e comparar 570, 965 e 970. Consulte o estoque do modelo escolhido.",stock:"Modelo não definido"},{store:"Yodobashi Camera",area:"Shinjuku",day:"23/11",query:"Yodobashi Camera Shinjuku Garmin COROS",reason:"Boa opção para comparar preços, mas confirme online quais marcas e modelos estão disponíveis na unidade.",stock:"Estoque não confirmado"}]
+    },
+    {
       match:function(t){ return /\bleki\b/.test(t) && /bastao|caminhada|trekking|pole/.test(t); },
       category:"Esporte e outdoor",
       canonical:"LEKI folding trekking or trail-running poles",
@@ -408,7 +436,8 @@
       "Propolinse mouthwash",
       "Kobayashi Kamu Breath Care",
       "CHPT.9 Pore Clear Serum 30 ml",
-      "Keana Nadeshiko Rice Mask, 10 sheets"
+      "Keana Nadeshiko Rice Mask, 10 sheets",
+      "Medicube AGE-R Booster Pro"
     ].indexOf(profile.canonical) >= 0);
   }
   function isProfileConfirmed(item, profile) {
