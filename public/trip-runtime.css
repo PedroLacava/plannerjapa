@@ -514,6 +514,13 @@ body.shopping-open .shopping-view { display:block; }
 .shop-canonical b { font-size:11px; line-height:1.35; }
 .shop-research > p { margin:0; color:#5f5a51; font-size:11px; line-height:1.45; }
 .shop-research-price { font-size:12px; font-weight:800; }
+.shop-decision { display:flex; justify-content:space-between; gap:10px; align-items:center; padding:9px; border:1px solid #e1c98f; border-radius:8px; background:#fff8e8; }
+.shop-decision.confirmed { border-color:#a9c9a4; background:#eef8ed; }
+.shop-decision > div { display:grid; gap:2px; }
+.shop-decision b { font-size:11px; }
+.shop-decision span { color:#756c5d; font-size:9.5px; }
+.shop-decision button { flex:0 0 auto; padding:7px 9px; border:1px solid #8f7131; border-radius:7px; background:#fff; color:#493612; font-size:10px; font-weight:800; cursor:pointer; }
+.shop-decision.confirmed button { border-color:#71916c; color:#335032; }
 .shop-sources,.shop-query-actions { display:flex; flex-wrap:wrap; gap:6px; }
 .shop-sources a { display:grid; padding:7px 9px; border:1px solid #cfdcc9; border-radius:8px; background:#fff; color:#335032; font-size:11px; text-decoration:none; }
 .shop-sources a small { color:#756c5d; font-size:9px; }
@@ -547,7 +554,7 @@ body.shopping-open .shopping-view { display:block; }
   .shop-filter select { flex:1 1 130px; }
   .shop-rate { margin-left:0; flex:1 0 100%; }
   .shop-price { grid-template-columns:1fr; }
-  .shop-research-head,.shop-candidate { flex-direction:column; }
+  .shop-research-head,.shop-candidate,.shop-decision { flex-direction:column; align-items:stretch; }
 }
 @media (min-width: 761px) {
   .today-view.active {

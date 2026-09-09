@@ -401,6 +401,23 @@
   }
   function unique(list) { return list.filter(function(x,i){ return x && list.indexOf(x) === i; }); }
   function optionList(values, selected) { return values.map(function(x){ return '<option '+(x===selected?'selected':'')+'>'+esc(x)+'</option>'; }).join(""); }
+  function canConfirmProfile(profile) {
+    return !!(profile && [
+      "DHC Fragrant Bulgarian Rose Capsules",
+      "Mocchiri Dense Toothbrush 16000",
+      "Propolinse mouthwash",
+      "Kobayashi Kamu Breath Care",
+      "CHPT.9 Pore Clear Serum 30 ml",
+      "Keana Nadeshiko Rice Mask, 10 sheets"
+    ].indexOf(profile.canonical) >= 0);
+  }
+  function isProfileConfirmed(item, profile) {
+    return !!(canConfirmProfile(profile) && item.profileConfirmed && item.confirmedCanonical === profile.canonical);
+  }
+  function displayDate(value) {
+    var parts=String(value || "").split("-");
+    return parts.length===3 ? parts[2]+"/"+parts[1]+"/"+parts[0] : value;
+  }
 
   var filters = { search:"", owner:"Todos", status:"Todos", category:"Todas", detail:false };
   function visible(item) {
@@ -413,7 +430,15 @@
   }
   function researchFor(item) {
     var profile=productProfile(item);
-    if(profile) return profile;
+    if(profile) {
+      var result=Object.assign({},profile,{confirmable:canConfirmProfile(profile)});
+      if(isProfileConfirmed(item,profile)) {
+        result.confirmed=true;
+        result.confidence="Produto confirmado pelo grupo";
+        result.tone="confirmed";
+      }
+      return result;
+    }
     var guide=STORE_GUIDE[item.category] || STORE_GUIDE.Outros;
     if (item.foundStore || safeUrl(item.sourceUrl)) return {
       confidence:item.foundStore && safeUrl(item.sourceUrl)?"Registrado com fonte":"Informação parcial",
@@ -434,10 +459,13 @@
   function evidenceHtml(item,research) {
     var sources=research.sources.map(function(s){return '<a href="'+esc(s.url)+'" target="_blank" rel="noopener noreferrer"><b>'+esc(s.label)+'</b><small>'+esc(s.kind)+'</small></a>';}).join("");
     var candidates=research.candidates.map(function(c){return '<div class="shop-candidate"><div><b>'+esc(c.store)+'</b><span>'+esc([c.area,c.day&&("roteiro de "+c.day)].filter(Boolean).join(" · "))+'</span><p>'+esc(c.reason)+'</p><small>'+esc(c.stock)+'</small></div><div class="shop-candidate-actions">'+(item.foundStore&&safeUrl(item.sourceUrl)?'<a href="'+esc(mapUrl(c.query))+'" target="_blank" rel="noopener noreferrer">Mapa</a>':'')+'</div></div>';}).join("");
+    var decision=research.confirmable ? (research.confirmed ?
+      '<div class="shop-decision confirmed"><div><b>Produto confirmado</b><span>Escolha registrada em '+esc(displayDate(item.confirmedAt))+'</span></div><button type="button" data-shop-unconfirm="'+esc(item.id)+'">Desfazer confirmação</button></div>' :
+      '<div class="shop-decision"><div><b>Esta é a correção certa?</b><span>Ao confirmar, o aviso “Precisa detalhar” será removido.</span></div><button type="button" data-shop-confirm="'+esc(item.id)+'">Confirmar que é este produto</button></div>') : '';
     return '<section class="shop-research '+esc(research.tone)+'"><div class="shop-research-head"><div><small>Pesquisa do produto</small><b>'+esc(research.confidence)+'</b></div><span>Verificado: '+esc(research.checked)+'</span></div>'+
       (research.canonical?'<div class="shop-canonical"><small>Nome para procurar</small><b>'+esc(research.canonical)+'</b></div>':'')+'<p>'+esc(research.summary)+'</p>'+
       (research.price?'<div class="shop-research-price">'+esc(research.price)+'</div>':'')+
-      (sources?'<div class="shop-sources">'+sources+'</div>':'')+(candidates?'<div class="shop-candidates">'+candidates+'</div>':'')+
+      decision+(sources?'<div class="shop-sources">'+sources+'</div>':'')+(candidates?'<div class="shop-candidates">'+candidates+'</div>':'')+
       '<div class="shop-query-actions"><a href="'+esc(searchUrl(item,""))+'" target="_blank" rel="noopener noreferrer">Pesquisar produto exato</a><a href="'+esc(searchUrl(item,"yodobashi.com"))+'" target="_blank" rel="noopener noreferrer">Yodobashi</a><a href="'+esc(searchUrl(item,"amazon.co.jp"))+'" target="_blank" rel="noopener noreferrer">Amazon Japão</a><a href="'+esc(searchUrl(item,"rakuten.co.jp"))+'" target="_blank" rel="noopener noreferrer">Rakuten</a></div></section>';
   }
   function itemCard(item, rate) {
@@ -493,10 +521,14 @@
         state.items.unshift({id:"s-"+Date.now(),owner:owner,brand:brand,name:name,variant:"",category:cat,quantity:1,priority:host.querySelector('[data-new-shop="priority"]').value,status:"Desejado",maxPrice:"",foundPrice:"",foundStore:"",sourceUrl:"",checkedAt:"",note:"",needsDetail:needsDetail(name,brand),createdAt:new Date().toISOString().slice(0,10)});
         save(state); render(); return;
       }
+      var confirmBtn=e.target.closest("[data-shop-confirm]");
+      if(confirmBtn){id=confirmBtn.dataset.shopConfirm;item=state.items.find(function(x){return x.id===id;});var profile=item&&productProfile(item);if(item&&canConfirmProfile(profile)){item.profileConfirmed=true;item.confirmedCanonical=profile.canonical;item.confirmedAt=new Date().toISOString().slice(0,10);item.needsDetail=false;save(state);render();}return;}
+      var unconfirmBtn=e.target.closest("[data-shop-unconfirm]");
+      if(unconfirmBtn){id=unconfirmBtn.dataset.shopUnconfirm;item=state.items.find(function(x){return x.id===id;});if(item){item.profileConfirmed=false;item.confirmedCanonical="";item.confirmedAt="";item.needsDetail=true;save(state);render();}return;}
       var edit=e.target.closest("[data-shop-edit]");
       if(edit){id=edit.dataset.shopEdit;card=host.querySelector('[data-shop-card="'+id+'"]');var panel=card.querySelector('[data-shop-editor]');panel.hidden=!panel.hidden;edit.textContent=panel.hidden?"Editar":"Fechar";return;}
       var saveBtn=e.target.closest("[data-shop-save]");
-      if(saveBtn){id=saveBtn.dataset.shopSave;item=state.items.find(function(x){return x.id===id;});card=host.querySelector('[data-shop-card="'+id+'"]');if(item&&card){card.querySelectorAll('[data-shop-field]').forEach(function(f){var v=f.type==="checkbox"?f.checked:f.value;item[f.dataset.shopField]=f.type==="number"?(v===""?"":Number(v)):v;});item.checkedAt=item.foundPrice?new Date().toISOString().slice(0,10):item.checkedAt;save(state);render();}return;}
+      if(saveBtn){id=saveBtn.dataset.shopSave;item=state.items.find(function(x){return x.id===id;});card=host.querySelector('[data-shop-card="'+id+'"]');if(item&&card){var oldIdentity=plain([item.name,item.brand,item.variant].join(" "));card.querySelectorAll('[data-shop-field]').forEach(function(f){var v=f.type==="checkbox"?f.checked:f.value;item[f.dataset.shopField]=f.type==="number"?(v===""?"":Number(v)):v;});if(oldIdentity!==plain([item.name,item.brand,item.variant].join(" "))){item.profileConfirmed=false;item.confirmedCanonical="";item.confirmedAt="";}item.checkedAt=item.foundPrice?new Date().toISOString().slice(0,10):item.checkedAt;save(state);render();}return;}
       var del=e.target.closest("[data-shop-delete]");
       if(del&&confirm("Excluir este item da lista compartilhada?")){state.items=state.items.filter(function(x){return x.id!==del.dataset.shopDelete;});save(state);render();}
     });
