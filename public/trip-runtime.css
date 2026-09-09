@@ -509,6 +509,9 @@ body.shopping-open .shopping-view { display:block; }
 .shop-research-head div { display:grid; gap:2px; }
 .shop-research-head small,.shop-research-head span { color:#756c5d; font-size:10px; }
 .shop-research-head b { font-size:12px; }
+.shop-canonical { display:grid; gap:2px; padding:7px 8px; border-radius:7px; background:#fff; }
+.shop-canonical small { color:#756c5d; font-size:9px; text-transform:uppercase; font-weight:800; }
+.shop-canonical b { font-size:11px; line-height:1.35; }
 .shop-research > p { margin:0; color:#5f5a51; font-size:11px; line-height:1.45; }
 .shop-research-price { font-size:12px; font-weight:800; }
 .shop-sources,.shop-query-actions { display:flex; flex-wrap:wrap; gap:6px; }
