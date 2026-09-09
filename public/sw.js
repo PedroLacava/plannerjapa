@@ -1,4 +1,4 @@
-const CACHE = "japlanner-shell-v30";
+const CACHE = "japlanner-shell-v31";
 const SHELL = [
   "/",
   "/planner.html",
@@ -35,7 +35,18 @@ self.addEventListener("activate", (event) =>
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
   if (event.request.method !== "GET" || url.pathname.startsWith("/api/")) return;
-  if (url.origin !== self.location.origin) return;
+  if (url.origin !== self.location.origin) {
+    if (event.request.destination === "image") {
+      event.respondWith(
+        caches.match(event.request).then((hit) => hit || fetch(event.request).then((response) => {
+          var copy = response.clone();
+          caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+          return response;
+        })),
+      );
+    }
+    return;
+  }
   event.respondWith(
     fetch(event.request)
       .then((response) => {

@@ -39,6 +39,13 @@
 
   var RESEARCH_PROFILES = [
     {
+      match:function(t){ return /band.?aid|band aid|bolha.*pe|blister/.test(t); },category:"Saúde e cuidados",canonical:"BAND-AID Kizu Power Pad para bolhas (靴ずれ用)",
+      confidence:"Produto identificado",tone:"confirmed",checked:"09/09/2026",price:"Preço da unidade física ainda não confirmado",
+      summary:"É um curativo hidrocoloide específico para bolhas e feridas por atrito nos pés, com seis unidades. A versão japonesa se chama Kizu Power Pad para 靴ずれ. É para tratar a pele já lesionada; siga as instruções e não use junto com creme ou antisséptico.",
+      sources:[{label:"Kizu Power Pad para bolhas",url:"https://www.band-aid.jp/lineup/medicaltools/blister",kind:"BAND-AID Japão oficial"}],
+      candidates:[{store:"Matsukiyo / Cocokara",area:"Ginza",day:"19/11",query:"BAND-AID キズパワーパッド 靴ずれ用 Matsumoto Kiyoshi Ginza",reason:"Farmácia compatível com o produto; procure pelo nome japonês exato e confirme o pacote de seis unidades.",stock:"Estoque da unidade não confirmado"}]
+    },
+    {
       match:function(t){ return /agua que emagrece/.test(t); },category:"Alimentos",canonical:"7 Premium Hajime Green Tea / Aquarius Triple / Strong Sparkling Water Plus Triple",
       confidence:"Três produtos possíveis",tone:"partial",checked:"09/09/2026",price:"Preço varia por bebida e unidade",
       summary:"A descrição não identifica um único produto. O chá Hajime e o Aquarius Triple alegam ajudar a reduzir gordura corporal; a água gaseificada Plus Triple alega reduzir a absorção de gordura e açúcar. Escolha pela embalagem e finalidade.",
@@ -366,8 +373,40 @@
         {store:"Yodobashi Shinjuku / Ishii Sports",area:"Shinjuku",day:"23/11",query:"LEKI trekking pole Yodobashi Shinjuku",reason:"A rede vende LEKI online e a unidade fica no roteiro. Verifique retirada/estoque no site antes de ir.",stock:"Estoque da unidade não confirmado"},
         {store:"Caravan Sugamo",area:"Sugamo",day:"Dia livre em Tóquio",query:"Caravan Sugamo Tokyo",reason:"Loja da distribuidora japonesa; parte da linha é exclusiva do e-commerce ou desta unidade.",stock:"Modelos variam por loja"}
       ]
+    },
+    {
+      match:function(t){ return /goshi/.test(t) || (/toalha/.test(t) && /esfoliante|banho/.test(t)); },
+      category:"Saúde e cuidados",canonical:"GOSHI Exfoliating Shower Towel",
+      confidence:"Produto identificado",tone:"confirmed",checked:"09/09/2026",
+      price:"US$ 17,49 no site oficial; preço e disponibilidade no Japão precisam ser confirmados",
+      images:[{url:"https://i.ebayimg.com/images/g/TfIAAOSwu05mZVOk/s-l1200.jpg",label:"GOSHI Exfoliating Shower Towel — embalagem"}],
+      summary:"É uma toalha comprida de nylon feita no Japão para ensaboar, alcançar as costas e esfoliar o corpo durante o banho. Não é uma toalha para se secar: as famosas toalhas Imabari são outra categoria, reconhecida por absorção e maciez.",
+      sources:[
+        {label:"GOSHI Exfoliating Shower Towel",url:"https://goshi.com/products/exfoliating-shower-towel",kind:"Marca oficial"},
+        {label:"O que é uma toalha Imabari",url:"https://www.imabaritowel.jp/en",kind:"Associação oficial Imabari"}
+      ],
+      candidates:[{store:"GOSHI — loja oficial",area:"Online",day:"Antes da viagem",query:"GOSHI Exfoliating Shower Towel",reason:"É a fonte confirmada do produto. A marca vende em dólar; confira entrega e prazo antes de comprar.",stock:"Produto online confirmado; varejo físico no Japão não confirmado"}]
     }
   ];
+
+  var AMBIGUOUS_IMAGES = {
+    "Pente ainda não identificado":[{url:"https://image.thum.io/get/width/900/crop/600/noanimate/https://wawaza.com/products/japanese-hair-cleansing-tsuge-wood-comb-suki-gushi/",label:"Referência visual: pente japonês de madeira tsuge — produto ainda não confirmado"}],
+    "Lip balm ainda não identificado":[{url:"https://www.twowanderingsoles.com/wp-content/uploads/2024/01/Cosmetics-from-Japan-768x512.jpg",label:"Referência visual: lip balms japoneses — escolha ainda pendente"}],
+    "Máscaras faciais ainda não definidas":[{url:"https://image.thum.io/get/width/900/crop/600/noanimate/https://matcha-jp.com/en/9174",label:"Referência visual: máscaras faciais japonesas — produto ainda não definido"}],
+    "Produto possivelmente duplicado de Kyusoku Jikan":[{url:"https://1007int.com/cdn/shop/files/imgrc0080677604.jpg?v=1774326709",label:"Referência visual: Kyusoku Jikan — confirmar se o item é duplicado"}]
+  };
+
+  var STORE_IMAGES = {
+    "7-Eleven":"https://image.thum.io/get/width/900/crop/520/noanimate/https://www.sej.co.jp/in/en.html",
+    "Matsukiyo":"https://image.thum.io/get/width/900/crop/520/noanimate/https://www.matsukiyococokara-online.com/",
+    "Don Quijote":"https://image.thum.io/get/width/900/crop/520/noanimate/https://www.donki.com/en/store/shop_detail.php?shop_id=421",
+    "Yodobashi":"https://image.thum.io/get/width/900/crop/520/noanimate/https://www.yodobashi.com/",
+    "MUJI":"https://image.thum.io/get/width/900/crop/520/noanimate/https://www.muji.com/jp/ja/shop/detail/046604",
+    "UNIQLO":"https://image.thum.io/get/width/900/crop/520/noanimate/https://map.uniqlo.com/jp/ja/detail/101013",
+    "2nd STREET":"https://image.thum.io/get/width/900/crop/520/noanimate/https://www.2ndstreet.jp/shop/search",
+    "Onitsuka":"https://image.thum.io/get/width/900/crop/520/noanimate/https://www.onitsukatiger.com/jp/ja-jp/store",
+    "Adidas":"https://image.thum.io/get/width/900/crop/520/noanimate/https://mitsui-shopping-park.com/mop/kisarazu/english/"
+  };
 
   function plain(value) {
     return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -385,7 +424,7 @@
     if (/papelaria|muji/.test(t)) return "Papelaria";
     if (/shampoo|condicionador|mascara|oleo|escova|pente|hair/.test(t)) return "Beleza e cabelo";
     if (/serum|cushion|cream|creme|sabonete|cleasing|pore|collagen|biore|laneige|senka|suisai/.test(t)) return "Cuidados com a pele";
-    if (/capsula|lipcream|enxaguante|halito|salompas|roihi|dor|antipoluicao|refrescante/.test(t)) return "Saúde e cuidados";
+    if (/capsula|lipcream|enxaguante|halito|salompas|roihi|dor|antipoluicao|refrescante|toalha|goshi/.test(t)) return "Saúde e cuidados";
     return "Outros";
   }
   function needsDetail(name, brand) {
@@ -401,7 +440,14 @@
       needsDetail:needsDetail(row[2], row[1]), createdAt:"2026-09-08"
     };
   }
-  var DEFAULTS = { rate:29, items:IMPORTED.map(seedItem) };
+  var EXTRA_ITEMS = [{
+    id:"group-goshi-towel",owner:"Grupo",brand:"GOSHI",name:"Toalha japonesa esfoliante para banho",variant:"Exfoliating Shower Towel",
+    category:"Saúde e cuidados",quantity:1,priority:"Quero",status:"Desejado",maxPrice:"",foundPrice:"",foundStore:"",
+    sourceUrl:"https://goshi.com/products/exfoliating-shower-towel",checkedAt:"2026-09-09",
+    note:"Toalha comprida para ensaboar e esfoliar o corpo. Não confundir com toalha Imabari, que é usada principalmente para se secar.",
+    needsDetail:false,createdAt:"2026-09-09"
+  }];
+  var DEFAULTS = { rate:29, items:IMPORTED.map(seedItem).concat(EXTRA_ITEMS) };
 
   function clone(x) { return JSON.parse(JSON.stringify(x)); }
   function load() {
@@ -465,6 +511,12 @@
     var profile=productProfile(item);
     if(profile) {
       var result=Object.assign({},profile,{confirmable:canConfirmProfile(profile)});
+      if (!result.images || !result.images.length) {
+        result.images = AMBIGUOUS_IMAGES[result.canonical] || (result.sources && result.sources[0] ? [{
+          url:"https://image.thum.io/get/width/900/crop/600/noanimate/"+result.sources[0].url,
+          label:"Referência visual da fonte: "+result.sources[0].label
+        }] : []);
+      }
       if(isProfileConfirmed(item,profile)) {
         result.confirmed=true;
         result.confidence="Produto confirmado pelo grupo";
@@ -489,10 +541,15 @@
     };
     return {confidence:"Sem resultado confiável",tone:"unverified",summary:"Ainda não há evidência de produto, preço ou loja. Use as pesquisas direcionadas abaixo; o app não atribuirá uma loja automaticamente.",checked:"Não pesquisado",price:"Preço não pesquisado",sources:[],candidates:[]};
   }
+  function candidateImage(candidate) {
+    if (candidate.image) return candidate.image;
+    var key=Object.keys(STORE_IMAGES).find(function(name){return plain(candidate.store).indexOf(plain(name))>=0;});
+    return key ? STORE_IMAGES[key] : "https://image.thum.io/get/width/900/crop/520/noanimate/"+mapUrl(candidate.query);
+  }
   function evidenceHtml(item,research) {
     var sources=research.sources.map(function(s){return '<a href="'+esc(s.url)+'" target="_blank" rel="noopener noreferrer"><b>'+esc(s.label)+'</b><small>'+esc(s.kind)+'</small></a>';}).join("");
     var images=(research.images||[]).map(function(img){return '<figure><img src="'+esc(img.url)+'" alt="'+esc(img.label)+'" loading="lazy" onerror="this.closest(\'figure\').hidden=true"><figcaption>'+esc(img.label)+'</figcaption></figure>';}).join("");
-    var candidates=research.candidates.map(function(c){return '<div class="shop-candidate">'+(c.image?'<img class="shop-store-photo" src="'+esc(c.image)+'" alt="Fachada ou interior de '+esc(c.store)+'" loading="lazy" onerror="this.hidden=true">':'')+'<div><b>'+esc(c.store)+'</b><span>'+esc([c.area,c.day&&("roteiro de "+c.day)].filter(Boolean).join(" · "))+'</span><p>'+esc(c.reason)+'</p><small>'+esc(c.stock)+'</small></div><div class="shop-candidate-actions"><a href="'+esc(mapUrl(c.query))+'" target="_blank" rel="noopener noreferrer">Abrir no mapa</a></div></div>';}).join("");
+    var candidates=research.candidates.map(function(c){var photo=candidateImage(c);return '<div class="shop-candidate"><img class="shop-store-photo" src="'+esc(photo)+'" alt="Imagem de referência de '+esc(c.store)+'" loading="lazy" onerror="this.hidden=true"><div><b>'+esc(c.store)+'</b><span>'+esc([c.area,c.day&&("roteiro de "+c.day)].filter(Boolean).join(" · "))+'</span><p>'+esc(c.reason)+'</p><small>'+esc(c.stock)+'</small></div><div class="shop-candidate-actions"><a href="'+esc(mapUrl(c.query))+'" target="_blank" rel="noopener noreferrer">Abrir no mapa</a></div></div>';}).join("");
     var decision=research.confirmable ? (research.confirmed ?
       '<div class="shop-decision confirmed"><div><b>Produto confirmado</b><span>Escolha registrada em '+esc(displayDate(item.confirmedAt))+'</span></div><button type="button" data-shop-unconfirm="'+esc(item.id)+'">Desfazer confirmação</button></div>' :
       '<div class="shop-decision"><div><b>Esta é a correção certa?</b><span>Ao confirmar, o aviso “Precisa detalhar” será removido.</span></div><button type="button" data-shop-confirm="'+esc(item.id)+'">Confirmar que é este produto</button></div>') : '';
