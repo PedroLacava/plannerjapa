@@ -53,6 +53,14 @@
       candidates:[{store:"7-Eleven",area:"Diversas cidades",day:"Qualquer dia",query:"7 Eleven Japan functional drink",reason:"Produtos da linha 7 Premium; procure pelo nome japonês e pela alegação funcional na embalagem.",stock:"Varia por unidade"}]
     },
     {
+      match:function(t){ return /refa/.test(t) && /pente|comb/.test(t); },category:"Beleza e cabelo",canonical:"ReFa HEART COMB Aira",
+      confidence:"Produto provável identificado",tone:"partial",checked:"10/09/2026",price:"Cores regulares ¥2.970; cores Silky e M ¥3.300",
+      images:[{url:"https://tshop.r10s.jp/f231002-nagoya/cabinet/frp_goods/frp037/24611343.jpg?fitin=720%3A720",label:"ReFa HEART COMB Aira — cores de referência"}],
+      summary:"A marca informada aponta para o HEART COMB Aira: pente dobrável de 13 g para franja, laterais e pequenos fios. Ele reduz eletricidade estática e cabe no bolso. Confirme se era este modelo, pois a ReFa também vende novos pentes Aira e modelos exclusivos da Ginza.",
+      sources:[{label:"ReFa HEART COMB Aira",url:"https://www.refa.net/item/refa_heart_comb_aira/",kind:"ReFa oficial"},{label:"Preço e cores",url:"https://www.mtgec.jp/shop/g/g1050411402/",kind:"Loja oficial"}],
+      candidates:[{store:"ReFa GINZA",area:"Ginza",day:"19/11",query:"ReFa GINZA Tokyo",reason:"A loja fica no bairro previsto e permite comparar o HEART COMB Aira com variantes e modelos exclusivos.",stock:"Cor e modelo devem ser confirmados"}]
+    },
+    {
       match:function(t){ return /kit kat/.test(t); },category:"Alimentos",canonical:"KitKat Japan regional and seasonal flavors",
       confidence:"Linha confirmada",tone:"confirmed",checked:"09/09/2026",price:"Preço depende da embalagem e da edição",
       summary:"A Nestlé mantém sabores regulares como matcha, morango e laranja, além de edições regionais e sazonais. Defina se a prioridade é variedade, edição regional ou caixa para presente.",
@@ -375,7 +383,7 @@
       ]
     },
     {
-      match:function(t){ return /goshi/.test(t) || (/toalha/.test(t) && /esfoliante|banho/.test(t)); },
+      match:function(t){ return /goshi/.test(t) || (/toalha/.test(t) && /esfoliante/.test(t)); },
       category:"Saúde e cuidados",canonical:"GOSHI Exfoliating Shower Towel",
       confidence:"Produto identificado",tone:"confirmed",checked:"09/09/2026",
       price:"US$ 17,49 no site oficial; preço e disponibilidade no Japão precisam ser confirmados",
@@ -386,6 +394,23 @@
         {label:"O que é uma toalha Imabari",url:"https://www.imabaritowel.jp/en",kind:"Associação oficial Imabari"}
       ],
       candidates:[{store:"GOSHI — loja oficial",area:"Online",day:"Antes da viagem",query:"GOSHI Exfoliating Shower Towel",reason:"É a fonte confirmada do produto. A marca vende em dólar; confira entrega e prazo antes de comprar.",stock:"Produto online confirmado; varejo físico no Japão não confirmado"}]
+    },
+    {
+      match:function(t){ return /imabari|今治|sugoi hotel|sugoi towel/.test(t); },
+      category:"Saúde e cuidados",canonical:"Imabari Sugoi Hotel-spec Bath Towel (すごいホテル仕様タオル)",
+      confidence:"Produto identificado",tone:"confirmed",checked:"10/09/2026",
+      price:"¥6.270; aproximadamente 73 × 140 cm",
+      images:[{url:"https://tshop.r10s.jp/makasetaro/cabinet/item04/bna001_main00m.jpg?fitin=720%3A720",label:"Imabari Sugoi Towel — toalha de banho para secagem"}],
+      summary:"Toalha de banho japonesa para se secar, feita em algodão e com construção espessa de padrão hoteleiro. Imabari não é uma única fabricante: é uma certificação regional com exigências próprias, incluindo absorção rápida. Procure o selo oficial vermelho, azul e branco.",
+      sources:[
+        {label:"Tipos de toalha de banho",url:"https://imabari-towel.jp/shop/pages/bath_towel_type.aspx",kind:"Loja oficial Imabari"},
+        {label:"Padrão e absorção Imabari",url:"https://www.imabaritowel.jp/en",kind:"Associação oficial"},
+        {label:"Lojas oficiais",url:"https://www.imabaritowel.jp/en/store",kind:"Associação oficial"}
+      ],
+      candidates:[
+        {store:"Imabari Towel Minami-Aoyama",area:"Omotesando",day:"22/11",query:"Imabari Towel Minami Aoyama Store",reason:"Loja oficial com towel sommelier; é a melhor opção para tocar e comparar maciez, espessura e peso antes da compra.",stock:"Modelo específico deve ser confirmado"},
+        {store:"Imabari Towel Official Online Store",area:"Online no Japão",day:"Antes da viagem",query:"Imabari Towel Official Online Store",reason:"Catálogo oficial para conferir cores, medidas e disponibilidade antes de visitar a loja.",stock:"Disponibilidade online varia"}
+      ]
     }
   ];
 
@@ -446,6 +471,12 @@
     sourceUrl:"https://goshi.com/products/exfoliating-shower-towel",checkedAt:"2026-09-09",
     note:"Toalha comprida para ensaboar e esfoliar o corpo. Não confundir com toalha Imabari, que é usada principalmente para se secar.",
     needsDetail:false,createdAt:"2026-09-09"
+  },{
+    id:"group-imabari-bath-towel",owner:"Grupo",brand:"Imabari Towel",name:"Toalha de banho japonesa famosa para secar",variant:"Sugoi Hotel-spec Bath Towel",
+    category:"Saúde e cuidados",quantity:1,priority:"Quero",status:"Desejado",maxPrice:"6270",foundPrice:"",foundStore:"",
+    sourceUrl:"https://imabari-towel.jp/shop/pages/bath_towel_type.aspx",checkedAt:"2026-09-10",
+    note:"Toalha de banho de algodão para secagem. Procurar o selo oficial Imabari. Não é uma toalha esfoliante.",
+    needsDetail:false,createdAt:"2026-09-10"
   }];
   var DEFAULTS = { rate:29, items:IMPORTED.map(seedItem).concat(EXTRA_ITEMS) };
 
@@ -487,7 +518,8 @@
       "Kobayashi Kamu Breath Care",
       "CHPT.9 Pore Clear Serum 30 ml",
       "Keana Nadeshiko Rice Mask, 10 sheets",
-      "Medicube AGE-R Booster Pro"
+      "Medicube AGE-R Booster Pro",
+      "ReFa HEART COMB Aira"
     ].indexOf(profile.canonical) >= 0);
   }
   function isProfileConfirmed(item, profile) {
