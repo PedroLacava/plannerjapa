@@ -92,6 +92,24 @@ body.shopping-open .shopping-view { display:block; }
 .daily-override span { margin:0 !important; }
 .daily-budget-table td > small { display:block; margin-top:3px; color:#8a8478; }
 .budget-guidance p { margin:8px 0; }
+.transport-routes { padding:16px; border:1px solid #ddd4c4; border-radius:14px; background:#fff; }
+.transport-route-list { display:grid; gap:7px; }
+.transport-day { border:1px solid #e5ded2; border-radius:10px; background:#fcfaf6; overflow:hidden; }
+.transport-day summary { display:grid; grid-template-columns:180px minmax(260px,1fr) 210px; gap:12px; align-items:center; padding:11px 12px; cursor:pointer; list-style:none; }
+.transport-day summary::-webkit-details-marker { display:none; }
+.transport-day summary:before { content:"+"; grid-column:1; grid-row:1; align-self:start; width:18px; color:#47705a; font-size:18px; font-weight:900; }
+.transport-day[open] summary:before { content:"−"; }
+.transport-day-date { grid-column:1; grid-row:1; padding-left:25px; }
+.transport-day-date b,.transport-day-date span,.transport-day-total b,.transport-day-total span,.transport-day-chain { display:block; }
+.transport-day-date span,.transport-day-total span { margin-top:2px; color:#756c5d; font-size:10px; }
+.transport-day-chain { color:#625b50; font-size:11px; line-height:1.4; }
+.transport-day-total { text-align:right; }
+.transport-day-total b { font-size:16px; }
+.transport-day ul { margin:0; padding:0 12px 8px 42px; list-style:none; }
+.transport-day li { display:flex; justify-content:space-between; gap:16px; padding:9px 0; border-top:1px solid #eee8dd; }
+.transport-day li b,.transport-day li span { display:block; }
+.transport-day li span { margin-top:2px; color:#756c5d; font-size:10px; }
+.transport-leg-price { min-width:115px; text-align:right; }
 .detail-kind { display:inline-block !important; width:max-content; margin-bottom:3px; padding:2px 5px; border-radius:999px; background:#e7f3f8; color:#285c75; font-size:9px; font-weight:800; text-transform:uppercase; }
 .detail-kind.activity { background:#f1e8fb; color:#6a3fa0; }
 .final-transfer-select { flex:1 0 100%; }
@@ -480,6 +498,11 @@ body.shopping-open .shopping-view { display:block; }
   .budget-presets,.budget-input-grid,.budget-breakdown { grid-template-columns:1fr 1fr; }
   .budget-config-head { align-items:flex-start; flex-direction:column; }
   .budget-config-head small { text-align:left; }
+  .transport-day summary { grid-template-columns:1fr auto; gap:7px; }
+  .transport-day-date { grid-column:1; }
+  .transport-day-chain { grid-column:1 / -1; padding-left:25px; }
+  .transport-day-total { grid-column:2; grid-row:1; }
+  .transport-day ul { padding-left:12px; }
   .transport-check { margin-left:0; flex:1 0 100%; }
   .transport-table-wrap { overflow:visible; border:0; background:transparent; }
   .transport-table thead { display:none; }
