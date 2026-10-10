@@ -6,8 +6,8 @@
     "08/11": ["Chegada em Haneda e hotel", ["Deslocamento"]],
     "09/11": ["Mudança para Osaka + Dotonbori", ["Deslocamento", "Geral"]],
     "10/11": ["Osaka central: mercados, cultura pop e castelo", ["Geral", "Compras", "História e cultura"]],
-    "11/11": ["Fushimi Inari + Arashiyama", ["História e cultura", "Natureza"]],
-    "12/11": ["Gion + cerimônia do chá + Nishiki", ["História e cultura", "Alimentação"]],
+    "11/11": ["Kyoto com guia: Fushimi + Tofuku-ji + Higashiyama", ["História e cultura", "Natureza"]],
+    "12/11": ["Arashiyama + Saihō-ji + Kinkaku-ji + chá", ["História e cultura", "Natureza", "Alimentação"]],
     "13/11": ["Nara + Uji", ["História e cultura", "Natureza"]],
     "14/11": ["Castelo de Himeji + Kobe", ["História e cultura", "Geral"]],
     "15/11": ["Dia livre em Osaka", ["Geral"]],
@@ -69,6 +69,7 @@
   function moneyInput(id, label, value) { return '<label><span>' + label + '</span><div><em>¥</em><input id="' + id + '" type="number" min="0" step="100" value="' + esc(value) + '"></div></label>'; }
   function transportKind(x) {
     if (!Number(x[5])) return "free";
+    if (x[8] === "local") return x[6] === "yes" ? "localJr" : "localOther";
     if (x[6] === "yes") return ["10/11", "22/11", "25/11"].indexOf(x[0]) !== -1 ? "localJr" : "tripJr";
     if (/Ônibus rodoviário|Access Express/i.test(x[3]) || (x[0] === "27/11" && /Narita/i.test(x[2]))) return "tripOther";
     return "localOther";
