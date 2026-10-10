@@ -33,7 +33,8 @@ function T(id,date,name,place,tour,when){return{id:id,group:"transport",urgency:
 
 var ITEMS=[
  {id:"b-ryokan-hakone",group:"now",urgency:"alta",date:"17–18/11/2026",name:"Ryokan em Hakone",place:"Hakone",tour:null,url:"https://hakone-japan.com/plan-your-trip/accommodations/historic-ryokan/",window:"Reservar agora — ryokans com jantar esgotam com meses de antecedência.",tip:"Confirmar jantar para 4, configuração de quartos, onsen privativo e política de tatuagem."},
- {id:"b-tea-camellia",group:"now",urgency:"alta",date:"12/11/2026",name:"Cerimônia do chá Camellia Flower",place:"Kyoto",tour:"gion-tea",url:"https://tea-kyoto.com/reservation/flower",window:"Reservar agora — poucas vagas por horário.",tip:"Escolher horário compatível com o restante do dia em Kyoto."},
+ {id:"b-tea-camellia",group:"now",urgency:"alta",date:"12/11/2026",name:"Cerimônia do chá Camellia Flower",place:"Kyoto",tour:"kyoto-west-saihoji",url:"https://tea-kyoto.com/reservation/flower",window:"Reservar agora — poucas vagas por horário.",tip:"Condicionada à confirmação do horário do Saihō-ji; idealmente 16:30."},
+ {id:"b-saihoji",group:"now",urgency:"alta",date:"12/11/2026",name:"Saihō-ji (Kokedera)",place:"Kyoto (oeste)",tour:"kyoto-west-saihoji",url:"https://saihoji-kokedera.com/en/",window:"Reservar agora — visita só com reserva antecipada.",tip:"Valor indicativo mínimo de ¥4.000.",defaultNote:"Reserva obrigatória; buscar horário próximo das 10h."},
  {id:"b-disneysea",group:"open",urgency:"alta",date:"25/11/2026",name:"Tokyo DisneySea",place:"Tóquio (Urayasu)",tour:"disney",url:"https://www.tokyodisneyresort.jp/en/ticket/index.html",window:"Normalmente 2 meses antes da data.",tip:"Ingresso com data marcada; conferir a abertura oficial de vendas."},
  {id:"b-teamlab",group:"open",urgency:"alta",date:"19/11/2026",name:"teamLab Planets",place:"Toyosu, Tóquio",tour:"teamlab-planets",url:"https://teamlabplanets.dmm.com/en",window:"Comprar quando novembro abrir.",tip:"Ingresso com horário marcado."},
  {id:"b-shibuya-sky",group:"open",urgency:"alta",date:"21/11/2026",name:"Shibuya Sky",place:"Shibuya, Tóquio",tour:"shibuya-harajuku",url:"https://www.shibuya-scramble-square.com/sky/ticket/",window:"Normalmente 14 dias antes.",tip:"Preferência por 15h30–16h."},
@@ -59,8 +60,8 @@ function yen(n){return"¥"+Math.round(n).toLocaleString("pt-BR");}
 function brl(n){return"R$ "+Number(n).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});}
 function totals(s,rate){return s.accommodations.reduce(function(t,a){var v=Number(a.amount)||0;if(a.currency==="JPY"){t.jpy+=v;t.brl+=v/rate;}else{t.brl+=v;t.jpy+=v*rate;}return t;},{jpy:0,brl:0});}
 function domain(u){try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return u;}}
-function entryOf(s,id){var b=s.bookings[id];return{status:b&&b.status?b.status:"Pendente",note:b&&b.note?b.note:""};}
-function setEntry(s,id,patch){var cur=entryOf(s,id);s.bookings[id]={status:patch.status!=null?patch.status:cur.status,note:patch.note!=null?patch.note:cur.note};}
+function entryOf(s,id){var b=s.bookings[id];var it=ITEMS.filter(function(i){return i.id===id;})[0];return{status:b&&b.status?b.status:"Pendente",note:b&&b.note!=null&&b.note!==""?b.note:(b&&b.note===""&&b.touched?"":(it&&it.defaultNote)||"")};}
+function setEntry(s,id,patch){var cur=entryOf(s,id);s.bookings[id]={status:patch.status!=null?patch.status:cur.status,note:patch.note!=null?patch.note:cur.note,touched:true};}
 function isDone(st){return st==="Comprado"||st==="Reservado"||st==="Não se aplica";}
 
 window.JaplannerReservations={getState:load,getAccommodationTotals:function(rate){return totals(load(),rate||29);}};
