@@ -8,7 +8,6 @@ const SHELL = [
   "/activities-view.js",
   "/budget-view.js",
   "/reservations-view.js",
-  "/reservations-view.js",
   "/shopping-view.js",
   "/manifest.webmanifest",
   "/icons/icon-180.png",
