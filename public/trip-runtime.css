@@ -82,7 +82,7 @@ body.shopping-open .shopping-view { display:block; }
 .budget-input-grid em { color:#8a8478; font-style:normal; }
 .budget-trip-controls input#budget-shopping { width:100px; }
 .budget-summary { grid-template-columns:repeat(4,1fr); }
-.budget-breakdown { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+.budget-breakdown { display:grid; grid-template-columns:repeat(auto-fit,minmax(135px,1fr)); gap:8px; }
 .budget-breakdown > div { padding:11px 12px; border-radius:10px; background:#edf4ef; border:1px solid #d6e5da; }
 .budget-breakdown span,.budget-breakdown small { display:block; color:#657268; font-size:10px; }
 .budget-breakdown b { display:block; margin:3px 0; font-size:16px; }
@@ -92,6 +92,25 @@ body.shopping-open .shopping-view { display:block; }
 .daily-override span { margin:0 !important; }
 .daily-budget-table td > small { display:block; margin-top:3px; color:#8a8478; }
 .budget-guidance p { margin:8px 0; }
+.transport-separation { padding:16px; border:1px solid #cfded3; border-radius:14px; background:#f7fbf8; }
+.transport-split-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.transport-split-grid article { padding:12px; border:1px solid #d6e5da; border-radius:10px; background:#fff; }
+.transport-split-grid span,.transport-split-grid b,.transport-split-grid small { display:block; }
+.transport-split-grid span { color:#47705a; font-size:10px; font-weight:900; text-transform:uppercase; }
+.transport-split-grid b { margin:5px 0 3px; font-size:19px; }
+.transport-split-grid small { color:#756c5d; font-size:10px; line-height:1.35; }
+.pass-comparison { margin-top:12px; padding-top:12px; border-top:1px solid #d6e5da; }
+.pass-comparison-head { display:flex; justify-content:space-between; gap:12px; margin-bottom:8px; }
+.pass-comparison-head span { color:#756c5d; font-size:11px; }
+.pass-comparison-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:7px; }
+.pass-comparison-grid article { padding:11px; border:1px solid #e1dbcf; border-radius:10px; background:#fff; }
+.pass-comparison-grid article.best { border-color:#78a486; background:#edf7f0; }
+.pass-comparison-grid span,.pass-comparison-grid b,.pass-comparison-grid small,.pass-comparison-grid em,.pass-comparison-grid p { display:block; }
+.pass-comparison-grid span { min-height:27px; color:#625b50; font-size:10px; font-weight:900; text-transform:uppercase; }
+.pass-comparison-grid b { margin:5px 0 2px; font-size:18px; }
+.pass-comparison-grid small { color:#756c5d; font-size:10px; }
+.pass-comparison-grid em { margin-top:7px; color:#355b42; font-size:10px; font-style:normal; font-weight:900; }
+.pass-comparison-grid p { margin:5px 0 0; color:#756c5d; font-size:9px; line-height:1.35; }
 .transport-routes { padding:16px; border:1px solid #ddd4c4; border-radius:14px; background:#fff; }
 .transport-route-list { display:grid; gap:7px; }
 .transport-day { border:1px solid #e5ded2; border-radius:10px; background:#fcfaf6; overflow:hidden; }
@@ -109,6 +128,12 @@ body.shopping-open .shopping-view { display:block; }
 .transport-day li { display:flex; justify-content:space-between; gap:16px; padding:9px 0; border-top:1px solid #eee8dd; }
 .transport-day li b,.transport-day li span { display:block; }
 .transport-day li span { margin-top:2px; color:#756c5d; font-size:10px; }
+.transport-kind { display:inline-block !important; width:max-content; margin:0 0 4px !important; padding:2px 6px; border-radius:999px; font-size:8px !important; font-weight:900; letter-spacing:.03em; text-transform:uppercase; }
+.transport-tripJr { background:#ddecf7 !important; color:#245a78 !important; }
+.transport-tripOther { background:#f4e7d1 !important; color:#7d5321 !important; }
+.transport-localJr { background:#e7f2e9 !important; color:#3b6848 !important; }
+.transport-localOther { background:#eee9f5 !important; color:#625075 !important; }
+.transport-free { background:#eeeae3 !important; color:#716a60 !important; }
 .transport-leg-price { min-width:115px; text-align:right; }
 .detail-kind { display:inline-block !important; width:max-content; margin-bottom:3px; padding:2px 5px; border-radius:999px; background:#e7f3f8; color:#285c75; font-size:9px; font-weight:800; text-transform:uppercase; }
 .detail-kind.activity { background:#f1e8fb; color:#6a3fa0; }
@@ -495,7 +520,9 @@ body.shopping-open .shopping-view { display:block; }
   .transport-hero h2 { font-size:21px; }
   .transport-hero button { display:none; }
   .transport-summary,.pass-grid { grid-template-columns:1fr; }
-  .budget-presets,.budget-input-grid,.budget-breakdown { grid-template-columns:1fr 1fr; }
+  .budget-presets,.budget-input-grid,.budget-breakdown,.transport-split-grid { grid-template-columns:1fr 1fr; }
+  .pass-comparison-grid { grid-template-columns:1fr; }
+  .pass-comparison-head { align-items:flex-start; flex-direction:column; }
   .budget-config-head { align-items:flex-start; flex-direction:column; }
   .budget-config-head small { text-align:left; }
   .transport-day summary { grid-template-columns:1fr auto; gap:7px; }
