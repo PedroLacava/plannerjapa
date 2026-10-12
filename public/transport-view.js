@@ -32,7 +32,7 @@
     ["12/11", "Tenryu-ji", "Saihō-ji", "Táxi (grupo de 4)", "Táxi", 600, "no", "Estimativa por pessoa; ~¥2.400 por carro", "local"],
     ["12/11", "Saihō-ji", "Kinkaku-ji", "Táxi (grupo de 4)", "Táxi", 1000, "no", "Estimativa por pessoa; ~¥4.000 por carro; almoço no caminho", "local"],
     ["12/11", "Kinkaku-ji", "Nishiki Market", "Táxi ou ônibus", "Táxi/Kyoto City Bus", 500, "no", "Estimativa por pessoa", "local"],
-    ["12/11", "Nishiki Market", "Gion", "Caminhada", "—", 0, "no", "Cerimônia do chá e Gion", "local"],
+    ["12/11", "Nishiki Market", "Gion", "Caminhada", "—", 0, "no", "Fim de tarde livre em Gion", "local"],
     ["12/11", "Gion", "Kyoto Station", "Ônibus urbano", "Kyoto City Bus", 230, "no", "Ou táxi no fim do dia", "local"],
     ["12/11", "Kyoto", "Shin-Osaka", "JR Special Rapid", "JR", 580, "yes", "Ticket intermunicipal de retorno"],
 
@@ -40,6 +40,9 @@
     ["13/11", "JR Nara", "Nara Park", "Ônibus urbano", "Nara Kotsu", 250, "no", "Também é possível caminhar"],
     ["13/11", "Nara Park", "JR Nara", "Ônibus urbano", "Nara Kotsu", 250, "no", "Retorno à estação"],
     ["13/11", "JR Nara", "Uji", "JR Nara Line", "JR", 510, "yes", "Byodoin"],
+    ["13/11", "Uji Station", "Byodoin", "Caminhada", "—", 0, "no", "Cerca de 12 minutos", "local"],
+    ["13/11", "Byodoin", "Taihō-an", "Caminhada", "—", 0, "no", "Casa municipal de chá próxima ao templo", "local"],
+    ["13/11", "Taihō-an", "Uji Station", "Caminhada", "—", 0, "no", "Retorno pela área do rio Uji", "local"],
     ["13/11", "Uji", "Shin-Osaka", "JR Nara/Kyoto Line", "JR", 990, "yes", "Conexão em Kyoto"],
 
     ["14/11", "Shin-Osaka", "Himeji", "Sanyo Shinkansen", "JR", 3280, "yes", "Reservar assento se não usar passe regional"],

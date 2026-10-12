@@ -18,11 +18,11 @@
     ["12/11", "Saihō-ji (Kokedera)", "Kyoto", 4000, "Estimativa", "Valor indicativo mínimo; exige reserva antecipada", "yes", "https://saihoji-kokedera.com/en/"],
     ["12/11", "Kinkaku-ji", "Kyoto", 500, "Planejado", "Pavilhão Dourado", "no", "https://www.shokoku-ji.jp/en/kinkakuji/"],
     ["12/11", "Mercado Nishiki", "Kyoto", 0, "Livre", "Comidas e compras à parte", "no", "https://kyoto.travel/en/other-attractions/376.html"],
-    ["12/11", "Cerimônia do chá", "Kyoto", 3500, "Estimativa", "~16:30, condicionada ao horário do Saihō-ji", "yes", "https://tea-kyoto.com/reservation/flower"],
     ["12/11", "Gion", "Kyoto", 0, "Livre", "Caminhada ao entardecer", "no", "https://kyoto.travel/en/areas/gion-higashiyama.html"],
     ["13/11", "Parque de Nara", "Nara", 0, "Livre", "Biscoitos para os cervos à parte", "no", "https://www3.pref.nara.jp/park/"],
     ["13/11", "Tōdai-ji, Grande Salão do Buda", "Nara", 800, "Planejado", "Museu separado não incluído", "no", "https://www.todaiji.or.jp/en/information/haikan/"],
     ["13/11", "Byodoin", "Uji", 700, "Planejado", "Jardim e Museu Hoshokan", "no", "https://www.byodoin.or.jp/en/guide/"],
+    ["13/11", "Experiência de chá na Taihō-an", "Uji", 3600, "Planejado", "Preparo de matcha ou sencha; cerca de 40 minutos", "yes", "https://www.kyoto-uji-kankou.or.jp/taihoan-en.html"],
     ["14/11", "Castelo de Himeji", "Himeji", 2500, "Planejado", "Tarifa para visitante adulto desde março de 2026", "no", "https://www.himejicastle.jp/en/"],
     ["14/11", "Kobe", "Kobe", 0, "Livre", "Passeio urbano; atrações pagas não definidas", "no", "https://www.feel-kobe.jp/en/"],
     ["15/11", "Dia livre", "Osaka", 0, "Pendente", "Nenhum passeio escolhido ainda", "no", ""],
@@ -72,7 +72,7 @@
     host.innerHTML = '<div class="transport-shell activity-shell"><div class="transport-hero"><div><div class="today-eyebrow">Planejamento financeiro</div><h2>Passeios e ingressos</h2><p>Todos os passeios do roteiro atual, gratuitos e pagos, com valores por adulto e necessidade de reserva.</p></div><button type="button" data-close-activities>Voltar ao calendário</button></div>' +
       '<div class="transport-controls"><label>Pessoas <input id="activity-people" type="number" min="1" max="12" value="4"></label><label>¥ por R$ 1 <input id="activity-rate" type="number" min="1" step="0.1" value="29"></label></div>' +
       '<div class="transport-summary"><div><span>Ingressos por pessoa</span><b data-activity-single>' + yen(base) + '</b><small data-activity-single-brl></small></div><div><span>Grupo completo</span><b data-activity-group></b><small data-activity-group-brl></small></div><div><span>Composição do roteiro</span><b>' + paidCount + ' pagos · ' + freeCount + ' grátis</b><small>Alimentação, compras, transporte e hospedagem não incluídos</small></div></div>' +
-      '<div class="transport-note"><b>Importante:</b> DisneySea e teamLab usam preços variáveis e ainda não liberaram o valor definitivo para as datas da viagem. A cerimônia do chá depende da escolha do fornecedor. Esses itens estão incluídos com estimativas conservadoras.</div>' +
+      '<div class="transport-note"><b>Importante:</b> DisneySea e teamLab usam preços variáveis e ainda não liberaram o valor definitivo para as datas da viagem. A experiência da Taihō-an usa o preço oficial de 2026 e depende de disponibilidade. Esses itens estão incluídos no planejamento.</div>' +
       '<div class="transport-table-wrap"><table class="transport-table activity-table"><thead><tr><th>Data</th><th>Passeio</th><th>Valor</th><th>Status</th><th>Reserva</th><th>Observação</th></tr></thead><tbody>' + ACTIVITIES.map(row).join("") + '</tbody></table></div></div>';
     function update() {
       var people = Math.max(1, Number(document.getElementById("activity-people").value) || 1);

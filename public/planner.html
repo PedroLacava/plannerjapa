@@ -1633,7 +1633,7 @@
     <div id="print-view"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="/trip-runtime.js?v=2"></script>
+    <script src="/trip-runtime.js?v=3"></script>
     <script>
       var SHARED_KEYS = [
         "japan-trip-planner-v3",
@@ -5110,8 +5110,8 @@
           },
           "kyoto-west-saihoji": {
             "icon": "🎋",
-            "label": "Arashiyama + Saihō-ji + Kinkaku-ji + chá",
-            "hours": 12,
+            "label": "Arashiyama + Saihō-ji + Kinkaku-ji",
+            "hours": 11.5,
             "region": "kyoto",
             "colorKey": "kyoto",
             "travel": "🚆 Saída 06:15 · JR até Saga-Arashiyama · táxis entre templos · volta JR de Kyoto",
@@ -5119,14 +5119,14 @@
               "Bamboo Grove 07:20 e Tenryu-ji 08:00",
               "⚠️ Saihō-ji (Kokedera) exige reserva antecipada — ordem depende do horário reservado",
               "Kinkaku-ji 13:15 e Nishiki Market 15:15",
-              "Cerimônia do chá ~16:30, condicionada ao horário do Saihō-ji"
+              "Fim de tarde livre em Gion, sem outra reserva com horário rígido"
             ],
             "guide": {
-              "cardTitle": "Arashiyama + Saihō-ji + Kinkaku-ji + chá",
+              "cardTitle": "Arashiyama + Saihō-ji + Kinkaku-ji",
               "icon": "🎋",
-              "hours": 12,
+              "hours": 11.5,
               "city": "Kyoto",
-              "intro": "Dia no oeste de Kyoto: Arashiyama bem cedo, o jardim de musgo do Saihō-ji (somente com reserva), Kinkaku-ji, Nishiki Market e cerimônia do chá antes de Gion. A ordem exata da manhã depende do horário confirmado no Saihō-ji.",
+              "intro": "Dia no oeste de Kyoto: Arashiyama bem cedo, o jardim de musgo do Saihō-ji (somente com reserva), Kinkaku-ji, Nishiki Market e um fim de tarde sem pressa em Gion. A ordem exata da manhã depende do horário confirmado no Saihō-ji.",
               "images": [],
               "videos": [],
               "hiddenGems": [],
@@ -5188,16 +5188,11 @@
                 },
                 {
                   "time": "16:30",
-                  "place": "Cerimônia do chá",
-                  "note": "Condicionada à confirmação do horário do Saihō-ji; idealmente 16:30."
-                },
-                {
-                  "time": "17:30",
                   "place": "Gion",
-                  "note": "Caminhada ao entardecer."
+                  "note": "Caminhada ao entardecer, sem outra reserva com horário rígido."
                 },
                 {
-                  "time": "19:00",
+                  "time": "18:30",
                   "place": "Retorno a Osaka",
                   "note": "Ônibus/táxi até Kyoto Station e JR Special Rapid para Shin-Osaka."
                 }
@@ -6842,20 +6837,20 @@
           "nara-uji": {
             icon: "🦌",
             label: "Nara + Uji",
-            hours: 7,
+            hours: 10.5,
             region: "far",
             colorKey: "far",
             travel: "🚄 ~45min de Osaka · JR Nara Line (JR Pass)",
             bullets: [
               "Veados livres pedindo comida",
               "Todai-ji: Buda gigante de bronze",
-              "Uji: templo da moeda de 10¢ + cerimônia do chá",
+              "Uji: Byodoin + experiência de chá na Taihō-an",
               "Day trip mais longe — não combine com outro passeio",
             ],
             guide: {
               cardTitle: "Nara + Uji",
               icon: "🦌",
-              hours: 7.0,
+              hours: 10.5,
               city: "Kansai/Chugoku",
               intro:
                 "Combine a serenidade espiritual de Nara com a elegância de Uji em um único dia. Nara é famosa por seus cervos amigáveis e o Grande Buda, enquanto Uji é o berço do chá verde matcha de alta qualidade e lar do deslumbrante Templo Byodo-in.",
@@ -6913,6 +6908,11 @@
                   why: "Um dos templos mais bonitos do Japão, sua imagem estampa a moeda de 10 ienes. O Salão da Fênix parece flutuar sobre um lago, criando uma visão espetacular.",
                   bestTime:
                     "Início da tarde, quando a luz do sol ilumina a fachada do templo, ideal para fotos.",
+                },
+                {
+                  name: "Experiência de chá na Taihō-an (Uji)",
+                  why: "Casa municipal de chá de Uji; experiência de preparo de matcha ou sencha em ambiente tradicional.",
+                  bestTime: "Reservar por volta das 15:45, depois do Byodo-in e antes do retorno a Osaka.",
                 },
               ],
               hiddenGems: [
@@ -6977,9 +6977,19 @@
                   note: "Saia da estação JR Uji e caminhe pela rua Uji Bashi Dori. Visite o magnífico Templo Byodo-in e seu museu.",
                 },
                 {
-                  time: "16:00",
+                  time: "15:45",
+                  place: "Taihō-an",
+                  note: "Experiência reservada de preparo de matcha ou sencha; cerca de 40 minutos e ¥3.600 por pessoa.",
+                },
+                {
+                  time: "16:30",
                   place: "Rua Byodo-in Omotesando",
-                  note: "Passeie pela rua do chá. Pare na Nakamura Tokichi ou Itohkyuemon para um parfait de matcha ou para comprar chá de alta qualidade como souvenir.",
+                  note: "Passeio curto pela rua do chá antes de retornar à estação de Uji.",
+                },
+                {
+                  time: "17:00",
+                  place: "Retorno a Osaka",
+                  note: "JR Nara Line até Kyoto e conexão para Shin-Osaka.",
                 },
               ],
             },
@@ -7827,6 +7837,21 @@
           return true;
         }
 
+        function applyTaihoanTeaV1(sourcePlan) {
+          sourcePlan._updates = sourcePlan._updates || {};
+          if (sourcePlan._updates.taihoanTeaV1) return false;
+          var day12 = sourcePlan["2026-11-12"] || (sourcePlan["2026-11-12"] = emptyDay());
+          day12.base = day12.base || "osaka";
+          day12.tours = ["transport-osaka-kyoto-out", "kyoto-west-saihoji", "transport-kyoto-osaka-return"];
+          day12.note = "Kyoto oeste: saída 06:15 → Arashiyama 07:20 → Tenryu-ji → Saihō-ji ~10:00 (conforme reserva) → almoço → Kinkaku-ji → Nishiki → Gion → Osaka";
+          var day13 = sourcePlan["2026-11-13"] || (sourcePlan["2026-11-13"] = emptyDay());
+          day13.base = day13.base || "osaka";
+          day13.tours = ["transport-osaka-nara-out", "nara-uji", "transport-nara-uji", "transport-uji-osaka-return"];
+          day13.note = "Nara → Uji: Parque de Nara e Tōdai-ji → Byodoin → experiência de chá na Taihō-an → Osaka";
+          sourcePlan._updates.taihoanTeaV1 = true;
+          return true;
+        }
+
         // default proposal
         var defaultPlan = {
           "2026-11-08": {
@@ -7935,6 +7960,7 @@
                 if (applyHanedaHotelUpdate(parsed)) changed = true;
                 if (applyMoegiHotelUpdate(parsed)) changed = true;
                 if (applyKyotoDaysV1(parsed)) changed = true;
+                if (applyTaihoanTeaV1(parsed)) changed = true;
                 if (changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
                 return parsed;
               }
@@ -7949,6 +7975,7 @@
           applyHanedaHotelUpdate(freshPlan);
           applyMoegiHotelUpdate(freshPlan);
           applyKyotoDaysV1(freshPlan);
+          applyTaihoanTeaV1(freshPlan);
           return freshPlan;
         }
         function savePlan() {
@@ -9589,10 +9616,10 @@
         if (appTitle) appTitle.addEventListener("click", goTop);
       })();
     </script>
-    <script src="/transport-view.js?v=25"></script>
-    <script src="/activities-view.js?v=18"></script>
-    <script src="/reservations-view.js?v=24"></script>
-    <script src="/budget-view.js?v=28"></script>
+    <script src="/transport-view.js?v=26"></script>
+    <script src="/activities-view.js?v=19"></script>
+    <script src="/reservations-view.js?v=25"></script>
+    <script src="/budget-view.js?v=29"></script>
     <script src="/shopping-view.js?v=9"></script>
   </body>
 </html>

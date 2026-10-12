@@ -73,7 +73,6 @@
       ["Saihō-ji (Kokedera)", 34.992, 135.6849],
       ["Kinkaku-ji", 35.0394, 135.7292],
       ["Mercado Nishiki", 35.005, 135.7649],
-      ["Cerimônia do chá (Gion)", 35.003, 135.776],
       ["Gion", 35.0037, 135.7785],
       ["Estação Kyoto", 34.9858, 135.7588],
       ["Estação Shin-Osaka", 34.7335, 135.5002],
@@ -87,6 +86,7 @@
       ["Estação JR Nara", 34.6809, 135.8189],
       ["Estação Uji", 34.8904, 135.8],
       ["Templo Byodoin", 34.8893, 135.8077],
+      ["Taihō-an", 34.8891, 135.8092],
       ["Estação Uji", 34.8904, 135.8],
       ["Estação Shin-Osaka", 34.7335, 135.5002],
       ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
@@ -469,6 +469,7 @@
     "nara-uji": [
       ["Nara Park", 34.6851, 135.843],
       ["Byodoin Uji", 34.8893, 135.8077],
+      ["Taihō-an", 34.8891, 135.8092],
     ],
     usj: [["Universal Studios Japan", 34.6654, 135.4323]],
     "kobe-himeji": [

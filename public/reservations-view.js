@@ -3,7 +3,7 @@ var KEY="japan-trip-planner-reservations-v1",DEFAULTS={
 checklist:["Passaportes válidos e cópias digitais","Seguro viagem contratado","eSIM ou internet móvel definida","Cartões, ienes e aviso de viagem organizados","Decisão final sobre passes de transporte","Google Maps, Translate, Disney e Suica/PASMO configurados","Plano de malas e envio entre hotéis","Reservas e endereços dos hotéis salvos offline"].map(function(x,i){return{id:"c"+i,label:x,done:false};}),
 reservations:[
  ["09/11","Shinkansen Shinagawa → Shin-Osaka","Reservar assentos juntos e espaço para malas."],
- ["12/11","Cerimônia do chá em Kyoto","Fornecedor ainda não definido."],
+ ["13/11","Experiência de chá na Taihō-an","Reservar a experiência de preparo de Matcha ou Sencha; ¥3.600 por pessoa, cerca de 40 minutos."],
  ["17/11","Gora Kadan","Confirmar jantar, quartos e política para tatuagem."],
  ["20/11","teamLab Planets","Ingresso com horário marcado."],
  ["21/11","Shibuya Sky","Priorizar horário de fim de tarde."],
@@ -33,7 +33,7 @@ function T(id,date,name,place,tour,when){return{id:id,group:"transport",urgency:
 
 var ITEMS=[
  {id:"b-ryokan-hakone",group:"now",urgency:"alta",date:"17–18/11/2026",name:"Ryokan em Hakone",place:"Hakone",tour:null,url:"https://hakone-japan.com/plan-your-trip/accommodations/historic-ryokan/",window:"Reservar agora — ryokans com jantar esgotam com meses de antecedência.",tip:"Confirmar jantar para 4, configuração de quartos, onsen privativo e política de tatuagem."},
- {id:"b-tea-camellia",group:"now",urgency:"alta",date:"12/11/2026",name:"Cerimônia do chá Camellia Flower",place:"Kyoto",tour:"kyoto-west-saihoji",url:"https://tea-kyoto.com/reservation/flower",window:"Reservar agora — poucas vagas por horário.",tip:"Condicionada à confirmação do horário do Saihō-ji; idealmente 16:30."},
+ {id:"b-tea-taihoan",group:"now",urgency:"alta",date:"13/11/2026",name:"Experiência de chá na Taihō-an",place:"Uji",tour:"nara-uji",url:"https://www.kyoto-uji-kankou.or.jp/taihoan-contact.html",window:"Reservar assim que o horário do dia estiver definido.",tip:"Experiência de preparo de matcha ou sencha; ¥3.600 por pessoa e cerca de 40 minutos.",defaultNote:"Reservar a experiência de preparo de Matcha ou Sencha; ¥3.600 por pessoa, cerca de 40 minutos."},
  {id:"b-saihoji",group:"now",urgency:"alta",date:"12/11/2026",name:"Saihō-ji (Kokedera)",place:"Kyoto (oeste)",tour:"kyoto-west-saihoji",url:"https://saihoji-kokedera.com/en/",window:"Reservar agora — visita só com reserva antecipada.",tip:"Valor indicativo mínimo de ¥4.000.",defaultNote:"Reserva obrigatória; buscar horário próximo das 10h."},
  {id:"b-disneysea",group:"open",urgency:"alta",date:"25/11/2026",name:"Tokyo DisneySea",place:"Tóquio (Urayasu)",tour:"disney",url:"https://www.tokyodisneyresort.jp/en/ticket/index.html",window:"Normalmente 2 meses antes da data.",tip:"Ingresso com data marcada; conferir a abertura oficial de vendas."},
  {id:"b-teamlab",group:"open",urgency:"alta",date:"19/11/2026",name:"teamLab Planets",place:"Toyosu, Tóquio",tour:"teamlab-planets",url:"https://teamlabplanets.dmm.com/en",window:"Comprar quando novembro abrir.",tip:"Ingresso com horário marcado."},
@@ -53,7 +53,8 @@ var ITEMS=[
 ];
 
 function clone(x){return JSON.parse(JSON.stringify(x));}
-function load(){var s=null;try{s=JSON.parse(localStorage.getItem(KEY));}catch(e){}if(!s||!s.checklist||!s.reservations||!s.accommodations)s=clone(DEFAULTS);if(!s.bookings||typeof s.bookings!=="object")s.bookings={};var tokyoStay=s.accommodations.filter(function(a){return a.id==="h3";})[0];if(tokyoStay)tokyoStay.name="Ginza Capital Hotel Moegi";return s;}
+function migrateTaihoan(s){s._updates=s._updates||{};if(s._updates.taihoanTeaV1)return false;var tea=s.reservations.filter(function(r){return r.id==="r1";})[0];if(tea){tea.date="13/11";tea.label="Experiência de chá na Taihō-an";tea.note="Reservar a experiência de preparo de Matcha ou Sencha; ¥3.600 por pessoa, cerca de 40 minutos.";}if(s.bookings["b-tea-camellia"]&&!s.bookings["b-tea-taihoan"])s.bookings["b-tea-taihoan"]=s.bookings["b-tea-camellia"];delete s.bookings["b-tea-camellia"];s._updates.taihoanTeaV1=true;return true;}
+function load(){var s=null;try{s=JSON.parse(localStorage.getItem(KEY));}catch(e){}if(!s||!s.checklist||!s.reservations||!s.accommodations)s=clone(DEFAULTS);if(!s.bookings||typeof s.bookings!=="object")s.bookings={};var changed=migrateTaihoan(s);var tokyoStay=s.accommodations.filter(function(a){return a.id==="h3";})[0];if(tokyoStay)tokyoStay.name="Ginza Capital Hotel Moegi";if(changed){var value=JSON.stringify(s);if(window.JaplannerSharedStore)window.JaplannerSharedStore.set(KEY,value);else localStorage.setItem(KEY,value);}return s;}
 function save(s){if(window.JaplannerSharedStore)window.JaplannerSharedStore.set(KEY,JSON.stringify(s));else localStorage.setItem(KEY,JSON.stringify(s));}
 function esc(x){return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function yen(n){return"¥"+Math.round(n).toLocaleString("pt-BR");}
