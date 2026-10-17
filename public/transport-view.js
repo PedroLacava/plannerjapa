@@ -20,7 +20,7 @@
     ["11/11", "Comfort Hotel", "Shin-Osaka", "Caminhada", "—", 0, "no", "Saída do hotel por volta de 05:25", "local"],
     ["11/11", "Shin-Osaka", "Kyoto", "JR Special Rapid", "JR", 580, "yes", "Ticket intermunicipal; primeiros trens da manhã"],
     ["11/11", "Kyoto", "Inari", "JR Nara Line", "JR", 150, "yes", "Chegar a JR Inari antes de 07:00", "local"],
-    ["11/11", "Fushimi Inari", "Tofuku-ji", "Caminhada", "—", 0, "no", "Cerca de 20 min (ou 1 estação JR)", "local"],
+    ["11/11", "Inari", "Tofukuji", "JR Nara Line", "JR", 150, "yes", "Uma estação; encontro com o guia às 10h", "local"],
     ["11/11", "Tofuku-ji", "Kiyomizu-dera", "Táxi (grupo de 4)", "Táxi", 500, "no", "Estimativa por pessoa; ~¥2.000 por carro", "local"],
     ["11/11", "Kiyomizu-dera", "Gion", "Caminhada", "—", 0, "no", "Sannenzaka, Ninenzaka e Yasaka Pagoda", "local"],
     ["11/11", "Gion", "Kyoto Station", "Ônibus urbano", "Kyoto City Bus", 230, "no", "Ou táxi no fim do dia", "local"],
@@ -51,13 +51,13 @@
     ["14/11", "Himeji", "Sannomiya", "JR Special Rapid", "JR", 990, "yes", "Kobe"],
     ["14/11", "Kobe", "Shin-Osaka", "JR Special Rapid", "JR", 460, "yes", "Retorno ao hotel"],
 
-    ["15/11", "Dia livre em Osaka", "Deslocamentos não definidos", "Reserva para transporte local", "Osaka Metro/JR", 820, "partial", "Estimativa conservadora de um passe diário"],
+    ["15/11", "Shin-Osaka", "Hiroshima", "Sanyo Shinkansen", "JR", 10640, "yes", "Coberto pelo Kansai-Hiroshima Area Pass"],
+    ["15/11", "Hiroshima Station", "Peace Memorial Park", "Hiroshima Electric Railway", "Hiroden", 240, "no", "Bonde"],
+    ["15/11", "Peace Park", "Okonomimura", "Bonde", "Hiroden", 240, "no", "Ou caminhada"],
+    ["15/11", "Okonomimura", "Hiroshima Station", "Bonde", "Hiroden", 240, "no", "Retorno"],
+    ["15/11", "Hiroshima", "Shin-Osaka", "Sanyo Shinkansen", "JR", 10640, "yes", "Coberto pelo Kansai-Hiroshima Area Pass"],
 
-    ["16/11", "Shin-Osaka", "Hiroshima", "Sanyo Shinkansen", "JR", 10640, "yes", "Coberto pelo Kansai-Hiroshima Area Pass"],
-    ["16/11", "Hiroshima Station", "Peace Memorial Park", "Hiroshima Electric Railway", "Hiroden", 240, "no", "Bonde"],
-    ["16/11", "Peace Park", "Okonomimura", "Bonde", "Hiroden", 240, "no", "Ou caminhada"],
-    ["16/11", "Okonomimura", "Hiroshima Station", "Bonde", "Hiroden", 240, "no", "Retorno"],
-    ["16/11", "Hiroshima", "Shin-Osaka", "Sanyo Shinkansen", "JR", 10640, "yes", "Coberto pelo Kansai-Hiroshima Area Pass"],
+    ["16/11", "Dia livre em Osaka", "Deslocamentos não definidos", "Reserva para transporte local", "Osaka Metro/JR", 820, "partial", "Estimativa conservadora de um passe diário"],
 
     ["17/11", "Shin-Osaka", "Odawara", "Shinkansen Hikari", "JR", 12300, "yes", "Tokaido Shinkansen; não coberto pelo passe regional"],
     ["17/11", "Odawara", "Hakone-Yumoto", "Hakone Tozan Railway", "Odakyu Hakone", 360, "no", "Fora do JR Pass"],
@@ -141,7 +141,7 @@
       '<div class="transport-controls"><label>Pessoas <input id="transport-people" type="number" min="1" max="12" value="4"></label><label>¥ por R$ 1 <input id="transport-rate" type="number" min="1" step="0.1" value="29"></label><label class="transport-check"><input id="transport-gotemba" type="checkbox"> Simular Gotemba em 18/11</label></div>' +
       '<div class="transport-summary"><div><span>Bilhetes avulsos por pessoa</span><b data-single>' + yen(baseTotal) + '</b><small data-single-brl></small></div><div><span>Grupo completo</span><b data-group></b><small data-group-brl></small></div><div><span>Trechos integralmente JR</span><b>' + yen(eligible) + '</b><small>O restante não seria pago pelo JR Pass nacional</small></div></div>' +
       '<div class="pass-grid"><article><span class="pass-status pass-no">Não recomendado</span><h3>JR Pass nacional</h3><p>7 dias: <b>¥50.000</b><br>14 dias: <b>¥80.000</b><br>21 dias: <b>¥100.000</b></p><small>Mesmo concentrando as viagens caras, a economia estimada não supera o preço do passe.</small></article><article><span class="pass-status pass-yes">Melhor candidato</span><h3>Kansai-Hiroshima Area Pass</h3><p>5 dias consecutivos: <b>¥17.000</b></p><small>Simular ativação entre 12 e 16/11. Cobre o Sanyo Shinkansen Shin-Osaka ↔ Hiroshima e linhas JR da região, mas não o Tokaido Shinkansen para Odawara.</small></article><article><span class="pass-status pass-maybe">Avaliar por blocos</span><h3>Tokyo Subway Ticket</h3><p>24h ¥1.000 · 48h ¥1.500 · 72h ¥2.000</p><small>Vale apenas em dias consecutivos com bastante Tokyo Metro/Toei. Não cobre JR, Yurikamome, Tokyu ou ônibus rodoviários.</small></article></div>' +
-      '<div class="transport-note"><b>Importante:</b> valores são estimativas por adulto, com tarifas consultadas em agosto de 2026. A tabela é exaustiva para o roteiro atualmente publicado, mas o dia livre de 15/11 permanece como provisão porque os destinos ainda não foram escolhidos.</div>' +
+      '<div class="transport-note"><b>Importante:</b> valores são estimativas por adulto, com tarifas consultadas em agosto de 2026. A tabela é exaustiva para o roteiro atualmente publicado, mas o dia livre de 16/11 permanece como provisão porque os destinos ainda não foram escolhidos.</div>' +
       '<div class="transport-table-wrap"><table class="transport-table"><thead><tr><th>Data</th><th>Trecho</th><th>Transporte</th><th>Custo</th><th>JR Pass</th><th>Observação</th></tr></thead><tbody>' + LEGS.map(row).join("") + '</tbody></table></div>' +
       '<section class="gotemba-scenario" hidden><h3>Cenário alternativo: Gotemba em 18/11</h3><p>Substitui Togendai → Hakone-Yumoto → Odawara → Tokyo. Também permite retirar o outlet de Kisarazu de 24/11, mas essa segunda alteração ainda não está aplicada.</p><table class="transport-table"><tbody>' + GOTEMBA.map(row).join("") + '</tbody></table></section>' +
       '<div class="transport-sources"><h3>Fontes e premissas</h3><a target="_blank" rel="noopener" href="https://japanrailpass.net/en/purchase/price/">JR Pass nacional</a><a target="_blank" rel="noopener" href="https://www.westjr.co.jp/travel-information/en/tickets-passes/jrwest-rail-pass/kansai_hiroshima/">JR West Kansai-Hiroshima Pass</a><a target="_blank" rel="noopener" href="https://www.tokyometro.jp/en/ticket/travel/index.html">Tokyo Subway Ticket</a><a target="_blank" rel="noopener" href="https://www.keisei.co.jp/keisei/tetudou/skyliner/us/traffic/skyliner_fares.php">Keisei Skyliner</a><a target="_blank" rel="noopener" href="https://www.hakonenavi.jp/international/en/transportation/hakone-tozanbus">Transportes de Hakone</a></div></div>';

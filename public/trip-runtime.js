@@ -105,9 +105,6 @@
     ],
     "2026-11-15": [
       ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
-    ],
-    "2026-11-16": [
-      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
       ["Estação Shin-Osaka", 34.7335, 135.5002],
       ["Estação Hiroshima", 34.3978, 132.4753],
       ["Museu Memorial da Paz de Hiroshima", 34.3915, 132.4523],
@@ -115,6 +112,9 @@
       ["Okonomimura", 34.3927, 132.4637],
       ["Estação Hiroshima", 34.3978, 132.4753],
       ["Estação Shin-Osaka", 34.7335, 135.5002],
+      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+    ],
+    "2026-11-16": [
       ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
     ],
     "2026-11-17": [

@@ -1633,7 +1633,7 @@
     <div id="print-view"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="/trip-runtime.js?v=3"></script>
+    <script src="/trip-runtime.js?v=4"></script>
     <script>
       var SHARED_KEYS = [
         "japan-trip-planner-v3",
@@ -5024,23 +5024,24 @@
 
           "kyoto-guided-higashiyama": {
             "icon": "⛩️",
-            "label": "Kyoto com guia: Fushimi + Tofuku-ji + Higashiyama",
+            "label": "Fushimi solo + Kyoto com guia às 10h",
             "hours": 11,
             "region": "kyoto",
             "colorKey": "kyoto",
             "travel": "🚆 Saída 05:25 · JR Shin-Osaka → Kyoto → Inari (antes de 07:00) · volta JR de Kyoto",
             "bullets": [
-              "Fushimi Inari antes das 07:00, com poucos visitantes",
-              "Tofuku-ji (ponte Tsutenkyo) no auge do outono",
+              "Fushimi Inari sem guia antes das 07:00, com poucos visitantes",
+              "Encontro com o guia às 10:00 na entrada do Tofuku-ji",
+              "Tofuku-ji (ponte Tsutenkyo) e Higashiyama com o guia",
               "Kiyomizu-dera, Sannenzaka/Ninenzaka, Yasaka Pagoda e Gion",
-              "Passeio com guia — confirmar ponto de encontro e horário"
+              "Confirmar com o guia o ponto exato junto à bilheteria do Tofuku-ji"
             ],
             "guide": {
-              "cardTitle": "Kyoto com guia: Fushimi + Tofuku-ji + Higashiyama",
+              "cardTitle": "Fushimi solo + Kyoto com guia às 10h",
               "icon": "⛩️",
               "hours": 11,
               "city": "Kyoto",
-              "intro": "Dia guiado no sul e leste de Kyoto: sair muito cedo de Osaka para pegar Fushimi Inari vazio, seguir para Tofuku-ji e terminar na Higashiyama histórica até Gion, voltando a Osaka à noite.",
+              "intro": "Fushimi Inari é feito sem guia bem cedo. Depois, o encontro com o guia acontece às 10h no Tofuku-ji, aproveitando melhor o acompanhamento na visita ao templo e no eixo histórico de Higashiyama até Gion.",
               "images": [],
               "videos": [],
               "hiddenGems": [],
@@ -5073,35 +5074,50 @@
                 {
                   "time": "06:50",
                   "place": "Fushimi Inari Taisha",
-                  "note": "Subir pelos Senbon Torii enquanto está vazio."
+                  "note": "Visita sem guia. Subir pelos Senbon Torii até Mitsutsuji; não fazer o circuito completo do cume para manter o horário."
                 },
                 {
-                  "time": "09:00",
-                  "place": "Tofuku-ji",
-                  "note": "Cerca de 20 min a pé (ou 1 estação JR até Tofukuji). Ponte Tsutenkyo; ingresso pago no outono."
+                  "time": "08:25",
+                  "place": "Inari → Tofukuji",
+                  "note": "Uma estação pela JR Nara Line. Fazer uma pausa rápida e caminhar até o templo."
                 },
                 {
-                  "time": "10:45",
+                  "time": "10:00",
+                  "place": "Encontro com o guia no Tofuku-ji",
+                  "note": "Ponto recomendado: entrada da área paga da ponte Tsutenkyo. Confirmar o ponto exato com o guia."
+                },
+                {
+                  "time": "10:00–11:15",
+                  "place": "Tofuku-ji com guia",
+                  "note": "Ponte Tsutenkyo e jardim Hojo. Em 11/11, a visita abre às 09:00."
+                },
+                {
+                  "time": "11:15",
+                  "place": "Táxi para Kiyomizu-dera",
+                  "note": "Cerca de 15 a 20 minutos, dependendo do trânsito."
+                },
+                {
+                  "time": "11:45",
                   "place": "Kiyomizu-dera",
-                  "note": "Táxi ou ônibus de Tofuku-ji (~15 min)."
+                  "note": "Visita guiada ao salão principal e aos mirantes."
                 },
                 {
-                  "time": "12:30",
+                  "time": "13:15",
                   "place": "Sannenzaka e Ninenzaka",
-                  "note": "Almoço e ruas históricas de pedra."
+                  "note": "Almoço e caminhada pelas ruas históricas."
                 },
                 {
-                  "time": "14:00",
-                  "place": "Yasaka Pagoda",
-                  "note": "Foto clássica de Hokan-ji."
+                  "time": "14:30",
+                  "place": "Yasaka Pagoda e Kodai-ji",
+                  "note": "Foto clássica de Hokan-ji; Kodai-ji entra se o ritmo do grupo permitir."
                 },
                 {
-                  "time": "15:00",
-                  "place": "Gion",
-                  "note": "Hanamikoji, Shirakawa e Yasaka-jinja."
+                  "time": "16:15",
+                  "place": "Kennin-ji e Gion",
+                  "note": "Kennin-ji, Hanamikoji, Shirakawa e Yasaka-jinja conforme o tempo restante com o guia."
                 },
                 {
-                  "time": "18:00",
+                  "time": "18:30",
                   "place": "Retorno a Osaka",
                   "note": "Ônibus/táxi até Kyoto Station e JR Special Rapid para Shin-Osaka."
                 }
@@ -7852,6 +7868,25 @@
           return true;
         }
 
+        function applyGuide10AndHiroshima15V1(sourcePlan) {
+          sourcePlan._updates = sourcePlan._updates || {};
+          if (sourcePlan._updates.guide10Hiroshima15V1) return false;
+          var day11 = sourcePlan["2026-11-11"] || (sourcePlan["2026-11-11"] = emptyDay());
+          day11.base = "osaka";
+          day11.tours = ["transport-osaka-kyoto-out", "kyoto-guided-higashiyama", "transport-kyoto-osaka-return"];
+          day11.note = "Fushimi Inari sem guia antes de 07:00 → encontro com o guia às 10:00 no Tofuku-ji → Kiyomizu-dera → Sannenzaka/Ninenzaka → Yasaka Pagoda → Gion → Osaka";
+          var day15 = sourcePlan["2026-11-15"] || (sourcePlan["2026-11-15"] = emptyDay());
+          day15.base = "osaka";
+          day15.tours = ["transport-osaka-hiroshima-out", "peace-memorial", "okonomimura", "transport-hiroshima-osaka-return"];
+          day15.note = "Bate-volta Osaka → Hiroshima → Osaka: Parque e Museu Memorial da Paz + almoço em Okonomimura";
+          var day16 = sourcePlan["2026-11-16"] || (sourcePlan["2026-11-16"] = emptyDay());
+          day16.base = "osaka";
+          day16.tours = [];
+          day16.note = "Dia livre em Osaka";
+          sourcePlan._updates.guide10Hiroshima15V1 = true;
+          return true;
+        }
+
         // default proposal
         var defaultPlan = {
           "2026-11-08": {
@@ -7961,6 +7996,7 @@
                 if (applyMoegiHotelUpdate(parsed)) changed = true;
                 if (applyKyotoDaysV1(parsed)) changed = true;
                 if (applyTaihoanTeaV1(parsed)) changed = true;
+                if (applyGuide10AndHiroshima15V1(parsed)) changed = true;
                 if (changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
                 return parsed;
               }
@@ -7976,6 +8012,7 @@
           applyMoegiHotelUpdate(freshPlan);
           applyKyotoDaysV1(freshPlan);
           applyTaihoanTeaV1(freshPlan);
+          applyGuide10AndHiroshima15V1(freshPlan);
           return freshPlan;
         }
         function savePlan() {
@@ -9616,10 +9653,10 @@
         if (appTitle) appTitle.addEventListener("click", goTop);
       })();
     </script>
-    <script src="/transport-view.js?v=26"></script>
-    <script src="/activities-view.js?v=19"></script>
-    <script src="/reservations-view.js?v=25"></script>
-    <script src="/budget-view.js?v=29"></script>
+    <script src="/transport-view.js?v=27"></script>
+    <script src="/activities-view.js?v=20"></script>
+    <script src="/reservations-view.js?v=26"></script>
+    <script src="/budget-view.js?v=30"></script>
     <script src="/shopping-view.js?v=9"></script>
   </body>
 </html>

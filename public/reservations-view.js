@@ -38,7 +38,7 @@ var ITEMS=[
  {id:"b-disneysea",group:"open",urgency:"alta",date:"25/11/2026",name:"Tokyo DisneySea",place:"Tóquio (Urayasu)",tour:"disney",url:"https://www.tokyodisneyresort.jp/en/ticket/index.html",window:"Normalmente 2 meses antes da data.",tip:"Ingresso com data marcada; conferir a abertura oficial de vendas."},
  {id:"b-teamlab",group:"open",urgency:"alta",date:"19/11/2026",name:"teamLab Planets",place:"Toyosu, Tóquio",tour:"teamlab-planets",url:"https://teamlabplanets.dmm.com/en",window:"Comprar quando novembro abrir.",tip:"Ingresso com horário marcado."},
  {id:"b-shibuya-sky",group:"open",urgency:"alta",date:"21/11/2026",name:"Shibuya Sky",place:"Shibuya, Tóquio",tour:"shibuya-harajuku",url:"https://www.shibuya-scramble-square.com/sky/ticket/",window:"Normalmente 14 dias antes.",tip:"Preferência por 15h30–16h."},
- {id:"b-hiroshima-museu",group:"open",urgency:"media",date:"16/11/2026",name:"Museu Memorial da Paz de Hiroshima",place:"Hiroshima",tour:"peace-memorial",url:"https://hpmmuseum.jp/?lang=eng",window:"Comprar quando a data estiver disponível.",tip:"Conferir horário de entrada no site oficial."},
+ {id:"b-hiroshima-museu",group:"open",urgency:"media",date:"15/11/2026",name:"Museu Memorial da Paz de Hiroshima",place:"Hiroshima",tour:"peace-memorial",url:"https://hpmmuseum.jp/?lang=eng",window:"Comprar quando a data estiver disponível.",tip:"Conferir horário de entrada no site oficial."},
  {id:"b-himeji",group:"open",urgency:"media",date:"14/11/2026",name:"Castelo de Himeji",place:"Himeji",tour:"kobe-himeji",url:"https://www.himejicastle.jp/en/",window:"Conferir abertura oficial de vendas.",tip:"Chegar cedo reduz fila na torre principal."},
  {id:"b-gotemba-bus",group:"near",urgency:"media",date:"24/11/2026",name:"Ônibus para Gotemba Premium Outlets",place:"Tóquio → Gotemba",tour:"outlet",url:"https://www.premiumoutlets.co.jp/en/gotemba/access/",window:"Conferir cerca de 1 mês antes.",tip:"Verificar horários de ida e volta no dia escolhido."},
  {id:"b-hakone-freepass",group:"near",urgency:"media",date:"17–18/11/2026",name:"Hakone Freepass 2 dias (início em Odawara)",place:"Odawara / Hakone",tour:"hakone-museum-onsen",url:"https://www.hakonenavi.jp/international/en/discount_passes/free_pass",window:"Comprar perto da viagem.",tip:"Cobre trem, ropeway, ônibus e barco na área de Hakone."},
@@ -46,7 +46,7 @@ var ITEMS=[
  {id:"b-hakone-ropeway",group:"none",urgency:"baixa",date:"17–18/11/2026",name:"Hakone Ropeway e cruzeiro do Lago Ashi",place:"Hakone",tour:"hakone-ropeway",url:"https://www.hakonenavi.jp/international/en/transportation/hakone-ropeway",window:"Não precisa reservar.",tip:"Pode haver interrupção por clima ou manutenção; o Freepass costuma cobrir o trecho."},
  T("b-rail-tokyo-osaka","09/11/2026","Trem Tóquio → Shin-Osaka","Shinagawa → Shin-Osaka","transport-tokyo-osaka"),
  T("b-rail-himeji","14/11/2026","Trem Shin-Osaka ↔ Himeji","Shin-Osaka ↔ Himeji","transport-osaka-himeji-kobe"),
- T("b-rail-hiroshima","16/11/2026","Trem Shin-Osaka ↔ Hiroshima","Shin-Osaka ↔ Hiroshima","transport-osaka-hiroshima"),
+ T("b-rail-hiroshima","15/11/2026","Trem Shin-Osaka ↔ Hiroshima","Shin-Osaka ↔ Hiroshima","transport-osaka-hiroshima-out"),
  T("b-rail-odawara","17/11/2026","Trem Shin-Osaka → Odawara","Shin-Osaka → Odawara","transport-osaka-hakone"),
  T("b-rail-tokyo-back","18/11/2026","Trem Odawara → Tóquio/Shinagawa","Odawara → Shinagawa","transport-hakone-tokyo"),
  T("b-rail-narita","27/11/2026","Trem Tóquio → Narita","Tóquio → Aeroporto de Narita","transport-tokyo-narita")
