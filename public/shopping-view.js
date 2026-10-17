@@ -810,6 +810,9 @@
 
   window.JaplannerJetlag = { todayCard: todayCard, getState: load };
   window.plannerShowJetlag = function (show) {
+    if (show !== false) {
+      document.body.classList.remove("shopping-open", "transport-open", "activities-open", "budget-open", "reservations-open", "desktop-today");
+    }
     document.body.classList.toggle("jetlag-open", show !== false);
     if (show !== false) render();
     window.scrollTo(0, 0);

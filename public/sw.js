@@ -1,4 +1,4 @@
-const CACHE = "japlanner-shell-v43";
+const CACHE = "japlanner-shell-v44";
 const SHELL = [
   "/",
   "/planner.html",
