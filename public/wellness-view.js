@@ -145,8 +145,10 @@
     if (show !== false) render();
     window.scrollTo(0, 0);
   };
-  document.addEventListener("DOMContentLoaded", function () {
+  function bindButton() {
     var button = document.getElementById("open-jetlag-view");
     if (button) button.addEventListener("click", function () { window.plannerShowJetlag(true); });
-  });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bindButton);
+  else bindButton();
 })();
