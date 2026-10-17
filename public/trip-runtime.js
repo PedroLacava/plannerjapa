@@ -1096,6 +1096,9 @@
         (next.note ? '<div class="weather-muted">' + esc(next.note) + "</div>" : "") +
         "</div>"
       : '<div class="today-card next-step"><h3>Próximo passo</h3><div>Dia concluído.</div></div>';
+    var jetlagHtml = window.JaplannerJetlag && window.JaplannerJetlag.todayCard
+      ? window.JaplannerJetlag.todayCard()
+      : "";
     var prev = addDays(iso, -1),
       nxt = addDays(iso, 1);
     document.getElementById("today-view").innerHTML =
@@ -1103,6 +1106,7 @@
       notice +
       hero +
       nextHtml +
+      jetlagHtml +
       '<div class="today-grid"><div class="today-card"><h3>Roteiro do dia</h3><div class="timeline">' +
       timeline +
       '</div></div><div class="today-card"><h3>Clima</h3><div id="today-weather"></div></div><div class="today-card"><h3>Mapa do dia</h3>' +

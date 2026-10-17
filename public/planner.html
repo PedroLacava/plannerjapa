@@ -1481,6 +1481,7 @@
 
     <div class="mobile-tabs screen-only" id="mobile-tabs">
       <button type="button" data-mview="today">Hoje</button>
+      <button type="button" data-mview="jetlag">Jet lag</button>
       <button type="button" data-mview="cal" class="active">🗓️ Roteiro</button>
       <button type="button" data-mview="budget">Custos</button>
       <button type="button" data-mview="reservations">Reservas</button>
@@ -1491,6 +1492,7 @@
 
     <div class="today-toolbar screen-only">
       <button type="button" id="open-today-desktop">Abrir modo Hoje</button>
+      <button type="button" id="open-jetlag-view">Plano de jet lag</button>
       <button type="button" id="open-budget-view">Simular gastos</button>
       <button type="button" id="open-reservations-view">Reservas e ingressos</button>
       <button type="button" id="open-shopping-view">Lista de compras</button>
@@ -1499,6 +1501,7 @@
     </div>
 
     <section id="today-view" class="today-view screen-only" aria-live="polite"></section>
+    <section id="jetlag-view" class="jetlag-view screen-only" aria-live="polite"></section>
     <section id="transport-view" class="transport-view screen-only" aria-live="polite"></section>
     <section id="activities-view" class="activities-view screen-only" aria-live="polite"></section>
     <section id="budget-view" class="budget-view screen-only" aria-live="polite"></section>
@@ -1633,7 +1636,7 @@
     <div id="print-view"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="/trip-runtime.js?v=4"></script>
+    <script src="/trip-runtime.js?v=5"></script>
     <script>
       var SHARED_KEYS = [
         "japan-trip-planner-v3",
@@ -1643,6 +1646,7 @@
         "japan-trip-planner-reservations-v1",
         "japan-trip-planner-shopping-v1",
         "japan-trip-planner-daily-budget-v1",
+        "japan-trip-planner-jetlag-v1",
       ];
       var sharedRevision = 0;
       var sharedDirty = false;
@@ -9589,9 +9593,13 @@
           var tabs = document.getElementById("mobile-tabs");
           if (!tabs) return;
           function setView(view) {
-            document.body.classList.remove("m-today", "m-pool", "m-detail", "m-transport", "m-activities", "m-budget", "m-reservations", "m-shopping");
-            document.body.classList.remove("transport-open", "activities-open", "budget-open", "reservations-open", "shopping-open");
+            document.body.classList.remove("m-today", "m-jetlag", "m-pool", "m-detail", "m-transport", "m-activities", "m-budget", "m-reservations", "m-shopping");
+            document.body.classList.remove("jetlag-open", "transport-open", "activities-open", "budget-open", "reservations-open", "shopping-open");
             if (view === "today") document.body.classList.add("m-today");
+            if (view === "jetlag") {
+              document.body.classList.add("m-jetlag");
+              if (window.plannerShowJetlag) window.plannerShowJetlag(true);
+            }
             if (view === "transport") {
               document.body.classList.add("m-transport");
               if (window.plannerShowTransport) window.plannerShowTransport(true);
@@ -9658,5 +9666,6 @@
     <script src="/reservations-view.js?v=26"></script>
     <script src="/budget-view.js?v=30"></script>
     <script src="/shopping-view.js?v=9"></script>
+    <script src="/jetlag-view.js?v=1"></script>
   </body>
 </html>

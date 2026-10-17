@@ -39,6 +39,7 @@ body.desktop-today .today-view {
 .budget-view { display: none; max-width: 1240px; margin: 0 auto 20px; }
 .reservations-view { display:none; max-width:1240px; margin:0 auto 20px; }
 .shopping-view { display:none; max-width:1240px; margin:0 auto 20px; }
+.jetlag-view { display:none; max-width:1240px; margin:0 auto 20px; }
 body.transport-open .layout,
 body.transport-open #card-guide,
 body.transport-open #today-view { display: none !important; }
@@ -55,6 +56,8 @@ body.reservations-open .layout,body.reservations-open #card-guide,body.reservati
 body.reservations-open .reservations-view { display:block; }
 body.shopping-open .layout,body.shopping-open #card-guide,body.shopping-open #today-view { display:none !important; }
 body.shopping-open .shopping-view { display:block; }
+body.jetlag-open .layout,body.jetlag-open #card-guide,body.jetlag-open #today-view { display:none !important; }
+body.jetlag-open .jetlag-view { display:block; }
 .budget-type { display:inline-block; padding:3px 7px; border-radius:999px; background:#e7f3f8; color:#285c75; font-size:11px; font-weight:800; }
 .budget-activity .budget-type { background:#f1e8fb; color:#6a3fa0; }
 .budget-source { display:block; margin-top:5px; color:#285c75; font-weight:800; }
@@ -510,6 +513,8 @@ body.shopping-open .shopping-view { display:block; }
   body.m-reservations .reservations-view { display:block; }
   body.m-shopping .layout,body.m-shopping #today-view { display:none !important; }
   body.m-shopping .shopping-view { display:block; }
+  body.m-jetlag .layout,body.m-jetlag #today-view { display:none !important; }
+  body.m-jetlag .jetlag-view { display:block; }
   .reservation-grid { grid-template-columns:1fr; }
   .booking-row { grid-template-columns:52px 1fr; }
   .booking-row select,.booking-row input { grid-column:2; width:100%; }
@@ -544,6 +549,68 @@ body.shopping-open .shopping-view { display:block; }
   .today-card {
     padding: 12px;
   }
+}
+
+/* Plano de adaptação ao fuso */
+.jl-shell { display:grid; gap:14px; }
+.jl-hero { background:linear-gradient(135deg,#20375a,#466a8d); }
+.jl-now { display:flex; justify-content:space-between; align-items:center; gap:18px; padding:18px; border-radius:14px; background:#182b45; color:#fff; }
+.jl-now span,.jl-heading span { display:block; color:#99bddc; font-size:10px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
+.jl-now h3,.jl-heading h3 { margin:4px 0; }
+.jl-now p { margin:0; color:#d9e5ef; }
+.jl-now button,.jl-today-card button { padding:9px 12px; border:1px solid #9dbbd4; border-radius:9px; background:#fff; color:#20375a; font:inherit; font-weight:800; cursor:pointer; }
+.jl-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:14px; }
+.jl-card { padding:16px; border:1px solid #ddd4c4; border-radius:14px; background:#fff; }
+.jl-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:12px; }
+.jl-heading span { color:#466a8d; }
+.jl-heading small { max-width:360px; color:#756c5d; text-align:right; }
+.jl-flights { display:grid; gap:8px; }
+.jl-flight { display:grid; grid-template-columns:82px 1fr 28px 1fr 55px; gap:8px; align-items:center; padding:10px; border-radius:10px; background:#f5f8fb; }
+.jl-flight > span { color:#466a8d; font-size:10px; font-weight:900; }
+.jl-flight div b,.jl-flight div small { display:block; }
+.jl-flight div small,.jl-flight em { color:#756c5d; font-size:10px; font-style:normal; }
+.jl-flight i { height:1px; background:#9eb2c5; position:relative; }
+.jl-flight i:after { content:"›"; position:absolute; right:-2px; top:-10px; color:#466a8d; font-style:normal; font-size:17px; }
+.jl-group-status { padding:11px; border-radius:10px; background:#f2f4f6; }
+.jl-group-status.good { background:#e9f4e7; }
+.jl-group-status.care { background:#fff5dd; }
+.jl-group-status.slow { background:#fae8e4; }
+.jl-group-status p { margin:3px 0 0; color:#5f5a51; font-size:12px; }
+.jl-checkins { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:10px; }
+.jl-checkins > div { display:grid; grid-template-columns:1fr 1fr; gap:7px; padding:9px; border:1px solid #e5ded2; border-radius:9px; }
+.jl-checkins > div > b { grid-column:1 / -1; }
+.jl-checkins label,.jl-profiles label { display:grid; gap:3px; color:#756c5d; font-size:10px; font-weight:800; }
+.jl-checkins input,.jl-checkins select,.jl-profiles input { min-width:0; width:100%; box-sizing:border-box; padding:7px; border:1px solid #d8cfbf; border-radius:7px; background:#fff; color:#2b2620; font:inherit; }
+.jl-timeline { display:grid; }
+.jl-timeline-row { display:grid; grid-template-columns:72px 175px 120px 1fr; gap:10px; align-items:center; padding:10px 0; border-top:1px solid #eee8da; }
+.jl-timeline-row:first-child { border-top:0; }
+.jl-timeline-row > span { color:#466a8d; font-size:10px; font-weight:900; text-transform:uppercase; }
+.jl-timeline-row strong { color:#20375a; }
+.jl-timeline-row small { color:#756c5d; }
+.jl-profiles { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; }
+.jl-profiles article { display:grid; gap:8px; padding:10px; border:1px solid #e5ded2; border-radius:10px; background:#faf9f7; }
+.jl-mini-schedule { display:grid; grid-template-columns:1fr 1fr; gap:3px 8px; font-size:10px; }
+.jl-mini-schedule b { grid-column:1 / -1; margin-top:3px; color:#466a8d; text-transform:uppercase; }
+.jl-medical-note { margin:11px 0 0; color:#756c5d; font-size:11px; }
+.jl-checklist { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+.jl-checklist label { display:flex; gap:8px; align-items:flex-start; padding:10px; border-radius:9px; background:#f7f5f0; font-size:12px; }
+.jl-reference { display:flex; align-items:center; gap:12px; }
+.jl-reference p { flex:1; margin:0; color:#756c5d; font-size:11px; }
+.jl-reference a { color:#285c75; font-size:11px; font-weight:800; }
+.jl-today-card { display:grid; gap:5px; border-left:4px solid #466a8d; }
+.jl-today-card > span { color:#466a8d; font-size:10px; font-weight:900; text-transform:uppercase; }
+.jl-today-card > p { margin:0; color:#756c5d; font-size:12px; }
+.jl-today-card button { justify-self:start; margin-top:3px; }
+@media (max-width:760px) {
+  .jl-grid,.jl-profiles,.jl-checklist { grid-template-columns:1fr; }
+  .jl-now,.jl-reference { align-items:stretch; flex-direction:column; }
+  .jl-flight { grid-template-columns:62px 1fr 22px 1fr; }
+  .jl-flight em { grid-column:2 / -1; }
+  .jl-checkins { grid-template-columns:1fr; }
+  .jl-timeline-row { grid-template-columns:78px 1fr; }
+  .jl-timeline-row small { grid-column:2; }
+  .jl-heading { align-items:flex-start; flex-direction:column; }
+  .jl-heading small { text-align:left; }
 }
 
 /* Lista colaborativa de compras */
