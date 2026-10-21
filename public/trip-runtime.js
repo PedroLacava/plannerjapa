@@ -55,6 +55,7 @@
       ["Estação JR Inari", 34.9669, 135.77],
       ["Fushimi Inari Taisha", 34.9671, 135.7727],
       ["Tofuku-ji", 34.9767, 135.7738],
+      ["Mercado Nishiki", 35.005, 135.7649],
       ["Kiyomizu-dera", 34.9949, 135.785],
       ["Sannenzaka e Ninenzaka", 34.9965, 135.7809],
       ["Yasaka Pagoda", 34.9986, 135.7793],
@@ -442,6 +443,7 @@
     "kyoto-guided-higashiyama": [
       ["Fushimi Inari Taisha", 34.9671, 135.7727],
       ["Tofuku-ji", 34.9767, 135.7738],
+      ["Nishiki Market", 35.005, 135.7649],
       ["Kiyomizu-dera", 34.9949, 135.785],
       ["Yasaka Pagoda", 34.9986, 135.7793],
       ["Gion", 35.0037, 135.7785],
