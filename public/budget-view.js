@@ -6,7 +6,7 @@
     "08/11": ["Chegada em Haneda e hotel", ["Deslocamento"]],
     "09/11": ["Mudança para Osaka + Dotonbori", ["Deslocamento", "Geral"]],
     "10/11": ["Osaka central: mercados, cultura pop e castelo", ["Geral", "Compras", "História e cultura"]],
-    "11/11": ["Fushimi solo + Kyoto com guia às 10h", ["História e cultura", "Natureza"]],
+    "11/11": ["Fushimi solo + Kyoto com guia às 12h no Nishiki", ["História e cultura", "Natureza"]],
     "12/11": ["Arashiyama + Saihō-ji + Kinkaku-ji", ["História e cultura", "Natureza"]],
     "13/11": ["Nara + Uji + chá na Taihō-an", ["História e cultura", "Natureza", "Alimentação"]],
     "14/11": ["Castelo de Himeji + Kobe", ["História e cultura", "Geral"]],

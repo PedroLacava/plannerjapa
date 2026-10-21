@@ -1636,7 +1636,7 @@
     <div id="print-view"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="/trip-runtime.js?v=5"></script>
+    <script src="/trip-runtime.js?v=6"></script>
     <script>
       var SHARED_KEYS = [
         "japan-trip-planner-v3",
@@ -5028,24 +5028,24 @@
 
           "kyoto-guided-higashiyama": {
             "icon": "⛩️",
-            "label": "Fushimi solo + Kyoto com guia às 10h",
+            "label": "Fushimi solo + Kyoto com guia às 12h no Nishiki",
             "hours": 11,
             "region": "kyoto",
             "colorKey": "kyoto",
             "travel": "🚆 Saída 05:25 · JR Shin-Osaka → Kyoto → Inari (antes de 07:00) · volta JR de Kyoto",
             "bullets": [
               "Fushimi Inari sem guia antes das 07:00, com poucos visitantes",
-              "Encontro com o guia às 10:00 na entrada do Tofuku-ji",
-              "Tofuku-ji (ponte Tsutenkyo) e Higashiyama com o guia",
-              "Kiyomizu-dera, Sannenzaka/Ninenzaka, Yasaka Pagoda e Gion",
-              "Confirmar com o guia o ponto exato junto à bilheteria do Tofuku-ji"
+              "Tofuku-ji sem guia por volta de 09:00–10:15 (opcional se houver fila)",
+              "Encontro confirmado com o guia às 12:00 no Nishiki Market — chegar por volta de 11:45",
+              "Ponto exato dentro/na entrada do mercado ainda a combinar com o guia",
+              "Com o guia: almoço no mercado, Kiyomizu-dera, Sannenzaka/Ninenzaka, Yasaka Pagoda e Gion"
             ],
             "guide": {
-              "cardTitle": "Fushimi solo + Kyoto com guia às 10h",
+              "cardTitle": "Fushimi solo + Kyoto com guia às 12h no Nishiki",
               "icon": "⛩️",
               "hours": 11,
               "city": "Kyoto",
-              "intro": "Fushimi Inari é feito sem guia bem cedo. Depois, o encontro com o guia acontece às 10h no Tofuku-ji, aproveitando melhor o acompanhamento na visita ao templo e no eixo histórico de Higashiyama até Gion.",
+              "intro": "Fushimi Inari e Tofuku-ji são feitos sem guia pela manhã. O encontro com o guia está confirmado para 12:00 no Nishiki Market (ponto exato ainda a combinar); a prioridade é chegar pontualmente ao mercado. Depois do almoço no mercado, o grupo segue com o guia por Kiyomizu-dera e o eixo histórico de Higashiyama até Gion. Horários além do encontro são estimativas sujeitas ao ritmo do grupo.",
               "images": [],
               "videos": [],
               "hiddenGems": [],
@@ -5065,66 +5065,19 @@
                 }
               ],
               "smartRoute": [
-                {
-                  "time": "05:25",
-                  "place": "Saída do hotel em Osaka",
-                  "note": "Caminhada até a estação Shin-Osaka."
-                },
-                {
-                  "time": "05:45",
-                  "place": "JR Shin-Osaka → Kyoto → Inari",
-                  "note": "JR Special Rapid + JR Nara Line; chegar a JR Inari antes de 07:00."
-                },
-                {
-                  "time": "06:50",
-                  "place": "Fushimi Inari Taisha",
-                  "note": "Visita sem guia. Subir pelos Senbon Torii até Mitsutsuji; não fazer o circuito completo do cume para manter o horário."
-                },
-                {
-                  "time": "08:25",
-                  "place": "Inari → Tofukuji",
-                  "note": "Uma estação pela JR Nara Line. Fazer uma pausa rápida e caminhar até o templo."
-                },
-                {
-                  "time": "10:00",
-                  "place": "Encontro com o guia no Tofuku-ji",
-                  "note": "Ponto recomendado: entrada da área paga da ponte Tsutenkyo. Confirmar o ponto exato com o guia."
-                },
-                {
-                  "time": "10:00–11:15",
-                  "place": "Tofuku-ji com guia",
-                  "note": "Ponte Tsutenkyo e jardim Hojo. Em 11/11, a visita abre às 09:00."
-                },
-                {
-                  "time": "11:15",
-                  "place": "Táxi para Kiyomizu-dera",
-                  "note": "Cerca de 15 a 20 minutos, dependendo do trânsito."
-                },
-                {
-                  "time": "11:45",
-                  "place": "Kiyomizu-dera",
-                  "note": "Visita guiada ao salão principal e aos mirantes."
-                },
-                {
-                  "time": "13:15",
-                  "place": "Sannenzaka e Ninenzaka",
-                  "note": "Almoço e caminhada pelas ruas históricas."
-                },
-                {
-                  "time": "14:30",
-                  "place": "Yasaka Pagoda e Kodai-ji",
-                  "note": "Foto clássica de Hokan-ji; Kodai-ji entra se o ritmo do grupo permitir."
-                },
-                {
-                  "time": "16:15",
-                  "place": "Kennin-ji e Gion",
-                  "note": "Kennin-ji, Hanamikoji, Shirakawa e Yasaka-jinja conforme o tempo restante com o guia."
-                },
-                {
-                  "time": "18:30",
-                  "place": "Retorno a Osaka",
-                  "note": "Ônibus/táxi até Kyoto Station e JR Special Rapid para Shin-Osaka."
-                }
+                { "time": "05:25", "place": "Saída do hotel em Osaka", "note": "Caminhada até a estação Shin-Osaka." },
+                { "time": "05:45", "place": "JR Shin-Osaka → Kyoto → Inari", "note": "JR Special Rapid + JR Nara Line; chegar a JR Inari antes de 07:00. Horários de trem não confirmados." },
+                { "time": "06:50", "place": "Fushimi Inari Taisha", "note": "Visita sem guia. Subir pelos Senbon Torii até Mitsutsuji; não fazer o circuito completo do cume." },
+                { "time": "~08:45", "place": "Inari → Tofukuji", "note": "Uma estação pela JR Nara Line e caminhada até o templo." },
+                { "time": "~09:00–10:15", "place": "Tofuku-ji sem guia (opcional)", "note": "Ponte Tsutenkyo e jardim Hojo. Pular se houver fila longa — a prioridade é chegar pontual ao Nishiki." },
+                { "time": "~10:15", "place": "Deslocamento para o Nishiki Market", "note": "Trem/metrô ou táxi com folga; chegada recomendada por volta de 11:45." },
+                { "time": "12:00", "place": "Encontro com o guia no Nishiki Market", "note": "Horário confirmado. Ponto exato dentro/na entrada do mercado ainda a combinar com o guia." },
+                { "time": "12:00–13:00", "place": "Almoço e mercado com o guia", "note": "Estimativa." },
+                { "time": "~13:00", "place": "Deslocamento para Kiyomizu-dera", "note": "Táxi ou ônibus; estimativa." },
+                { "time": "~13:30", "place": "Kiyomizu-dera", "note": "Salão principal e mirantes." },
+                { "time": "~15:00", "place": "Sannenzaka e Ninenzaka", "note": "Caminhada pelas ruas históricas." },
+                { "time": "~16:00–17:30", "place": "Yasaka Pagoda e Gion", "note": "Conforme o ritmo do grupo e o tempo com o guia." },
+                { "time": "~18:30", "place": "Retorno a Osaka", "note": "Ônibus/táxi até Kyoto Station e JR Special Rapid para Shin-Osaka." }
               ]
             }
           },
@@ -5138,7 +5091,7 @@
             "bullets": [
               "Bamboo Grove 07:20 e Tenryu-ji 08:00",
               "⚠️ Saihō-ji (Kokedera) exige reserva antecipada — ordem depende do horário reservado",
-              "Kinkaku-ji 13:15 e Nishiki Market 15:15",
+              "Kinkaku-ji 13:15; passagem pelo Nishiki Market opcional (mercado já visitado com o guia em 11/11)",
               "Fim de tarde livre em Gion, sem outra reserva com horário rígido"
             ],
             "guide": {
@@ -5203,8 +5156,8 @@
                 },
                 {
                   "time": "15:15",
-                  "place": "Nishiki Market",
-                  "note": "Táxi ou ônibus até o centro."
+                  "place": "Nishiki Market (opcional)",
+                  "note": "Opcional — o mercado já foi visitado com o guia em 11/11. Táxi ou ônibus até o centro."
                 },
                 {
                   "time": "16:30",
@@ -7891,6 +7844,19 @@
           return true;
         }
 
+        function applyGuideNishikiNoonV1(sourcePlan) {
+          sourcePlan._updates = sourcePlan._updates || {};
+          if (sourcePlan._updates.guideNishikiNoonV1) return false;
+          var day11 = sourcePlan["2026-11-11"] || (sourcePlan["2026-11-11"] = emptyDay());
+          day11.base = day11.base || "osaka";
+          var req = ["transport-osaka-kyoto-out", "kyoto-guided-higashiyama", "transport-kyoto-osaka-return"];
+          var extras = (day11.tours || []).filter(function (t) { return req.indexOf(t) === -1; });
+          day11.tours = [req[0], req[1]].concat(extras, [req[2]]);
+          day11.note = "Fushimi Inari sem guia antes de 07:00 → Tofuku-ji sem guia ~09:00–10:15 (opcional se houver fila) → encontro confirmado com o guia às 12:00 no Nishiki Market (chegar ~11:45; ponto exato a combinar) → Kiyomizu-dera ~13:30 → Sannenzaka/Ninenzaka ~15:00 → Yasaka Pagoda e Gion ~16:00–17:30 → Osaka ~18:30 (horários estimados)";
+          sourcePlan._updates.guideNishikiNoonV1 = true;
+          return true;
+        }
+
         // default proposal
         var defaultPlan = {
           "2026-11-08": {
@@ -8001,6 +7967,7 @@
                 if (applyKyotoDaysV1(parsed)) changed = true;
                 if (applyTaihoanTeaV1(parsed)) changed = true;
                 if (applyGuide10AndHiroshima15V1(parsed)) changed = true;
+                if (applyGuideNishikiNoonV1(parsed)) changed = true;
                 if (changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
                 return parsed;
               }
@@ -8017,6 +7984,7 @@
           applyKyotoDaysV1(freshPlan);
           applyTaihoanTeaV1(freshPlan);
           applyGuide10AndHiroshima15V1(freshPlan);
+          applyGuideNishikiNoonV1(freshPlan);
           return freshPlan;
         }
         function savePlan() {
@@ -9661,10 +9629,10 @@
         if (appTitle) appTitle.addEventListener("click", goTop);
       })();
     </script>
-    <script src="/transport-view.js?v=27"></script>
+    <script src="/transport-view.js?v=28"></script>
     <script src="/activities-view.js?v=20"></script>
     <script src="/reservations-view.js?v=26"></script>
-    <script src="/budget-view.js?v=30"></script>
+    <script src="/budget-view.js?v=31"></script>
     <script src="/shopping-view.js?v=11"></script>
   </body>
 </html>
