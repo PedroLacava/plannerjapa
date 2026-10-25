@@ -1,0 +1,36 @@
+:root { --pokemon-red:#d93645; --pokemon-white:#fff; --pokemon-black:#202124; --pokemon-surface:var(--paper); --pokemon-border:var(--line); --pokemon-accent:var(--transport); }
+.pokeball { display:inline-block; width:20px; height:20px; flex:0 0 20px; border:2px solid var(--pokemon-black); border-radius:50%; position:relative; vertical-align:middle; background:linear-gradient(to bottom,var(--pokemon-red) 0 44%,var(--pokemon-black) 44% 56%,var(--pokemon-white) 56% 100%); }
+.pokeball::after { content:""; position:absolute; width:7px; height:7px; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--pokemon-white); border:2px solid var(--pokemon-black); border-radius:50%; }
+.pokemon-day-badge { display:inline-flex; align-items:center; gap:3px; margin-left:auto; flex-shrink:0; }
+.pokemon-day-badge b { font-size:11px; color:var(--ink); }
+.day-num { gap:4px; flex-wrap:wrap; }
+.pokemon-legend { font-size:12px; color:var(--ink); margin:8px 0 12px; display:flex; align-items:center; gap:6px; }
+.pokemon-view { display:none; max-width:1240px; margin:0 auto 20px; color:var(--ink); }
+body.pokemon-open .layout,body.pokemon-open #card-guide,body.pokemon-open #today-view,body.pokemon-open #jetlag-view,body.pokemon-open #transport-view,body.pokemon-open #activities-view,body.pokemon-open #budget-view,body.pokemon-open #reservations-view,body.pokemon-open #shopping-view { display:none!important; }
+body.pokemon-open .pokemon-view { display:block; }
+.pokemon-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; border-bottom:2px solid var(--pokemon-red); padding:16px 0; }
+.pokemon-header h2 { margin:0; display:flex; gap:10px; align-items:center; }
+.pokemon-header p { margin:8px 0; }
+.pokemon-header progress { display:block; width:180px; accent-color:var(--pokemon-red); margin-top:8px; }
+.pokemon-header button { padding:10px; border:1px solid var(--line); background:var(--pokemon-white); color:var(--ink); border-radius:6px; cursor:pointer; }
+.pokemon-note { border-left:3px solid var(--pokemon-accent); padding:8px 12px; line-height:1.5; }
+.pokemon-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.pokemon-card { padding:18px; border:1px solid var(--line); border-radius:8px; background:var(--pokemon-white); min-width:0; }
+.pokemon-card h4 { display:flex; align-items:center; gap:8px; font-size:17px; margin:0 0 14px; }
+.pokemon-card dl { margin:0; display:grid; grid-template-columns:130px minmax(0,1fr); gap:8px 12px; line-height:1.5; font-size:13px; }
+.pokemon-card dt { font-weight:bold; }
+.pokemon-card dd { margin:0; overflow-wrap:anywhere; }
+.pokemon-alert { border-left:3px solid var(--pokemon-red); padding-left:10px; font-size:13px; line-height:1.5; }
+.pokemon-links { display:flex; flex-wrap:wrap; gap:8px 12px; align-items:center; margin:10px 0; }
+.pokemon-links a,.pokemon-outside a { color:var(--pokemon-accent); font-weight:700; }
+.pokemon-links small { font-size:11px; }
+.pokemon-checks { display:flex; flex-wrap:wrap; gap:12px; padding-top:12px; border-top:1px solid var(--line); }
+.pokemon-checks label { display:flex; align-items:center; gap:6px; min-height:36px; font-size:13px; cursor:pointer; }
+.pokemon-checks input { width:18px; height:18px; accent-color:var(--pokemon-red); }
+.pokemon-view :focus-visible { outline:3px solid var(--pokemon-accent); outline-offset:3px; }
+.pokemon-outside { margin-top:22px; padding-top:12px; border-top:1px solid var(--line); line-height:1.6; }
+.pokemon-day-detail { padding:12px 0; border-top:2px solid var(--pokemon-red); font-size:13px; line-height:1.5; }
+.pokemon-map-marker { background:none!important; border:none!important; }
+.pokemon-map-marker .pokeball { width:28px; height:28px; }
+.today-toolbar { flex-wrap:wrap; }
+@media(max-width:760px) { .pokemon-grid { grid-template-columns:1fr; } .pokemon-header { flex-wrap:wrap; } .pokemon-card { padding:14px; } .pokemon-card dl { grid-template-columns:1fr; gap:4px; } .pokemon-card dd { margin-bottom:8px; } .pokemon-view { padding:0 4px; } .pokemon-day-badge .pokeball { width:16px; height:16px; flex-basis:16px; } }

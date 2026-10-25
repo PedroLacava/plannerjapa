@@ -16,7 +16,8 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180.png" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-    <link rel="stylesheet" href="/trip-runtime.css" />
+    <link rel="stylesheet" href="/trip-runtime.css?v=7" />
+    <link rel="stylesheet" href="/pokemon-view.css?v=1" />
     <style>
       :root {
         color-scheme: light;
@@ -1486,6 +1487,7 @@
       <button type="button" data-mview="budget">Custos</button>
       <button type="button" data-mview="reservations">Reservas</button>
       <button type="button" data-mview="shopping">Compras</button>
+      <button type="button" data-mview="pokemon">Rota Pokémon</button>
       <button type="button" data-mview="pool">🎴 Cards</button>
       <button type="button" data-mview="detail">📋 Detalhes</button>
     </div>
@@ -1496,6 +1498,7 @@
       <button type="button" id="open-budget-view">Simular gastos</button>
       <button type="button" id="open-reservations-view">Reservas e ingressos</button>
       <button type="button" id="open-shopping-view">Lista de compras</button>
+      <button type="button" id="open-pokemon-view">Rota Pokémon</button>
       <button type="button" id="install-app-button" hidden>Instalar aplicativo</button>
       <button type="button" id="install-help-button">Como instalar</button>
     </div>
@@ -1507,6 +1510,7 @@
     <section id="budget-view" class="budget-view screen-only" aria-live="polite"></section>
     <section id="reservations-view" class="reservations-view screen-only" aria-live="polite"></section>
     <section id="shopping-view" class="shopping-view screen-only" aria-live="polite"></section>
+    <section id="pokemon-view" class="pokemon-view screen-only" aria-label="Rota Pokémon"></section>
 
     <div class="layout screen-only">
       <!-- POOL -->
@@ -1564,6 +1568,7 @@
       <!-- CALENDAR -->
       <div class="panel calendar-panel">
         <h2>Novembro 2026 — Segunda a Domingo</h2>
+        <div class="pokemon-legend"><span class="pokeball" aria-hidden="true"></span> Parada da Rota Pokémon</div>
         <div id="stay-summary-top" class="stay-overview"></div>
         <div class="view-options">
           <div class="view-options-title">Conteúdo dos cards</div>
@@ -1636,7 +1641,8 @@
     <div id="print-view"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="/trip-runtime.js?v=6"></script>
+    <script src="/pokemon-view.js?v=1"></script>
+    <script src="/trip-runtime.js?v=7"></script>
     <script>
       var SHARED_KEYS = [
         "japan-trip-planner-v3",
@@ -1647,6 +1653,7 @@
         "japan-trip-planner-shopping-v1",
         "japan-trip-planner-daily-budget-v1",
         "japan-trip-planner-jetlag-v1",
+        "japan-trip-planner-pokemon-v1",
       ];
       var sharedRevision = 0;
       var sharedDirty = false;
@@ -7407,6 +7414,8 @@
           },
         };
 
+        window.JaplannerPokemon.register(TOUR_DEFS);
+
         var REGION_LABELS = {
           transport: "Deslocamentos — priorizando JR Pass",
           tokyo: "Passeios em Tóquio",
@@ -7968,6 +7977,7 @@
                 if (applyTaihoanTeaV1(parsed)) changed = true;
                 if (applyGuide10AndHiroshima15V1(parsed)) changed = true;
                 if (applyGuideNishikiNoonV1(parsed)) changed = true;
+                if (window.JaplannerPokemon.migrate(parsed)) changed = true;
                 if (changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
                 return parsed;
               }
@@ -7985,6 +7995,7 @@
           applyTaihoanTeaV1(freshPlan);
           applyGuide10AndHiroshima15V1(freshPlan);
           applyGuideNishikiNoonV1(freshPlan);
+          window.JaplannerPokemon.migrate(freshPlan);
           return freshPlan;
         }
         function savePlan() {
@@ -8528,6 +8539,8 @@
             lbl.num +
             "</span>" +
             (hrs > 0 ? '<span class="hours-badge ' + status + '">' + hrs + "h</span>" : "");
+          numRow.insertAdjacentHTML("beforeend", window.JaplannerPokemon.badge(iso));
+          cell.setAttribute("data-date", iso);
           cell.appendChild(numRow);
 
           // base chip
@@ -8865,6 +8878,7 @@
             html += '<div class="detail-placeholder">Nenhum passeio adicionado ainda.</div>';
           }
 
+          html += window.JaplannerPokemon.detail(selectedDate);
           detailEl.insertAdjacentHTML("beforeend", html);
           detailEl.querySelectorAll(".guide-link").forEach(function (link) {
             link.addEventListener("click", function (e) {
@@ -9561,8 +9575,8 @@
           var tabs = document.getElementById("mobile-tabs");
           if (!tabs) return;
           function setView(view) {
-            document.body.classList.remove("m-today", "m-jetlag", "m-pool", "m-detail", "m-transport", "m-activities", "m-budget", "m-reservations", "m-shopping");
-            document.body.classList.remove("jetlag-open", "transport-open", "activities-open", "budget-open", "reservations-open", "shopping-open");
+            document.body.classList.remove("m-today", "m-jetlag", "m-pool", "m-detail", "m-transport", "m-activities", "m-budget", "m-reservations", "m-shopping", "m-pokemon");
+            document.body.classList.remove("jetlag-open", "transport-open", "activities-open", "budget-open", "reservations-open", "shopping-open", "pokemon-open");
             if (view === "today") document.body.classList.add("m-today");
             if (view === "jetlag") {
               document.body.classList.add("m-jetlag");
@@ -9588,11 +9602,13 @@
               document.body.classList.add("m-shopping");
               if (window.plannerShowShopping) window.plannerShowShopping(true);
             }
+            if (view === "pokemon") { document.body.classList.add("m-pokemon", "pokemon-open"); }
             if (view === "pool") document.body.classList.add("m-pool");
             if (view === "detail") document.body.classList.add("m-detail");
             tabs.querySelectorAll("button").forEach(function (b) {
               b.classList.toggle("active", b.getAttribute("data-mview") === view);
             });
+            if (view === "pokemon" && window.JaplannerPokemon.render) window.JaplannerPokemon.render();
             window.scrollTo(0, 0);
           }
           tabs.addEventListener("click", function (e) {
