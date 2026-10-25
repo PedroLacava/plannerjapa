@@ -579,7 +579,7 @@
   }
   function stepsFor(iso) {
     if (iso === "2026-11-10") {
-      return [
+      var fixedSteps = [
         {
           key: iso + "|fixed|0",
           time: "09:00",
@@ -612,9 +612,9 @@
         },
         {
           key: iso + "|fixed|5",
-          time: "18:30",
-          place: "Pokémon Center Osaka",
-          note: "Compras no Daimaru Umeda antes do jantar.",
+          time: "",
+          place: "Pokémon Center OSAKA DX",
+          note: "Após Kuromon, na passagem por Shinsaibashi/Dotonbori · 45 min · Daimaru Shinsaibashi Main Building 9F · 10:00–20:00. Estoque não garantido.",
         },
         {
           key: iso + "|fixed|6",
@@ -623,6 +623,9 @@
           note: "Depois, retorno ao Comfort Hotel Shin-Osaka.",
         },
       ];
+      var pokemonStep = fixedSteps.splice(5, 1)[0];
+      fixedSteps.splice(1, 0, pokemonStep);
+      return fixedSteps;
     }
     var entry = plan()[iso] || { tours: [] },
       steps = [];
@@ -674,9 +677,10 @@
   }
   function pointsFor(iso) {
     if (DATE_ROUTES[iso]) {
-      return DATE_ROUTES[iso].map(function (p) {
+      var routePoints = DATE_ROUTES[iso].map(function (p) {
         return { name: p[0], lat: p[1], lng: p[2], tourId: "route-" + iso };
       });
+      return window.JaplannerPokemon ? window.JaplannerPokemon.route(iso, routePoints) : routePoints;
     }
     if (iso === "2026-11-10") {
       return [
@@ -789,7 +793,7 @@
       .map(function (p) {
         return (
           '<a target="_blank" rel="noopener" href="' +
-          mapsSearch(p.name) +
+          (p.pokemon && window.JaplannerPokemon ? window.JaplannerPokemon.mapUrl(p) : mapsSearch(p.name)) +
           '">' +
           esc(p.name) +
           "</a>"
@@ -859,12 +863,12 @@
       });
       var markerLabel = labels.join("/");
       var icon = L.divIcon({
-        className: "numbered-marker" + (labels.length > 1 ? " repeated-marker" : ""),
-        html: markerLabel,
+        className: p.pokemon ? "pokemon-map-marker" : "numbered-marker" + (labels.length > 1 ? " repeated-marker" : ""),
+        html: p.pokemon && window.JaplannerPokemon ? window.JaplannerPokemon.ball() : markerLabel,
         iconSize: labels.length > 1 ? [44, 28] : [28, 28],
         iconAnchor: labels.length > 1 ? [22, 14] : [14, 14],
       });
-      L.marker([p.lat, p.lng], { icon: icon })
+      L.marker([p.lat, p.lng], { icon: icon, title: p.pokemon ? "Parada Pokémon: " + p.name : p.name })
         .addTo(map)
         .bindPopup(
           "<b>Pin " +
@@ -872,7 +876,7 @@
             " · " +
             esc(p.name) +
             '</b><br><a target="_blank" rel="noopener" href="' +
-            mapsSearch(p.name) +
+            (p.pokemon && window.JaplannerPokemon ? window.JaplannerPokemon.mapUrl(p) : mapsSearch(p.name)) +
             '">Abrir no Google Maps</a>',
         );
     });
@@ -1208,7 +1212,7 @@
     init: function (config) {
       api = config;
       Object.keys(api.tourDefs).forEach(function (id) {
-        api.tourDefs[id].environment = INDOOR.has(id)
+        api.tourDefs[id].environment = id.indexOf("pokemon-") === 0 || INDOOR.has(id)
           ? "indoor"
           : MIXED.has(id) || api.tourDefs[id].region === "transport"
             ? "mixed"
