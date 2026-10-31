@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicCalendarRouteImport } from './routes/api/public/calendar'
 import { Route as ApiPublicStateRouteImport } from './routes/api/public/state'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicCalendarRoute = ApiPublicCalendarRouteImport.update({
+  id: '/api/public/calendar',
+  path: '/api/public/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicStateRoute = ApiPublicStateRouteImport.update({
@@ -25,27 +31,31 @@ const ApiPublicStateRoute = ApiPublicStateRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/calendar': typeof ApiPublicCalendarRoute
   '/api/public/state': typeof ApiPublicStateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/calendar': typeof ApiPublicCalendarRoute
   '/api/public/state': typeof ApiPublicStateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/calendar': typeof ApiPublicCalendarRoute
   '/api/public/state': typeof ApiPublicStateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/state'
+  fullPaths: '/' | '/api/public/calendar' | '/api/public/state'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/state'
-  id: '__root__' | '/' | '/api/public/state'
+  to: '/' | '/api/public/calendar' | '/api/public/state'
+  id: '__root__' | '/' | '/api/public/calendar' | '/api/public/state'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicCalendarRoute: typeof ApiPublicCalendarRoute
   ApiPublicStateRoute: typeof ApiPublicStateRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/calendar': {
+      id: '/api/public/calendar'
+      path: '/api/public/calendar'
+      fullPath: '/api/public/calendar'
+      preLoaderRoute: typeof ApiPublicCalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/state': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicCalendarRoute: ApiPublicCalendarRoute,
   ApiPublicStateRoute: ApiPublicStateRoute,
 }
 export const routeTree = rootRouteImport

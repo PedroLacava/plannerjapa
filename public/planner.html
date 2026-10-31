@@ -1499,6 +1499,7 @@
       <button type="button" id="open-reservations-view">Reservas e ingressos</button>
       <button type="button" id="open-shopping-view">Lista de compras</button>
       <button type="button" id="open-pokemon-view">Rota Pokémon</button>
+      <button type="button" id="open-calendar-export">Google Calendar</button>
       <button type="button" id="install-app-button" hidden>Instalar aplicativo</button>
       <button type="button" id="install-help-button">Como instalar</button>
     </div>
@@ -1643,6 +1644,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="/pokemon-view.js?v=1"></script>
     <script src="/trip-runtime.js?v=7"></script>
+    <script src="/calendar-view.js?v=1"></script>
     <script>
       var SHARED_KEYS = [
         "japan-trip-planner-v3",
@@ -1707,6 +1709,11 @@
       window.JaplannerSharedStore = {
         get: function (key) { return localStorage.getItem(key); },
         set: sharedSet,
+        flush: async function () {
+          clearTimeout(sharedTimer);
+          await pushSharedState();
+          if (sharedDirty) throw new Error("Não foi possível salvar as últimas alterações.");
+        },
       };
 
       async function loadSharedState() {
