@@ -5,7 +5,7 @@
 .planner-view-buttons button[aria-pressed="true"] { background:var(--transport);color:#fff;box-shadow:0 1px 2px #0001; }
 #week-calendar[hidden] { display:none!important; }
 body.week-open .layout { grid-template-columns:minmax(0,1fr); }
-body.week-open:not(.m-pool) .pool-panel,body.week-open:not(.m-detail) #detail-panel { display:none!important; }
+body.week-open:not(.m-pool) #pool-panel,body.week-open:not(.m-detail) #detail-panel { display:none!important; }
 body.week-open .calendar-panel { position:static;max-height:none;overflow:visible;padding:18px;min-width:0; }
 body.week-open .calendar-panel>h2,body.week-open #calendar,body.week-open .weekday-header,body.week-open .calendar-panel>.view-options,body.week-open #stay-summary-top,body.week-open .calendar-panel>.pokemon-legend { display:none!important; }
 .wk-toolbar { display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:12px; }
