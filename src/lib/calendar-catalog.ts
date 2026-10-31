@@ -1751,6 +1751,7 @@ export default {
     "travel": "🚄 ~30min de Osaka · JR Rapid (JR Pass)",
     "guide": {
       "city": "Kyoto",
+      "timeMode": "relative",
       "smartRoute": [
         {
           "time": "00:00",
@@ -1796,6 +1797,7 @@ export default {
     "travel": "🚄 ~30min de Osaka · JR Rapid (JR Pass)",
     "guide": {
       "city": "Kyoto",
+      "timeMode": "relative",
       "smartRoute": [
         {
           "time": "00:00",
@@ -1841,6 +1843,7 @@ export default {
     "travel": "🚄 ~30min de Osaka · JR Rapid (JR Pass)",
     "guide": {
       "city": "Kyoto",
+      "timeMode": "relative",
       "smartRoute": [
         {
           "time": "00:00",
@@ -1872,45 +1875,46 @@ export default {
   },
   "dotonbori": {
     "label": "Dotonbori (à noite)",
-    "hours": 2,
+    "hours": 2.5,
     "region": "osaka",
     "bullets": [
       "Neons refletidos no rio",
-      "Cheiro de takoyaki no ar"
+      "Cheiro de takoyaki no ar",
+      "Sugestão em 09/11: 18h–20h30, após check-in; encurtar se houver cansaço"
     ],
     "travel": null,
     "guide": {
       "city": "Osaka",
       "smartRoute": [
         {
-          "time": "00:00",
+          "time": "18:00",
           "place": "Ponte Ebisubashi",
           "note": "Comece no epicentro. Tire a foto clássica com o painel do Glico Man e absorva a energia inicial."
         },
         {
-          "time": "00:20",
+          "time": "18:20",
           "place": "Kukuru Takoyaki",
           "note": "Pegue uma porção de takoyaki para comer enquanto caminha. Cuidado, é muito quente por dentro!"
         },
         {
-          "time": "00:40",
+          "time": "18:40",
           "place": "Caminhada pelo Tombori River Walk",
           "note": "Desça para a passarela ao lado do rio. Caminhe em direção ao leste, apreciando os neons refletidos na água."
         },
         {
-          "time": "01:00",
+          "time": "19:00",
           "place": "Hozenji Yokocho",
           "note": "Mergulhe na atmosfera tranquila desta viela histórica. Encontre o Templo Hozenji e jogue água na estátua de musgo."
         },
         {
-          "time": "01:30",
+          "time": "19:30",
           "place": "Jantar de Kushikatsu",
           "note": "Experimente os espetos fritos, outra especialidade de Osaka. Procure uma loja da rede 'Kushikatsu Daruma' e lembre-se: não mergulhe o espeto no molho duas vezes!"
         },
         {
-          "time": "02:00",
+          "time": "20:00",
           "place": "Don Quijote Dotonbori",
-          "note": "Termine na icônica loja Don Quijote com sua roda-gigante oval. É um labirinto de produtos bizarros e ótimos para comprar lanches."
+          "note": "Visita sugerida de até 30 min; corte esta parada se houver cansaço após a viagem. Termine na icônica loja Don Quijote com sua roda-gigante oval. É um labirinto de produtos bizarros e ótimos para comprar lanches."
         }
       ]
     }

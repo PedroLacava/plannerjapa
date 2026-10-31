@@ -1,5 +1,5 @@
 type Step = { time?: string; place?: string; note?: string };
-type Tour = { label?: string; hours?: number; region?: string; bullets?: string[]; suggested?: string[]; travel?: string | null; guide?: { city?: string; smartRoute?: Step[] } };
+type Tour = { label?: string; hours?: number; region?: string; bullets?: string[]; suggested?: string[]; travel?: string | null; guide?: { city?: string; timeMode?: string; smartRoute?: Step[] } };
 type Day = { tours?: string[]; base?: string; note?: string };
 export type CalendarEvent = { uid: string; date: string; title: string; location: string; description: string; start: number | null; end: number | null; conflict: boolean };
 function parse(value: unknown): any {
@@ -34,7 +34,8 @@ export function buildEvents(shared: Record<string, unknown>, catalog: Record<str
         const identity = id + '|' + title;
         if (seen.has(identity)) return;
         seen.add(identity);
-        const start = clock(step.time || '');
+        const relative = def.guide?.timeMode === 'relative';
+        const start = relative ? null : clock(step.time || '');
         const range = /[–-]\s*(\d{1,2}):(\d{2})/.exec(step.time || '');
         const explicitEnd = range && +range[1] < 24 && +range[2] < 60 ? +range[1] * 60 + +range[2] : null;
         const nextStart = index + 1 < steps.length ? clock(steps[index + 1].time || '') : null;
@@ -43,7 +44,7 @@ export function buildEvents(shared: Record<string, unknown>, catalog: Record<str
         const city = def.guide?.city || ({ tokyo: 'Tokyo', kyoto: 'Kyoto', osaka: 'Osaka', hiro: 'Hiroshima', hakone: 'Hakone' } as Record<string, string>)[def.region || ''] || 'Japan';
         const location = title + ', ' + city + ', Japan';
         const timing = start === null ? 'Atividade flexível: sem horário definido. O evento de dia inteiro não significa que a visita dure o dia todo.' : 'Horário sugerido do roteiro, no fuso Asia/Tokyo. Não representa uma reserva confirmada. A duração é estimada quando não informada.';
-        events.push({ uid: date + '-' + hash(identity) + '@plannerjapa.lovable.app', date, title: (start === null ? '[Flexível] ' : '') + title, location, start, end, conflict: false, description: [timing, step.time ? 'Janela original: ' + step.time : '', step.note || '', 'Atividade: ' + (def.label || id), 'Mapa: https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location), 'Roteiro: https://plannerjapa.lovable.app'].filter(Boolean).join('\n\n') });
+        events.push({ uid: date + '-' + hash(identity) + '@plannerjapa.lovable.app', date, title: (start === null ? '[Flexível] ' : '') + title, location, start, end, conflict: false, description: [timing, step.time ? (relative ? 'Tempo decorrido desde o início da atividade (não é hora do relógio): ' : 'Janela original: ') + step.time : '', step.note || '', 'Atividade: ' + (def.label || id), 'Mapa: https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location), 'Roteiro: https://plannerjapa.lovable.app'].filter(Boolean).join('\n\n') });
       });
     }
   }
