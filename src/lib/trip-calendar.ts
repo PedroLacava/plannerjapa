@@ -1,7 +1,7 @@
-type Step = { time?: string; place?: string; note?: string };
-type Tour = { label?: string; hours?: number; region?: string; bullets?: string[]; suggested?: string[]; travel?: string | null; guide?: { city?: string; timeMode?: string; smartRoute?: Step[] } };
+type Step = { time?: string; place?: string; note?: string; dayOffset?: number; confirmed?: boolean };
+type Tour = { label?: string; hours?: number; region?: string; bullets?: string[]; suggested?: string[]; travel?: string | null; guide?: { city?: string; timeMode?: string; smartRoute?: Step[]; dateRoutes?: Record<string, Step[]> } };
 type Day = { tours?: string[]; base?: string; note?: string };
-export type CalendarEvent = { uid: string; date: string; title: string; location: string; description: string; start: number | null; end: number | null; conflict: boolean };
+export type CalendarEvent = { uid: string; date: string; title: string; location: string; description: string; start: number | null; end: number | null; conflict: boolean; confirmed?: boolean };
 function parse(value: unknown): any {
   if (typeof value !== 'string') return value || {};
   try { return JSON.parse(value); } catch { return {}; }
@@ -25,9 +25,12 @@ export function buildEvents(shared: Record<string, unknown>, catalog: Record<str
     const day = plan[date] as Day;
     if (!Array.isArray(day?.tours)) continue;
     const seen = new Set<string>();
-    for (const id of day.tours) {
+    const tourIds = day.tours.slice();
+    // Same additive repair as the planner, also before a client has opened the new version.
+    if (date === '2026-11-09' && !plan._updates?.osakaTransferCalendarV1 && tourIds.includes('dotonbori') && !tourIds.some(id => id === 'transport-haneda-hotel-osaka' || id === 'transport-tokyo-osaka')) tourIds.unshift('transport-haneda-hotel-osaka');
+    for (const id of tourIds) {
       const def = defs[id] || { label: id };
-      const route = def.guide?.smartRoute;
+      const route = def.guide?.dateRoutes?.[date] || def.guide?.smartRoute;
       const steps: Step[] = route?.length ? route : [{ place: def.label, note: [...(def.bullets || []), ...(def.suggested || []), def.travel || ''].join('\n') }];
       steps.forEach((step, index) => {
         const title = String(step.place || def.label || id).trim();
@@ -40,11 +43,12 @@ export function buildEvents(shared: Record<string, unknown>, catalog: Record<str
         const explicitEnd = range && +range[1] < 24 && +range[2] < 60 ? +range[1] * 60 + +range[2] : null;
         const nextStart = index + 1 < steps.length ? clock(steps[index + 1].time || '') : null;
         const estimate = duration(step.note || '') || (steps.length === 1 && def.hours ? Math.min(240, Math.round(def.hours * 60)) : 60);
-        const end = start === null ? null : explicitEnd !== null && explicitEnd > start ? explicitEnd : start + Math.min(estimate, nextStart !== null && nextStart > start ? nextStart - start : estimate);
+        const end = start === null ? null : explicitEnd !== null ? explicitEnd + (explicitEnd <= start ? 1440 : 0) : start + Math.min(estimate, nextStart !== null && nextStart > start ? nextStart - start : estimate);
         const city = def.guide?.city || ({ tokyo: 'Tokyo', kyoto: 'Kyoto', osaka: 'Osaka', hiro: 'Hiroshima', hakone: 'Hakone' } as Record<string, string>)[def.region || ''] || 'Japan';
         const location = title + ', ' + city + ', Japan';
-        const timing = start === null ? 'Atividade flexível: sem horário definido. O evento de dia inteiro não significa que a visita dure o dia todo.' : 'Horário sugerido do roteiro, no fuso Asia/Tokyo. Não representa uma reserva confirmada. A duração é estimada quando não informada.';
-        events.push({ uid: date + '-' + hash(identity) + '@plannerjapa.lovable.app', date, title: (start === null ? '[Flexível] ' : '') + title, location, start, end, conflict: false, description: [timing, step.time ? (relative ? 'Tempo decorrido desde o início da atividade (não é hora do relógio): ' : 'Janela original: ') + step.time : '', step.note || '', 'Atividade: ' + (def.label || id), 'Mapa: https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location), 'Roteiro: https://plannerjapa.lovable.app'].filter(Boolean).join('\n\n') });
+        const timing = start === null ? 'Atividade flexível: sem horário definido. O evento de dia inteiro não significa que a visita dure o dia todo.' : step.confirmed ? 'Início confirmado na reserva salva. Fuso Asia/Tokyo. Término e duração estimados.' : 'Horário sugerido do roteiro, no fuso Asia/Tokyo. Não representa uma reserva confirmada. A duração é estimada quando não informada.';
+        const actualDate = step.dayOffset ? new Date(new Date(date + 'T00:00:00Z').getTime() + step.dayOffset * 86400000).toISOString().slice(0, 10) : date;
+        events.push({ uid: actualDate + '-' + hash(identity) + '@plannerjapa.lovable.app', date: actualDate, title: (start === null ? '[Flexível] ' : '') + title, location, start, end, conflict: false, confirmed: !!step.confirmed, description: [timing, step.time ? (relative ? 'Tempo decorrido desde o início da atividade (não é hora do relógio): ' : 'Janela original: ') + step.time : '', step.note || '', 'Atividade: ' + (def.label || id), 'Mapa: https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location), 'Roteiro: https://plannerjapa.lovable.app'].filter(Boolean).join('\n\n') });
       });
     }
   }
@@ -73,7 +77,7 @@ export function toIcs(events: CalendarEvent[], stamp = new Date().toISOString())
     lines.push('BEGIN:VEVENT', 'UID:' + event.uid, 'DTSTAMP:' + dtstamp);
     if (event.start === null) lines.push('DTSTART;VALUE=DATE:' + event.date.replace(/-/g, ''), 'DTEND;VALUE=DATE:' + dateTime(event.date, 1440).slice(0, 8));
     else lines.push('DTSTART;TZID=Asia/Tokyo:' + dateTime(event.date, event.start), 'DTEND;TZID=Asia/Tokyo:' + dateTime(event.date, event.end!));
-    lines.push('SUMMARY:' + escapeText(event.title), 'DESCRIPTION:' + escapeText(event.description), 'LOCATION:' + escapeText(event.location), 'STATUS:TENTATIVE', 'TRANSP:TRANSPARENT', 'END:VEVENT');
+    lines.push('SUMMARY:' + escapeText(event.title), 'DESCRIPTION:' + escapeText(event.description), 'LOCATION:' + escapeText(event.location), event.confirmed ? 'STATUS:CONFIRMED' : 'STATUS:TENTATIVE', 'TRANSP:TRANSPARENT', 'END:VEVENT');
   }
   lines.push('END:VCALENDAR');
   return lines.map(fold).join('\r\n') + '\r\n';

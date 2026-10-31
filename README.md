@@ -18,7 +18,7 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 Use the **Google Calendar** button to preview and subscribe to the current saved itinerary, or download a one-time `.ics` copy. The public feed is `/api/public/calendar`; `?format=json` previews the same events and `?download=1` downloads the calendar.
 
-Events use `Asia/Tokyo`. Times and estimated durations remain tentative; stops without a time are flexible all-day entries. Overlaps are disclosed. Subscriptions refresh on Google's schedule and do not write changes back to the planner. No day comments, reservation records or financial data are exported.
+Events use `Asia/Tokyo`. Reservation starts explicitly confirmed in the saved itinerary are marked confirmed; all other times and estimated durations remain tentative; stops without a time are flexible all-day entries. Overlaps are disclosed. Subscriptions refresh on Google's schedule and do not write changes back to the planner. No day comments, reservation records or financial data are exported.
 
 `npm run build` regenerates `src/lib/calendar-catalog.ts` from the HTML planner and Pokémon module before compiling. Run `node --test tests/trip-calendar.test.mjs tests/pokemon-route.test.cjs` for the export and preservation checks.
 
@@ -32,3 +32,5 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+The 31 October itinerary review preserves the saved Saihō-ji start at 11:30 on 12 November and teamLab at 09:00 on 20 November. Shared transport cards use `guide.dateRoutes` to keep date-specific departure margins. Only the missing 9 November Osaka transfer is added by an idempotent migration; user-added cards and saved data are retained. Regenerate the calendar catalogue after editing definitions.

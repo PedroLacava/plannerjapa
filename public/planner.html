@@ -1642,9 +1642,9 @@
     <div id="print-view"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="/pokemon-view.js?v=1"></script>
-    <script src="/trip-runtime.js?v=7"></script>
-    <script src="/calendar-view.js?v=1"></script>
+    <script src="/pokemon-view.js?v=2"></script>
+    <script src="/trip-runtime.js?v=8"></script>
+    <script src="/calendar-view.js?v=2"></script>
     <script>
       var SHARED_KEYS = [
         "japan-trip-planner-v3",
@@ -1938,7 +1938,7 @@
           "transport-haneda-tokyo": {
             icon: "🌙",
             label: "Haneda → Henn na Hotel Tokyo Haneda",
-            hours: 1.5,
+            hours: 1.6,
             region: "transport",
             colorKey: "transport",
             travel: "Terminal 3 → shuttle gratuito do hotel · chegada 23h55",
@@ -1948,6 +1948,25 @@
               "Serviço por ordem de chegada e limitado a uma mala por pessoa",
               "Táxi é o plano B se o shuttle lotar ou o desembarque atrasar",
             ],
+            guide: {
+  "cardTitle": "Haneda → Henn na Hotel Tokyo Haneda",
+  "city": "Tokyo",
+  hours: 1.6,
+  "intro": "Plano de deslocamento. Horários sugeridos, salvo reservas identificadas. Confirmar trens e assentos.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": [
+  {
+    "time": "23:55–01:30",
+    "place": "Haneda → Henn na Hotel Tokyo Haneda",
+    "note": "Chegada do voo às 23:55 em 08/11. Imigração, bagagens e traslado terminam já em 09/11. Duração estimada; usar táxi se o shuttle do hotel não estiver operando. Não é um passeio à meia-noite.",
+    "confirmed": true
+  }
+]
+},
           },
           "transport-tokyo-hakone": {
             icon: "🚅",
@@ -2122,7 +2141,7 @@
           "transport-haneda-hotel-osaka": {
             icon: "🚅",
             label: "Henn na Hotel Haneda → Comfort Hotel Shin-Osaka",
-            hours: 4,
+            hours: 4.5,
             region: "transport",
             colorKey: "transport",
             travel: "Hotel → Otorii → Shinagawa → Shin-Osaka · apenas ida",
@@ -2132,11 +2151,44 @@
               "Shinagawa → Shin-Osaka: reservar Hikari; Nozomi exige suplemento",
               "Comfort Hotel fica a aproximadamente 5–8 min a pé de Shin-Osaka",
             ],
+            guide: {
+  "cardTitle": "Henn na Hotel Haneda → Comfort Hotel Shin-Osaka",
+  "city": "Tokyo / Osaka",
+  hours: 4.5,
+  "intro": "Plano de deslocamento. Horários sugeridos, salvo reservas identificadas. Confirmar trens e assentos.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": [
+  {
+    "time": "11:00–11:40",
+    "place": "Henn na Hotel Haneda → Shinagawa",
+    "note": "Caminhada até Otorii e Keikyu para Shinagawa; 40 min com espera e malas."
+  },
+  {
+    "time": "11:40–12:00",
+    "place": "Margem de embarque em Shinagawa",
+    "note": "20 min para plataforma do Shinkansen; chegar com bilhete e assento resolvidos."
+  },
+  {
+    "time": "12:00–15:00",
+    "place": "Shinkansen Shinagawa → Shin-Osaka",
+    "note": "Janela de planejamento de 3h; escolher e reservar o trem real. O passe regional de 5 dias não deve ser presumido válido neste trecho."
+  },
+  {
+    "time": "15:00–15:30",
+    "place": "Shin-Osaka → Comfort Hotel · check-in",
+    "note": "Caminhada e check-in estimados. Descansar depois da chegada."
+  }
+]
+},
           },
           "transport-osaka-kyoto-out": {
             icon: "🚆",
             label: "Osaka → Kyoto",
-            hours: 0.5,
+            hours: 1.4,
             region: "transport",
             colorKey: "transport",
             travel: "Osaka Station → Kyoto Station · ida",
@@ -2146,11 +2198,49 @@
               "Checar a estação mais prática conforme o hotel",
               "Este card representa apenas a ida",
             ],
+            guide: {
+              dateRoutes: {
+  "2026-11-11": [
+    {
+      "time": "05:25–05:45",
+      "place": "Saída do hotel em Osaka",
+      "note": "Caminhada, acesso e margem de embarque."
+    },
+    {
+      "time": "05:45–06:50",
+      "place": "JR Shin-Osaka → Kyoto → Inari",
+      "note": "Janela estimada com baldeação; consultar os trens reais antes de sair."
+    }
+  ],
+  "2026-11-12": [
+    {
+      "time": "06:15–06:30",
+      "place": "Comfort Hotel → Shin-Osaka",
+      "note": "Caminhada e acesso à estação."
+    },
+    {
+      "time": "06:30–07:20",
+      "place": "Shin-Osaka → Saga-Arashiyama",
+      "note": "JR via Kyoto; inclui baldeação e espera estimadas."
+    }
+  ]
+},
+  "cardTitle": "Osaka → Kyoto",
+  "city": "Osaka / Kyoto",
+  hours: 1.4,
+  "intro": "Plano de deslocamento. Horários sugeridos, salvo reservas identificadas. Confirmar trens e assentos.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": []
+},
           },
           "transport-kyoto-osaka-return": {
             icon: "🚆",
             label: "Kyoto → Osaka",
-            hours: 0.5,
+            hours: 1.5,
             region: "transport",
             colorKey: "transport",
             travel: "Kyoto Station → Osaka Station · volta",
@@ -2160,11 +2250,49 @@
               "Manter margem após a última atividade",
               "Este card representa apenas a volta",
             ],
+            guide: {
+              dateRoutes: {
+  "2026-11-11": [
+    {
+      "time": "18:00–18:30",
+      "place": "Gion → Kyoto Station",
+      "note": "Transporte local estimado; antecipar se cortar o passeio opcional."
+    },
+    {
+      "time": "18:30–19:30",
+      "place": "Kyoto → Comfort Hotel Shin-Osaka",
+      "note": "Trem e caminhada ao hotel, incluindo espera. Confirmar a partida real."
+    }
+  ],
+  "2026-11-12": [
+    {
+      "time": "18:00–18:30",
+      "place": "Gion → Kyoto Station",
+      "note": "Transporte local estimado; antecipar se cortar o passeio opcional."
+    },
+    {
+      "time": "18:30–19:30",
+      "place": "Kyoto → Comfort Hotel Shin-Osaka",
+      "note": "Trem e caminhada ao hotel, incluindo espera. Confirmar a partida real."
+    }
+  ]
+},
+  "cardTitle": "Kyoto → Osaka",
+  "city": "Kyoto / Osaka",
+  hours: 1.5,
+  "intro": "Plano de deslocamento. Horários sugeridos, salvo reservas identificadas. Confirmar trens e assentos.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": []
+},
           },
           "transport-osaka-nara-out": {
             icon: "🚆",
             label: "Osaka → Nara",
-            hours: 0.75,
+            hours: 2,
             region: "transport",
             colorKey: "transport",
             travel: "Osaka Station → JR Nara Station · ida",
@@ -2174,11 +2302,39 @@
               "Tempo aproximado de 45-55min",
               "Este card representa apenas a ida",
             ],
+            guide: {
+  "cardTitle": "Osaka → Nara",
+  "city": "Osaka / Nara",
+  hours: 2,
+  "intro": "Plano de deslocamento. Horários sugeridos, salvo reservas identificadas. Confirmar trens e assentos.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": [
+  {
+    "time": "07:15–07:30",
+    "place": "Comfort Hotel → Shin-Osaka",
+    "note": "Caminhada e acesso."
+  },
+  {
+    "time": "07:30–08:45",
+    "place": "JR Shin-Osaka → Osaka → JR Nara",
+    "note": "75 min de janela incluindo conexão e espera; confirmar o trem."
+  },
+  {
+    "time": "08:45–09:15",
+    "place": "JR Nara → Parque de Nara",
+    "note": "Caminhada ou ônibus local; a chegada é por JR Nara, não Kintetsu Nara."
+  }
+]
+},
           },
           "transport-nara-uji": {
             icon: "🚆",
             label: "Nara → Uji",
-            hours: 0.5,
+            hours: 1.5,
             region: "transport",
             colorKey: "transport",
             travel: "JR Nara Station → Uji Station",
@@ -2188,11 +2344,39 @@
               "Tempo aproximado de 30-40min",
               "Trecho intermediário do circuito",
             ],
+            guide: {
+  "cardTitle": "Nara → Uji",
+  "city": "Nara / Uji",
+  hours: 1.5,
+  "intro": "Plano de deslocamento. Horários sugeridos, salvo reservas identificadas. Confirmar trens e assentos.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": [
+  {
+    "time": "12:30–13:00",
+    "place": "Centro de Nara → JR Nara",
+    "note": "Caminhada/ônibus com margem."
+  },
+  {
+    "time": "13:00–13:45",
+    "place": "JR Nara → Uji",
+    "note": "Janela de 45 min com espera."
+  },
+  {
+    "time": "13:45–14:00",
+    "place": "Uji Station → Byodo-in",
+    "note": "Caminhada."
+  }
+]
+},
           },
           "transport-uji-osaka-return": {
             icon: "🚆",
             label: "Uji → Osaka",
-            hours: 1,
+            hours: 1.25,
             region: "transport",
             colorKey: "transport",
             travel: "Uji Station → Kyoto Station → Osaka Station · volta",
@@ -2202,6 +2386,24 @@
               "Prever conexão em Kyoto",
               "Este card encerra o circuito do dia",
             ],
+            guide: {
+  "cardTitle": "Uji → Osaka",
+  "city": "Uji / Osaka",
+  hours: 1.25,
+  "intro": "Plano de deslocamento. Horários sugeridos, salvo reservas identificadas. Confirmar trens e assentos.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": [
+  {
+    "time": "17:00–18:15",
+    "place": "Uji → Comfort Hotel Shin-Osaka",
+    "note": "JR via Kyoto/Osaka conforme melhor conexão, mais caminhada. 75 min de planejamento."
+  }
+]
+},
           },
           "transport-osaka-himeji-out": {
             icon: "🚅",
@@ -2277,7 +2479,7 @@
           "transport-hiroshima-osaka-return": {
             icon: "🚅",
             label: "Hiroshima → Osaka",
-            hours: 1.5,
+            hours: 2.5,
             region: "transport",
             colorKey: "transport",
             travel: "Hiroshima → Shin-Osaka · volta",
@@ -2287,11 +2489,39 @@
               "Manter margem para chegar à estação",
               "Este card representa apenas a volta",
             ],
+            guide: {
+  "cardTitle": "Hiroshima → Osaka",
+  "city": "Hiroshima / Osaka",
+  hours: 2.5,
+  "intro": "Plano de deslocamento. Horários sugeridos, salvo reservas identificadas. Confirmar trens e assentos.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": [
+  {
+    "time": "18:15–18:45",
+    "place": "Margem de embarque em Hiroshima",
+    "note": "30 min depois da loja Pokémon. Escolher trem real de retorno próximo desta janela."
+  },
+  {
+    "time": "18:45–20:30",
+    "place": "Shinkansen Hiroshima → Shin-Osaka",
+    "note": "Janela estimada de 1h45. Assentos ainda precisam ser reservados; ajustar ao serviço disponível."
+  },
+  {
+    "time": "20:30–20:45",
+    "place": "Shin-Osaka → Comfort Hotel",
+    "note": "Caminhada e retorno ao hotel."
+  }
+]
+},
           },
           "transport-osaka-hakone": {
             icon: "🚅",
             label: "Osaka → Hakone",
-            hours: 3.5,
+            hours: 5,
             region: "transport",
             colorKey: "transport",
             travel: "Comfort Hotel → Shin-Osaka → Odawara → Chokoku-no-Mori · apenas ida",
@@ -2301,11 +2531,44 @@
               "Reservar assento e confirmar a conexão",
               "Visitar o museu antes do check-in no Gora Kadan; organizar envio ou guarda das malas",
             ],
+            guide: {
+  "cardTitle": "Osaka → Hakone",
+  "city": "Osaka / Hakone",
+  hours: 5,
+  "intro": "Plano de deslocamento. Horários sugeridos, salvo reservas identificadas. Confirmar trens e assentos.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": [
+  {
+    "time": "06:45–07:00",
+    "place": "Comfort Hotel → Shin-Osaka",
+    "note": "Check-out e caminhada; levar bagagem."
+  },
+  {
+    "time": "07:00–07:30",
+    "place": "Margem de embarque para Odawara",
+    "note": "30 min para o trem reservado."
+  },
+  {
+    "time": "07:30–10:15",
+    "place": "Shinkansen Shin-Osaka → Odawara",
+    "note": "Janela estimada de 2h45. Selecionar Hikari/Kodama/conexão adequada; não presumir que todo trem para em Odawara."
+  },
+  {
+    "time": "10:15–11:45",
+    "place": "Odawara → Hakone-Yumoto → Chokoku-no-Mori",
+    "note": "90 min com conexões e malas. Confirmar onde deixar as malas antes do museu; não presumir despacho contratado."
+  }
+]
+},
           },
           "transport-hakone-tokyo": {
             icon: "🚅",
             label: "Hakone → Tóquio",
-            hours: 2,
+            hours: 3.75,
             region: "transport",
             colorKey: "transport",
             travel: "Gora Kadan → Gora → Hakone-Yumoto → Odawara → Tokyo → Tsukiji · apenas ida",
@@ -2315,6 +2578,39 @@
               "Deixar Hakone após Ropeway, Owakudani e Lago Ashi",
               "Tokyo Station → Ginza → Tsukiji; terminar no Ginza Capital Hotel Moegi",
             ],
+            guide: {
+  "cardTitle": "Hakone → Tóquio",
+  "city": "Hakone / Tokyo",
+  hours: 3.75,
+  "intro": "Plano de deslocamento. Horários sugeridos, salvo reservas identificadas. Confirmar trens e assentos.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": [
+  {
+    "time": "15:15–16:45",
+    "place": "Gora → Hakone-Yumoto → Odawara",
+    "note": "90 min com trens locais, espera e malas."
+  },
+  {
+    "time": "16:45–17:15",
+    "place": "Margem de embarque em Odawara",
+    "note": "30 min. Escolher trem que pare em Odawara."
+  },
+  {
+    "time": "17:15–18:00",
+    "place": "Shinkansen Odawara → Shinagawa / Tokyo",
+    "note": "Janela estimada; consultar serviço e reservar se necessário."
+  },
+  {
+    "time": "18:00–19:00",
+    "place": "Estação de chegada → Ginza Capital Hotel Moegi",
+    "note": "Transporte local com malas e check-in. Jantar leve perto do hotel."
+  }
+]
+},
           },
           "transport-osaka-arima": {
             icon: "🚆",
@@ -2361,7 +2657,7 @@
           "transport-tokyo-narita": {
             icon: "✈️",
             label: "Tóquio → Aeroporto de Narita",
-            hours: 1.5,
+            hours: 5.4,
             region: "transport",
             colorKey: "transport",
             travel: "Tokyo Station → Narita Airport · Narita Express",
@@ -2371,8 +2667,50 @@
               "Para o voo das 16h55, sair do centro entre 12h e 12h30",
               "Confirmar terminal e horário do trem na véspera",
             ],
+            guide: {
+  "cardTitle": "Tóquio → Aeroporto de Narita",
+  "city": "Tokyo / Narita",
+  hours: 5.4,
+  "intro": "Voo às 16h55 em 27/11. Planejar saída do hotel às 11h30 e chegada ao terminal por volta de 13h55, com cerca de 3h de antecedência. Confirmar trem, terminal, regras de bagagem e limites da companhia.",
+  "images": [],
+  "videos": [],
+  "mustSee": [],
+  "hiddenGems": [],
+  "overrated": [],
+  "smartRoute": [
+  {
+    "time": "11:30–12:00",
+    "place": "Ginza Capital Hotel Moegi → Tokyo Station",
+    "note": "Check-out, malas e acesso ao Narita Express."
+  },
+  {
+    "time": "12:00–12:30",
+    "place": "Margem de embarque no Narita Express",
+    "note": "30 min para plataforma e reserva de assento. Confirmar terminal do voo."
+  },
+  {
+    "time": "12:30–13:35",
+    "place": "Narita Express Tokyo → Narita Airport",
+    "note": "65 min de janela; escolher o trem real que cumpra a chegada desejada. Não é partida confirmada às 12h30."
+  },
+  {
+    "time": "13:35–13:55",
+    "place": "Estação de Narita → terminal e check-in",
+    "note": "20 min de margem, mais se o terminal exigir deslocamento."
+  },
+  {
+    "time": "13:55–16:25",
+    "place": "Check-in, bagagem e segurança em Narita",
+    "note": "Meta: estar no terminal 3h antes do voo 16h55. Horários-limite da companhia prevalecem."
+  },
+  {
+    "time": "16:25–16:55",
+    "place": "Portão e embarque do voo",
+    "note": "Horário estimado de embarque; conferir cartão de embarque e portão."
+  }
+]
+},
           },
-
           "arima-onsen-stay": {
             icon: "♨️",
             label: "Arima Onsen + Gekkoen Yugetsusanso",
@@ -2391,7 +2729,7 @@
           "shibuya-harajuku": {
             icon: "🛍️",
             label: "Shibuya + Harajuku + Omotesando",
-            hours: 7,
+            hours: 11.75,
             region: "tokyo",
             colorKey: "tokyo",
             travel: null,
@@ -2412,10 +2750,10 @@
             guide: {
               cardTitle: "Shibuya + Harajuku + Omotesando",
               icon: "🛍️",
-              hours: 7,
+              hours: 11.75,
               city: "Tóquio",
               intro:
-                "Um roteiro vibrante pelo lado mais jovem, fashion e urbano de Tóquio. Mistura cruzamentos icônicos, cafés estilosos, templos tranquilos, lojas-conceito e arquitetura elegante.",
+                "Roteiro com deslocamentos e pausas: Meiji Jingu, Harajuku, @cosme às 11h, Omotesando e Shibuya. Shibuya Sky no fim de tarde ainda depende da compra do ingresso; Pokémon e eventual retirada do Design Lab vêm depois. Não há reserva confirmada de Sky/Design Lab.",
               images: [
                 {
                   url: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800",
@@ -2475,23 +2813,19 @@
                 },
               ],
               hiddenGems: [
-                {
-                  name: "Cat Street",
-                  tip: "Caminhe sem pressa entre Shibuya e Harajuku para achar brechós, cafés e lojas independentes.",
-                },
-                {
-                  name: "Tokyu Plaza Omotesando Harajuku",
-                  tip: "Suba até o terraço para uma pausa agradável com vista e menos muvuca.",
-                },
-                {
-                  name: "Ura-Harajuku",
-                  tip: "Explore as vielas atrás da Takeshita para moda mais autoral e ambiente menos turístico.",
-                },
-                {
-                  name: "Aoyama Flower Market Tea House",
-                  tip: "Ótimo para um chá ou sobremesa em ambiente florido e fotogênico.",
-                },
-              ],
+  {
+    "name": "Cat Street",
+    "tip": "Caminhe sem pressa entre Shibuya e Harajuku para achar brechós, cafés e lojas independentes."
+  },
+  {
+    "name": "Ura-Harajuku",
+    "tip": "Explore as vielas atrás da Takeshita para moda mais autoral e ambiente menos turístico."
+  },
+  {
+    "name": "Aoyama Flower Market Tea House",
+    "tip": "Ótimo para um chá ou sobremesa em ambiente florido e fotogênico."
+  }
+],
               overrated: [
                 {
                   name: "Takeshita Street no pico da tarde",
@@ -2510,73 +2844,103 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "08:00",
-                  place: "Meiji Jingu",
-                  note: "Comece cedo para aproveitar o santuário com tranquilidade.",
-                },
-                {
-                  time: "09:30",
-                  place: "Yoyogi Park",
-                  note: "Caminhada leve antes de entrar no clima de Harajuku.",
-                },
-                {
-                  time: "10:30",
-                  place: "Takeshita Street",
-                  note: "Veja lojas e doces antes da rua ficar lotada.",
-                },
-                {
-                  time: "11:00 (sugestão)",
-                  place: "@cosme TOKYO · Harajuku",
-                  note: "21/11 · visita de 45–60 min após Meiji Jingu e a passagem por Takeshita Street. Endereço: 1-14-27 Jingumae, Shibuya, Tokyo. Funcionamento: 11h–21h. Usar parte do tempo de compras, mantendo os compromissos de Pokémon Center e Shibuya Sky. Site oficial: https://www.cosme.net/store/shop/tokyo/",
-                },
-                {
-                  time: "12:00",
-                  place: "Ura-Harajuku",
-                  note: "Explore vielas, brechós e opções rápidas para almoço.",
-                },
-                {
-                  time: "13:30",
-                  place: "Tokyu Plaza Omotesando Harajuku",
-                  note: "Passe pelo espelho da entrada e descanse no terraço.",
-                },
-                {
-                  time: "14:30",
-                  place: "Omotesando",
-                  note: "Caminhe pela avenida observando vitrines, cafés e arquitetura.",
-                },
-                {
-                  time: "16:00",
-                  place: "Cat Street",
-                  note: "Siga em direção a Shibuya por lojas independentes e cafés estilosos.",
-                },
-                {
-                  time: "17:30",
-                  place: "Shibuya",
-                  note: "Chegue com tempo para ver Hachiko e o movimento crescer.",
-                },
-                {
-                  time: "18:30",
-                  place: "Shibuya Crossing",
-                  note: "Atravesse e observe o cruzamento iluminado.",
-                },
-                {
-                  time: "19:30",
-                  place: "Shibuya Sky ou região de Center-Gai",
-                  note: "Escolha vista panorâmica ou jantar em área animada.",
-                },
-                {
-                  time: "21:00",
-                  place: "Shibuya Station",
-                  note: "Finalize o roteiro com acesso fácil ao metrô e trens.",
-                },
-              ],
+  {
+    "time": "07:15–08:00",
+    "place": "Ginza Capital Hotel Moegi → Meiji Jingu",
+    "note": "Transporte local e acesso ao santuário."
+  },
+  {
+    "time": "08:00–09:00",
+    "place": "Meiji Jingu",
+    "note": "Passeio cedo."
+  },
+  {
+    "time": "09:00–09:30",
+    "place": "Yoyogi Park (opcional)",
+    "note": "Cortável."
+  },
+  {
+    "time": "09:30–10:00",
+    "place": "Café e caminhada em Harajuku",
+    "note": "As lojas abrem em horários diferentes."
+  },
+  {
+    "time": "10:00–10:45",
+    "place": "Takeshita Street",
+    "note": "Passeio curto; não contar com todas as lojas abertas."
+  },
+  {
+    "time": "10:45–11:00",
+    "place": "Harajuku → @cosme TOKYO",
+    "note": "Caminhada e margem para abertura."
+  },
+  {
+    "time": "11:00–12:00",
+    "place": "@cosme TOKYO · Harajuku",
+    "note": "45–60 min de compras na abertura."
+  },
+  {
+    "time": "12:00–12:45",
+    "place": "Almoço em Ura-Harajuku",
+    "note": "Pausa."
+  },
+  {
+    "time": "12:45–13:30",
+    "place": "Omotesando",
+    "note": "Lojas conforme prioridades."
+  },
+  {
+    "time": "13:30–14:15",
+    "place": "Cat Street",
+    "note": "Caminhada até Shibuya."
+  },
+  {
+    "time": "14:15–14:45",
+    "place": "Shibuya Crossing e Hachiko",
+    "note": "Passeio e fotos."
+  },
+  {
+    "time": "14:45–15:00",
+    "place": "Caminhada para Shibuya Sky",
+    "note": "Acesso ao prédio."
+  },
+  {
+    "time": "15:00–15:30",
+    "place": "Margem de entrada no Shibuya Sky",
+    "note": "Ingresso ainda pendente. Ajustar ao horário efetivamente comprado quando abrir a venda."
+  },
+  {
+    "time": "15:30–16:45",
+    "place": "Shibuya Sky (horário a reservar)",
+    "note": "Janela sugerida para o fim de tarde, não reserva confirmada. Confirmar bilhete e condições de vento."
+  },
+  {
+    "time": "16:45–17:00",
+    "place": "Shibuya Sky → Shibuya PARCO",
+    "note": "Caminhada."
+  },
+  {
+    "time": "18:15–19:15",
+    "place": "Jantar e margem para retirada do Design Lab",
+    "note": "O Design Lab pode não estar disponível; aguardar retirada somente se o atendimento for confirmado."
+  },
+  {
+    "time": "19:15–19:30",
+    "place": "Retirada no Design Lab (se contratada)",
+    "note": "Opcional, sem promessa de vaga/estoque."
+  },
+  {
+    "time": "19:30–20:15",
+    "place": "Shibuya → Ginza Capital Hotel Moegi",
+    "note": "Metrô e caminhada."
+  }
+],
             },
           },
           "nakameguro-daikanyama": {
             icon: "🌿",
             label: "Nakameguro + Daikanyama + Ebisu",
-            hours: 5,
+            hours: 8.5,
             region: "tokyo",
             colorKey: "tokyo",
             travel: null,
@@ -2595,7 +2959,7 @@
             guide: {
               cardTitle: "Nakameguro + Daikanyama + Ebisu",
               icon: "🌿",
-              hours: 5.0,
+              hours: 8.5,
               city: "Tóquio",
               intro:
                 "Nakameguro, Daikanyama e Ebisu formam o triângulo mais estiloso de Tóquio, combinando boutiques de luxo, cafés charmosos e uma atmosfera relaxante. É a área perfeita para quem busca tendências, arte e gastronomia refinada, longe das multidões de Shibuya. Passeie ao longo do rio Meguro, explore as lojas de design em Daikanyama e termine com uma cerveja no museu de Ebisu.",
@@ -2681,43 +3045,68 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "13:00",
-                  place: "Estação de Nakameguro",
-                  note: "Comece o passeio caminhando ao longo do rio Meguro em direção a Daikanyama.",
-                },
-                {
-                  time: "14:00",
-                  place: "Daikanyama T-Site",
-                  note: "Explore a livraria, tome um café e visite as lojas de design ao redor.",
-                },
-                {
-                  time: "15:30",
-                  place: "Kyu Asakura House",
-                  note: "Faça uma visita rápida a esta casa histórica para um momento de tranquilidade.",
-                },
-                {
-                  time: "16:30",
-                  place: "Caminhada para Ebisu",
-                  note: "Siga a pé de Daikanyama para Ebisu (cerca de 15 minutos).",
-                },
-                {
-                  time: "17:00",
-                  place: "Museum of Yebisu Beer",
-                  note: "Faça o tour de degustação para experimentar diferentes tipos de cerveja Yebisu.",
-                },
-                {
-                  time: "18:00",
-                  place: "Jantar em Ebisu",
-                  note: "Escolha um restaurante em Ebisu Yokocho ou explore os izakayas perto da estação para encerrar o dia.",
-                },
-              ],
+  {
+    "time": "11:30–12:15",
+    "place": "Ginza Capital Hotel Moegi → Nakameguro",
+    "note": "Deslocamento local estimado."
+  },
+  {
+    "time": "12:15–13:00",
+    "place": "Brunch em Nakameguro",
+    "note": "Início leve; o dia também é margem de recuperação de passeios."
+  },
+  {
+    "time": "13:00–13:45",
+    "place": "Rio Meguro",
+    "note": "Caminhada e cafés."
+  },
+  {
+    "time": "13:45–14:15",
+    "place": "Nakameguro → Daikanyama",
+    "note": "Caminhada."
+  },
+  {
+    "time": "14:15–15:00",
+    "place": "Daikanyama T-Site",
+    "note": "Livraria e lojas."
+  },
+  {
+    "time": "15:00–15:15",
+    "place": "T-Site → Kyu Asakura House",
+    "note": "Caminhada."
+  },
+  {
+    "time": "15:15–16:00",
+    "place": "Kyu Asakura House (opcional)",
+    "note": "Cortável; confirmar funcionamento e última entrada."
+  },
+  {
+    "time": "16:00–16:30",
+    "place": "Daikanyama → Ebisu",
+    "note": "Caminhada."
+  },
+  {
+    "time": "16:30–18:00",
+    "place": "Yebisu Garden Place e cervejaria (opcional)",
+    "note": "Passeio na área; a cervejaria atual e eventuais visitas guiadas exigem checar operação e reserva. Não pressupor museu/tour garantido."
+  },
+  {
+    "time": "18:00–19:00",
+    "place": "Jantar em Ebisu",
+    "note": "Pausa."
+  },
+  {
+    "time": "19:00–20:00",
+    "place": "Ebisu → Ginza Capital Hotel Moegi",
+    "note": "Retorno com margem."
+  }
+],
             },
           },
           "imperial-palace": {
             icon: "🏯",
             label: "Palácio Imperial + Jardins Leste",
-            hours: 2.5,
+            hours: 3,
             region: "tokyo",
             colorKey: "tokyo",
             travel: null,
@@ -2734,21 +3123,47 @@
             guide: {
               cardTitle: "Palácio Imperial + Jardins Leste",
               icon: "🏯",
-              hours: 2.5,
+              hours: 3,
               city: "Tóquio",
               intro: "Um recorte da história de Edo no centro de Tóquio, com muralhas, jardins e ruínas do antigo castelo.",
               smartRoute: [
-                { time: "09:00", place: "Otemon Gate", note: "Passe pela inspeção de segurança e entre nos Jardins Leste." },
-                { time: "09:20", place: "Honmaru", note: "Veja as muralhas e a área do antigo núcleo do Castelo de Edo." },
-                { time: "10:10", place: "Jardim Ninomaru", note: "Caminhada pelo jardim japonês antes de sair." },
-                { time: "10:45", place: "Ponte Nijubashi", note: "Veja a área externa do palácio e siga a pé para Marunouchi." },
-              ],
+  {
+    "time": "08:15–09:00",
+    "place": "Ginza Capital Hotel Moegi → Otemon Gate",
+    "note": "Transporte local e caminhada."
+  },
+  {
+    "time": "09:00–09:20",
+    "place": "Otemon Gate",
+    "note": "Acesso ao jardim."
+  },
+  {
+    "time": "09:20–10:10",
+    "place": "Honmaru",
+    "note": "Jardins e ruínas."
+  },
+  {
+    "time": "10:10–10:45",
+    "place": "Jardim Ninomaru",
+    "note": "Caminhada."
+  },
+  {
+    "time": "10:45–11:15",
+    "place": "Ponte Nijubashi",
+    "note": "Área externa, depois dos jardins."
+  },
+  {
+    "time": "11:15–11:45",
+    "place": "Palácio Imperial → Tokyo Station",
+    "note": "Caminhada com margem."
+  }
+],
             },
           },
           "hamarikyu-tsukiji": {
             icon: "🌿",
             label: "Tsukiji + Jardins Hamarikyu",
-            hours: 4,
+            hours: 4.5,
             region: "tokyo",
             colorKey: "tokyo",
             travel: null,
@@ -2765,20 +3180,42 @@
             guide: {
               cardTitle: "Tsukiji + Jardins Hamarikyu",
               icon: "🌿",
-              hours: 4,
+              hours: 4.5,
               city: "Tóquio",
               intro: "Uma tarde que combina gastronomia e a paisagem histórica da antiga baía de Edo.",
               smartRoute: [
-                { time: "13:00", place: "Mercado Externo de Tsukiji", note: "Almoço e caminhada pelas lojas do mercado." },
-                { time: "14:30", place: "Jardins Hamarikyu", note: "Explore o lago de maré, as pontes e a casa de chá." },
-                { time: "16:30", place: "Retorno a Asakusa", note: "Volte ao hotel ou siga para jantar." },
-              ],
+  {
+    "time": "11:30–12:15",
+    "place": "Toyosu → Tsukiji",
+    "note": "Transporte local com margem."
+  },
+  {
+    "time": "12:15–13:15",
+    "place": "Mercado Externo de Tsukiji",
+    "note": "Almoço; algumas lojas fecham cedo."
+  },
+  {
+    "time": "13:15–13:45",
+    "place": "Tsukiji → Jardins Hamarikyu",
+    "note": "Caminhada."
+  },
+  {
+    "time": "13:45–15:30",
+    "place": "Jardins Hamarikyu",
+    "note": "Visita antes do fechamento; confirmar avisos do dia."
+  },
+  {
+    "time": "15:30–16:00",
+    "place": "Hamarikyu → Ginza Capital Hotel Moegi",
+    "note": "Retorno ou tarde livre em Ginza."
+  }
+],
             },
           },
           "asakusa-ueno": {
             icon: "🏮",
             label: "Senso-ji + Ueno",
-            hours: 5,
+            hours: 6.75,
             region: "tokyo",
             colorKey: "tokyo",
             travel: null,
@@ -2795,22 +3232,57 @@
             guide: {
               cardTitle: "Senso-ji + Ueno",
               icon: "🏮",
-              hours: 5,
+              hours: 6.75,
               city: "Tóquio",
-              intro: "O eixo histórico do nordeste de Tóquio, combinando o templo mais famoso da cidade com Ueno.",
+              intro: "Senso-ji cedo, opção de Pokémon Skytree e Ueno com 90 min de museu. Kanda/Akihabara ficam no card próprio à tarde, sem duplicar atividades no mesmo horário. Dia cheio; Skytree e Jimbocho são cortáveis.",
               smartRoute: [
-                { time: "07:30", place: "Templo Senso-ji", note: "Visite o templo e a Kaminarimon antes do movimento." },
-                { time: "09:00", place: "Nakamise e Asakusa", note: "Café da manhã e caminhada pelas ruas próximas." },
-                { time: "10:30", place: "Parque Ueno", note: "Siga para o parque e escolha as áreas de maior interesse." },
-                { time: "11:00", place: "Museu Nacional de Tóquio", note: "Visita opcional focada na coleção japonesa." },
-                { time: "13:30", place: "Kanda e Akihabara", note: "Continue o roteiro do dia em direção ao sul." },
-              ],
+  {
+    "time": "06:45–07:30",
+    "place": "Ginza Capital Hotel Moegi → Asakusa",
+    "note": "Metrô e caminhada."
+  },
+  {
+    "time": "07:30–08:30",
+    "place": "Templo Senso-ji",
+    "note": "Visita cedo."
+  },
+  {
+    "time": "08:30–09:15",
+    "place": "Nakamise e café em Asakusa",
+    "note": "Muitas lojas abrem depois; priorizar o templo e o café."
+  },
+  {
+    "time": "09:15–10:00",
+    "place": "Asakusa → Tokyo Solamachi",
+    "note": "Metrô/caminhada e margem; a parada Pokémon é opcional."
+  },
+  {
+    "time": "10:45–11:30",
+    "place": "Skytree / Solamachi → Ueno",
+    "note": "Transporte local e espera."
+  },
+  {
+    "time": "11:30–12:00",
+    "place": "Parque Ueno",
+    "note": "Caminhada até o museu."
+  },
+  {
+    "time": "12:00–13:30",
+    "place": "Museu Nacional de Tóquio",
+    "note": "Visita de cerca de 90 min; conferir exposição e bilhete."
+  },
+  {
+    "time": "13:30–14:15",
+    "place": "Almoço em Ueno",
+    "note": "Pausa."
+  }
+],
             },
           },
           "ginza-nihonbashi": {
             icon: "🏙️",
             label: "Ginza + Marunouchi + Nihonbashi",
-            hours: 6,
+            hours: 4.75,
             region: "tokyo",
             colorKey: "tokyo",
             travel: null,
@@ -2832,7 +3304,7 @@
             guide: {
               cardTitle: "Ginza + Marunouchi + Nihonbashi",
               icon: "🏙️",
-              hours: 6.0,
+              hours: 4.75,
               city: "Tóquio",
               intro:
                 "Bem-vindo ao coração luxuoso e histórico de Tóquio. Ginza é sinônimo de sofisticação, com suas lojas de departamento centenárias e boutiques de grife, enquanto Marunouchi, entre a Estação de Tóquio e o Palácio Imperial, oferece uma arquitetura impressionante. Nihonbashi, o marco zero do Japão, preserva o charme comercial do período Edo em meio a arranha-céus modernos.",
@@ -2921,48 +3393,53 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "12:00",
-                  place: "Estação de Tóquio (Saída Marunouchi)",
-                  note: "Admire a arquitetura e suba ao terraço do KITTE para fotos.",
-                },
-                {
-                  time: "13:00",
-                  place: "Almoço em Marunouchi",
-                  note: "Explore os restaurantes no subsolo da Estação de Tóquio (Tokyo Ramen Street) ou no prédio Shin-Marunouchi.",
-                },
-                {
-                  time: "14:30",
-                  place: "Caminhada pela Chuo Dori em Ginza",
-                  note: "Comece no final de Marunouchi e caminhe em direção a Shimbashi. Explore as lojas de departamento e galerias de arte.",
-                },
-                {
-                  time: "15:30",
-                  place: "Gentle Monster Tokyo Ginza",
-                  note: "Visite a flagship de Ginza, na 3-3-14 Ginza. A loja funciona das 11h às 20h.",
-                },
-                {
-                  time: "16:30",
-                  place: "Chá da tarde em Ginza",
-                  note: "Faça uma pausa no Ginza West Aoyama Garden ou no café da loja de chá Jugetsudo no Kabuki-za Tower.",
-                },
-                {
-                  time: "17:30",
-                  place: "Caminhada para Nihonbashi",
-                  note: "Pegue um metrô rápido (Linha Ginza) ou caminhe (cerca de 20 minutos) até Nihonbashi.",
-                },
-                {
-                  time: "18:00",
-                  place: "Coredo Muromachi",
-                  note: "Explore as lojas tradicionais, veja a Ponte Nihonbashi iluminada e jante em um dos restaurantes da área.",
-                },
-              ],
+  {
+    "time": "12:05–12:30",
+    "place": "Tokyo Station → Nihonbashi",
+    "note": "Caminhada."
+  },
+  {
+    "time": "12:30–13:00",
+    "place": "Almoço em Nihonbashi",
+    "note": "Pausa antes do Pokémon Center TOKYO DX."
+  },
+  {
+    "time": "14:00–14:30",
+    "place": "Coredo Muromachi",
+    "note": "Passeio curto; cortável se atrasar."
+  },
+  {
+    "time": "14:30–15:00",
+    "place": "Nihonbashi → Ginza",
+    "note": "Caminhada/transporte local."
+  },
+  {
+    "time": "15:00–16:00",
+    "place": "Caminhada pela Chuo Dori em Ginza",
+    "note": "Lojas conforme prioridade."
+  },
+  {
+    "time": "16:00–16:45",
+    "place": "Gentle Monster Tokyo Ginza",
+    "note": "Visita sugerida; filas podem mudar a duração."
+  },
+  {
+    "time": "16:45–17:30",
+    "place": "Chá da tarde em Ginza",
+    "note": "Pausa."
+  },
+  {
+    "time": "17:30–18:00",
+    "place": "Ginza → Ginza Capital Hotel Moegi",
+    "note": "Caminhada ou transporte local."
+  }
+],
             },
           },
           "teamlab-planets": {
             icon: "🎨",
             label: "teamLab Planets",
-            hours: 3,
+            hours: 3.5,
             region: "tokyo",
             colorKey: "tokyo",
             travel: "~25-35min de Ginza · metrô + Yurikamome (fora do JR Pass)",
@@ -2981,10 +3458,10 @@
             guide: {
               cardTitle: "teamLab Planets",
               icon: "🎨",
-              hours: 3.0,
+              hours: 3.5,
               city: "Tóquio",
               intro:
-                "Prepare-se para uma imersão total em um universo de arte digital e sensorial no teamLab Planets em Toyosu. Nesta experiência única, você caminha descalço através de instalações de luz, água e projeções que se transformam com sua presença. É uma jornada alucinante que desafia a fronteira entre o visitante e a obra de arte.",
+                "Entrada comprada para 20/11 às 9h. Chegar por volta de 8h40. Tsukiji e Hamarikyu ficam depois da experiência; foi removido o antigo roteiro da tarde e o retorno incorreto a Asakusa.",
               images: [
                 {
                   url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Plan_view_of_Korolev_crater.jpg/960px-Plan_view_of_Korolev_crater.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
@@ -3066,37 +3543,28 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "15:00",
-                  place: "Chegada na estação Shin-Toyosu",
-                  note: "Siga as placas para o museu (cerca de 1 minuto de caminhada). Tenha seu ingresso com QR code pronto no celular.",
-                },
-                {
-                  time: "15:15",
-                  place: "Entrada e armários",
-                  note: "Guarde seus sapatos e pertences nos armários gratuitos. Use os shorts fornecidos se necessário.",
-                },
-                {
-                  time: "15:30",
-                  place: "Water Area (Soft Black Hole, The Dance of Koi)",
-                  note: "Comece pelas instalações com água. Não tenha pressa, a sensação é única.",
-                },
-                {
-                  time: "16:30",
-                  place: "Garden Area (Floating Flower Garden, Moss Garden)",
-                  note: "Vá para a segunda parte, que inclui as flores suspensas e os jardins. A transição é bem sinalizada.",
-                },
-                {
-                  time: "17:30",
-                  place: "Final da experiência e Loja",
-                  note: "Explore a loja de souvenirs e, se tiver tempo, experimente o ramen vegano no UZU.",
-                },
-                {
-                  time: "18:00",
-                  place: "Saída",
-                  note: "Se ainda estiver claro, dê uma volta pela área de Toyosu e aprecie a vista da baía de Tóquio.",
-                },
-              ],
+  {
+    "time": "08:00–08:40",
+    "place": "Ginza Capital Hotel Moegi → Shin-Toyosu",
+    "note": "Transporte local e caminhada; sair com ingresso acessível."
+  },
+  {
+    "time": "08:40–09:00",
+    "place": "Chegada, fila e armários do teamLab",
+    "note": "20 min antes da entrada comprada."
+  },
+  {
+    "time": "09:00–11:15",
+    "place": "teamLab Planets",
+    "note": "Entrada comprada para 9h nas reservas salvas. Tempo interno aproximado; não fixar a ordem nem os minutos de cada sala.",
+    "confirmed": true
+  },
+  {
+    "time": "11:15–11:30",
+    "place": "Final da experiência e Loja",
+    "note": "Pausa curta antes de Tsukiji."
+  }
+],
             },
           },
           "asakusa-ryogoku": {
@@ -3395,7 +3863,7 @@
           "akihabara-kanda": {
             icon: "⚡",
             label: "Akihabara + Kanda + Jimbocho",
-            hours: 5,
+            hours: 5.75,
             region: "tokyo",
             colorKey: "tokyo",
             travel: null,
@@ -3414,7 +3882,7 @@
             guide: {
               cardTitle: "Akihabara + Kanda + Jimbocho",
               icon: "⚡",
-              hours: 5.0,
+              hours: 5.75,
               city: "Tóquio",
               intro:
                 "Explore três facetas distintas do coração de Tóquio. Akihabara é a meca da cultura pop e eletrônicos, Kanda oferece um vislumbre da vida dos trabalhadores de Tóquio com seus izakayas, e Jimbocho é o paraíso dos intelectuais com suas livrarias centenárias. É um roteiro que vai do néon vibrante ao cheiro de livros antigos.",
@@ -3505,43 +3973,58 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "13:00",
-                  place: "Estação Akihabara (Electric Town Exit)",
-                  note: "Mergulhe direto na Chuo Dori. Explore as lojas laterais e a cultura otaku.",
-                },
-                {
-                  time: "13:30",
-                  place: "Mandarake Complex",
-                  note: "Um prédio de 8 andares dedicado a mangás, figuras e colecionáveis de segunda mão. Um paraíso otaku.",
-                },
-                {
-                  time: "15:00",
-                  place: "Santuário Kanda Myojin",
-                  note: "Suba a colina a partir de Akihabara. Não se esqueça de ver os amuletos de TI.",
-                },
-                {
-                  time: "16:00",
-                  place: "mAAch ecute Kanda Manseibashi",
-                  note: "Caminhe ao longo do rio Kanda. Ótimo lugar para uma pausa para o café.",
-                },
-                {
-                  time: "17:00",
-                  place: "Distrito de Livrarias de Jimbocho",
-                  note: "Pegue a linha Shinjuku de Iwamotocho para Jimbocho (1 parada) ou caminhe por 15 min. Explore a rua Yasukuni-dori.",
-                },
-                {
-                  time: "18:00",
-                  place: "Izakayas sob os trilhos da Estação Kanda",
-                  note: "Termine o dia como um local, comendo e bebendo em um dos muitos izakayas barulhentos e autênticos.",
-                },
-              ],
+  {
+    "time": "14:15–14:45",
+    "place": "Ueno → Kanda Myojin",
+    "note": "Trem/metrô e caminhada."
+  },
+  {
+    "time": "14:45–15:15",
+    "place": "Santuário Kanda Myojin",
+    "note": "Passeio."
+  },
+  {
+    "time": "15:15–15:30",
+    "place": "Kanda Myojin → Akihabara",
+    "note": "Caminhada."
+  },
+  {
+    "time": "15:30–16:30",
+    "place": "Mandarake Complex e Akihabara",
+    "note": "Escolher poucas lojas para não correr."
+  },
+  {
+    "time": "16:30–17:00",
+    "place": "mAAch ecute Kanda Manseibashi",
+    "note": "Passeio curto."
+  },
+  {
+    "time": "17:00–18:00",
+    "place": "Jimbocho (opcional e cortável)",
+    "note": "Verificar lojas abertas no domingo. Se livrarias forem prioridade, antecipar e reduzir Akihabara; não depender deste bloco."
+  },
+  {
+    "time": "18:00–18:15",
+    "place": "Jimbocho / Akihabara → Kanda",
+    "note": "Deslocamento local, ajustar ao local escolhido."
+  },
+  {
+    "time": "18:15–19:15",
+    "place": "Izakayas sob os trilhos da Estação Kanda",
+    "note": "Jantar."
+  },
+  {
+    "time": "19:15–20:00",
+    "place": "Kanda → Ginza Capital Hotel Moegi",
+    "note": "Retorno."
+  }
+],
             },
           },
           shinjuku: {
             icon: "🌃",
             label: "Shinjuku",
-            hours: 6,
+            hours: 11.25,
             region: "tokyo",
             colorKey: "tokyo",
             travel: null,
@@ -3561,10 +4044,10 @@
             guide: {
               cardTitle: "Shinjuku",
               icon: "🌃",
-              hours: 6.0,
+              hours: 11.25,
               city: "Tóquio",
               intro:
-                "Shinjuku é um microcosmo de Tóquio, um distrito de dualidades fascinantes. De um lado, os arranha-céus do governo metropolitano; do outro, o caos de neon de Kabukicho e os bares minúsculos de Golden Gai. É o lugar para se perder, seja na serenidade de um jardim imperial ou na energia pulsante de sua estação, a mais movimentada do mundo.",
+                "Shinjuku Gyoen pela manhã, mirante e compras antes da ida a Ikebukuro. Pokémon MEGA TOKYO às 16h30 é uma janela sugerida. Retorno para Omoide Yokocho; noite opcional. 23/11 é feriado.",
               images: [
                 {
                   url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Tokyo_Metropolitan_Government_Building_2024.jpg/960px-Tokyo_Metropolitan_Government_Building_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
@@ -3658,37 +4141,62 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "14:00",
-                  place: "Estação Shinjuku (Saída Sul)",
-                  note: "Comece indo em direção ao Shinjuku Gyoen.",
-                },
-                {
-                  time: "14:15",
-                  place: "Jardim Nacional Shinjuku Gyoen",
-                  note: "Passe pelo menos 1.5h aqui. Não perca a estufa e o jardim japonês.",
-                },
-                {
-                  time: "16:00",
-                  place: "Tokyo Metropolitan Government Building",
-                  note: "Caminhe pelo lado oeste de Shinjuku. Suba ao observatório sul para a vista do pôr do sol.",
-                },
-                {
-                  time: "18:00",
-                  place: "Omoide Yokocho",
-                  note: "Atravesse para o lado leste da estação. Hora do jantar! Escolha um bar de yakitori e peça uma cerveja.",
-                },
-                {
-                  time: "19:30",
-                  place: "Kabukicho",
-                  note: "Caminhe pela rua principal para ver as luzes, o Godzilla Head e o famoso portão. Cuidado com os 'touts'.",
-                },
-                {
-                  time: "20:30",
-                  place: "Shinjuku Golden Gai",
-                  note: "Escolha um bar que receba bem estrangeiros (procure por placas em inglês) e pague a taxa de cobertura (cover charge), se houver.",
-                },
-              ],
+  {
+    "time": "09:00–10:00",
+    "place": "Ginza Capital Hotel Moegi → Shinjuku Gyoen",
+    "note": "Transporte e caminhada com margem."
+  },
+  {
+    "time": "10:00–12:00",
+    "place": "Jardim Nacional Shinjuku Gyoen",
+    "note": "Visitar pela manhã; 23/11 é feriado e pode haver filas."
+  },
+  {
+    "time": "12:00–13:00",
+    "place": "Almoço em Shinjuku",
+    "note": "Pausa."
+  },
+  {
+    "time": "13:00–14:00",
+    "place": "Tokyo Metropolitan Government Building",
+    "note": "Inclui deslocamento e mirante se operando."
+  },
+  {
+    "time": "14:00–15:30",
+    "place": "Lojas de Shinjuku (flexível)",
+    "note": "Tempo de compras cortável para preservar Ikebukuro."
+  },
+  {
+    "time": "15:30–16:30",
+    "place": "Shinjuku → Ikebukuro / Sunshine City",
+    "note": "JR e caminhada; incluir orientação e filas do feriado."
+  },
+  {
+    "time": "18:00–19:00",
+    "place": "Sunshine City → Shinjuku",
+    "note": "Transporte e caminhada para jantar."
+  },
+  {
+    "time": "19:00–20:00",
+    "place": "Omoide Yokocho",
+    "note": "Jantar."
+  },
+  {
+    "time": "20:00–20:30",
+    "place": "Kabukicho (opcional)",
+    "note": "Passeio breve."
+  },
+  {
+    "time": "20:30–21:00",
+    "place": "Shinjuku Golden Gai (opcional)",
+    "note": "Cortável se houver cansaço."
+  },
+  {
+    "time": "21:00–21:45",
+    "place": "Shinjuku → Ginza Capital Hotel Moegi",
+    "note": "Retorno."
+  }
+],
             },
           },
           "shimokitazawa-koenji": {
@@ -4533,82 +5041,49 @@
           outlet: {
             icon: "🛍️",
             label: "Mitsui Outlet Park Kisarazu",
-            hours: 8,
+            hours: 10.5,
             region: "tokyo",
             colorKey: "tokyo",
             travel: "~50 min desde Tokyo Station · ônibus direto",
-            bullets: ["Adidas Factory Outlet", "Dia inteiro de compras em Kisarazu"],
+            bullets: [
+  "Mitsui Outlet Park Kisarazu, não Gotemba",
+  "Planejar ida desde o hotel às 8h e retorno ao hotel por volta de 19h",
+  "Ônibus sujeitos a trânsito e confirmação de horários",
+  "Pokémon Store dentro do passeio, em bloco próprio"
+],
             guide: {
               cardTitle: "Mitsui Outlet Park Kisarazu",
               icon: "🛍️",
-              hours: 4.0,
+              hours: 10.5,
               city: "Tóquio",
               intro:
-                "Dia inteiro no Mitsui Outlet Park Kisarazu, escolhido pela variedade de lojas, acesso direto desde Tokyo Station e Adidas Factory Outlet.",
+                "Dia no Mitsui Outlet Park Kisarazu. Ônibus de ida e volta entram no calendário, com espera e trânsito. O roteiro anterior citava setores e ponte de Gotemba; essas referências foram retiradas. Confirmar os horários reais dos ônibus antes de reservar.",
               images: [
-                {
-                  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Gotemba_premium_outlets1.jpg/960px-Gotemba_premium_outlets1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-                  alt: "Gotemba Premium Outlets Mount Fuji",
-                  caption: "Compras com vista para o Monte Fuji em Gotemba",
-                },
-                {
-                  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Kisarazu_montage.jpg/960px-Kisarazu_montage.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-                  alt: "Mitsui Outlet Park Kisarazu",
-                  caption: "O maior outlet de Tóquio, em Kisarazu",
-                },
-                {
-                  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/260322_Karuizawa_Station_Karuizawa_Japan01s3.jpg/960px-260322_Karuizawa_Station_Karuizawa_Japan01s3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-                  alt: "Karuizawa Prince Shopping Plaza",
-                  caption: "Compras e natureza em Karuizawa",
-                },
-              ],
-              videos: [
-                {
-                  platform: "YouTube",
-                  title: "Tour de compras no Outlet de Gotemba",
-                  embedUrl: "https://www.youtube.com/embed/faX5pkolGPo",
-                  sourceUrl: "https://www.youtube.com/watch?v=faX5pkolGPo",
-                },
-                {
-                  platform: "YouTube",
-                  title: "Como chegar ao Outlet de Kisarazu",
-                  embedUrl: "https://www.youtube.com/embed/EJ6wo00Eiao",
-                  sourceUrl: "https://www.youtube.com/watch?v=EJ6wo00Eiao",
-                },
-              ],
+  {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Kisarazu_montage.jpg/960px-Kisarazu_montage.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "alt": "Mitsui Outlet Park Kisarazu",
+    "caption": "O maior outlet de Tóquio, em Kisarazu"
+  }
+],
+              videos: [],
               mustSee: [
-                {
-                  name: "Gotemba Premium Outlets",
-                  why: "O mais famoso, com uma vista espetacular do Monte Fuji. Vasta seleção de marcas de luxo e esportivas como Nike, Prada, Gucci.",
-                  bestTime:
-                    "Dias de semana. Verifique a previsão do tempo para ter a chance de ver o Fuji-san.",
-                },
-                {
-                  name: "Mitsui Outlet Park Kisarazu",
-                  why: "O maior da região de Tóquio, com mais de 300 lojas. Forte em marcas japonesas como Beams, United Arrows e marcas de luxo.",
-                  bestTime:
-                    "Dias de semana. É acessível por ônibus direto da estação de Shinjuku ou Tóquio.",
-                },
-                {
-                  name: "Shisui Premium Outlets",
-                  why: "Conveniente para quem tem uma longa conexão no Aeroporto de Narita (NRT) ou para compras de última hora. Menor, mas com boa seleção.",
-                  bestTime: "Antes de um voo noturno ou durante uma longa escala em Narita.",
-                },
-              ],
+  {
+    "name": "Mitsui Outlet Park Kisarazu",
+    "why": "Outlet escolhido para 24/11. Usar o diretório e o mapa oficiais deste empreendimento.",
+    "bestTime": "Janela de compras após a chegada planejada às 10h10."
+  },
+  {
+    "name": "Pokémon Store OUTLET Kisarazu",
+    "why": "Parada de 20–30 min dentro do mesmo outlet; estoque e descontos não garantidos.",
+    "bestTime": "13h30, como sugestão."
+  }
+],
               hiddenGems: [
-                {
-                  name: "Food Courts dos Outlets",
-                  tip: "Não subestime as praças de alimentação. Elas frequentemente têm filiais de restaurantes famosos de ramen, udon e outras especialidades japonesas com preços justos.",
-                },
-                {
-                  name: "Lojas de marcas japonesas",
-                  tip: "Procure por marcas que são mais caras no exterior, como Onitsuka Tiger (calçados) ou Miki House (infantil). Os descontos podem valer muito a pena.",
-                },
-                {
-                  name: "Balcão de Informações",
-                  tip: "Sempre passe no balcão de informações ao chegar. Pegue um mapa e um cupom de descontos extra (disponível para turistas estrangeiros).",
-                },
-              ],
+  {
+    "name": "Balcão de informações de Kisarazu",
+    "tip": "Conferir mapa, horários de ônibus e eventuais benefícios vigentes; não presumir descontos."
+  }
+],
               overrated: [
                 {
                   name: "Comprar eletrônicos",
@@ -4626,38 +5101,58 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "10:00",
-                  place: "Chegada e Balcão de Informações",
-                  note: "Pegue o ônibus direto de Shinjuku para Gotemba. Ao chegar, pegue mapa e cupom de desconto.",
-                },
-                {
-                  time: "10:15",
-                  place: "West Zone (Marcas de Luxo)",
-                  note: "Comece pela área com as marcas mais concorridas, como Prada, Gucci, Balenciaga, enquanto estão mais vazias.",
-                },
-                {
-                  time: "11:30",
-                  place: "Ponte dos Sonhos (Yume no Ohashi)",
-                  note: "Atravesse para a East Zone. Pare na ponte para a foto clássica com o Monte Fuji ao fundo (se o tempo permitir).",
-                },
-                {
-                  time: "11:45",
-                  place: "East Zone (Marcas Esportivas e Casuais)",
-                  note: "Explore lojas como Nike, Adidas, The North Face e marcas japonesas como Onitsuka Tiger.",
-                },
-                {
-                  time: "13:00",
-                  place: "Almoço na Food Bazaar",
-                  note: "Faça uma pausa para o almoço. Experimente o Ippudo Ramen ou uma refeição local.",
-                },
-              ],
+  {
+    "time": "08:00–08:40",
+    "place": "Ginza Capital Hotel Moegi → Bus Terminal Tokyo Yaesu",
+    "note": "Transporte e caminhada até o terminal correto."
+  },
+  {
+    "time": "08:40–09:10",
+    "place": "Margem para o ônibus de Kisarazu",
+    "note": "Confirmar horário real, ponto, assento e reserva."
+  },
+  {
+    "time": "09:10–10:10",
+    "place": "Ônibus Tokyo Station → Mitsui Outlet Park Kisarazu",
+    "note": "Janela de 60 min; o trajeto divulgado pode levar cerca de 45 min, mas há trânsito. Não é reserva de saída às 9h10."
+  },
+  {
+    "time": "10:10–12:30",
+    "place": "Compras no Mitsui Outlet Park Kisarazu",
+    "note": "Escolher lojas prioritárias no mapa de Kisarazu, sem usar os setores de Gotemba."
+  },
+  {
+    "time": "12:30–13:30",
+    "place": "Almoço no outlet",
+    "note": "Pausa."
+  },
+  {
+    "time": "14:00–16:30",
+    "place": "Compras finais em Kisarazu",
+    "note": "Tempo flexível."
+  },
+  {
+    "time": "16:30–17:20",
+    "place": "Conferência de compras e margem do ônibus",
+    "note": "Chegar ao ponto com antecedência. Confirmar o retorno disponível."
+  },
+  {
+    "time": "17:20–18:20",
+    "place": "Ônibus Kisarazu → Tokyo Station",
+    "note": "17h20 aparece na tabela consultada, mas confirmar operação/reserva em 24/11; duração depende do trânsito."
+  },
+  {
+    "time": "18:20–19:00",
+    "place": "Tokyo Station → Ginza Capital Hotel Moegi",
+    "note": "Retorno com compras."
+  }
+],
             },
           },
           disney: {
             icon: "🏰",
             label: "Tokyo DisneySea",
-            hours: 9,
+            hours: 14.75,
             region: "tokyo",
             colorKey: "tokyo",
             travel: "~50-60min desde Asakusa · metrô/JR + Disney Resort Line",
@@ -4669,10 +5164,10 @@
             guide: {
               cardTitle: "Tokyo DisneySea",
               icon: "🏰",
-              hours: 9.0,
+              hours: 14.75,
               city: "Tóquio",
               intro:
-                "A Tokyo DisneySea é o parque marítimo exclusivo do Japão, organizado em portos temáticos e com atrações únicas como Journey to the Center of the Earth, Soaring e Fantasy Springs.",
+                "Ingresso comprado para 25/11. Saída sugerida do hotel às 6h45 para chegar à área de entrada às 8h. Programação interna e saída devem seguir os horários oficiais do dia e o aplicativo; não há Premier Access ou show garantidos.",
               images: [
                 {
                   url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Tokyo_DisneySea_logo.svg/960px-Tokyo_DisneySea_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
@@ -4749,49 +5244,79 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "08:00",
-                  place: "Fila de Entrada",
-                  note: "Chegue uma hora antes da abertura oficial. Tenha o app da Disney pronto no celular.",
-                },
-                {
-                  time: "09:00",
-                  place: "Entrada e 'Premier Access'",
-                  note: "Assim que entrar, confira no app o Premier Access e os passes disponíveis para Fantasy Springs e Soaring.",
-                },
-                {
-                  time: "09:15",
-                  place: "Atração popular sem agendamento",
-                  note: "Vá direto para Journey to the Center of the Earth ou Tower of Terror enquanto as filas ainda estão menores.",
-                },
-                {
-                  time: "11:00",
-                  place: "Explorar áreas menos concorridas",
-                  note: "Explore Arabian Coast e Mermaid Lagoon, normalmente menos concorridos no meio da manhã.",
-                },
-                {
-                  time: "13:00",
-                  place: "Almoço",
-                  note: "Almoce um pouco mais tarde para evitar o pico. Considere Zambini Brothers ou Casbah Food Court.",
-                },
-                {
-                  time: "14:30",
-                  place: "Use o 'Premier Access' agendado",
-                  note: "Vá para a atração que você agendou pela manhã. É a sua hora de furar a fila.",
-                },
-                {
-                  time: "18:00",
-                  place: "Jantar e garantir lugar para o show",
-                  note: "Jante algo rápido e encontre um bom lugar para o show noturno Believe! Sea of Dreams.",
-                },
-              ],
+  {
+    "time": "06:45–07:05",
+    "place": "Ginza Capital Hotel Moegi → Hatchobori",
+    "note": "Caminhada e acesso à JR Keiyo."
+  },
+  {
+    "time": "07:05–07:35",
+    "place": "JR Hatchobori → Maihama",
+    "note": "Janela com espera; não é trem reservado."
+  },
+  {
+    "time": "07:35–08:00",
+    "place": "Maihama → DisneySea",
+    "note": "Caminhada e Disney Resort Line, mais margem de segurança."
+  },
+  {
+    "time": "08:00–09:00",
+    "place": "Fila de Entrada",
+    "note": "Confirmar horário oficial do parque em 25/11; não prometer abertura antecipada."
+  },
+  {
+    "time": "09:00–09:15",
+    "place": "Entrada e 'Premier Access'",
+    "note": "Ingresso comprado para 25/11. Horários de atrações e compras dependem do aplicativo e da operação do dia."
+  },
+  {
+    "time": "09:15–11:00",
+    "place": "Atração popular sem agendamento",
+    "note": "Escolher conforme filas e regras do aplicativo."
+  },
+  {
+    "time": "11:00–12:00",
+    "place": "Explorar áreas menos concorridas",
+    "note": "Flexível."
+  },
+  {
+    "time": "12:00–13:00",
+    "place": "Almoço",
+    "note": "Ajustável às reservas e filas."
+  },
+  {
+    "time": "13:00–17:00",
+    "place": "Atrações e Premier Access conforme o aplicativo",
+    "note": "Não representa horários de atrações já comprados."
+  },
+  {
+    "time": "17:00–18:00",
+    "place": "Jantar",
+    "note": "Pausa."
+  },
+  {
+    "time": "18:00–20:00",
+    "place": "Atrações e show noturno, se programado",
+    "note": "Conferir programação real. Ajustar a saída se quiser assistir ao show."
+  },
+  {
+    "time": "20:00–20:30",
+    "place": "Saída do DisneySea",
+    "note": "Janela sugerida; antecipar se houver cansaço ou alterar conforme o show."
+  },
+  {
+    "time": "20:30–21:30",
+    "place": "DisneySea → Maihama → Hatchobori → hotel",
+    "note": "Planejar 60 min para monorail, JR, espera e caminhada."
+  }
+],
             },
           },
 
           "hakone-museum-onsen": {
             icon: "♨️",
             label: "Museu ao ar livre + Onsen",
-            hours: 5,
+            hours: 7.75,
             region: "hakone",
             colorKey: "hakone",
             travel: null,
@@ -4802,10 +5327,10 @@
             guide: {
               cardTitle: "Museu ao ar livre + Onsen",
               icon: "♨️",
-              hours: 5.0,
+              hours: 7.75,
               city: "Hakone",
               intro:
-                "Hakone é o refúgio perfeito da agitação de Tóquio, combinando arte, natureza e relaxamento. Passe o dia explorando o impressionante Museu ao Ar Livre e depois mergulhe nas águas termais de um onsen, com vistas das montanhas.",
+                "Museu após a viagem de Osaka, check-in às 15h e tarde/noite no Gora Kadan, já pago. Foi retirado o desvio genérico ao Hakone Yuryo; a prioridade é aproveitar o ryokan reservado.",
               images: [
                 {
                   url: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Enrique_Carbajal.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
@@ -4838,39 +5363,32 @@
                 },
               ],
               mustSee: [
-                {
-                  name: "Hakone Open-Air Museum",
-                  why: "Um museu onde a arte e a paisagem se fundem. Obras de grandes mestres estão dispostas em um vale, com destaque para um pavilhão de Picasso.",
-                  bestTime:
-                    "Pela manhã, para explorar com calma. O outono (folhas coloridas) e a primavera (cerejeiras) são especialmente bonitos.",
-                },
-                {
-                  name: "Symphonic Sculpture (Escultura Sinfônica)",
-                  why: "Uma torre de vitrais com uma escada em espiral no centro, dentro do museu. Subir até o topo oferece uma vista de 360 graus do parque.",
-                  bestTime:
-                    "Um dia ensolarado para que a luz atravesse os vitrais, criando um efeito mágico.",
-                },
-                {
-                  name: "Hakone Yuryo Onsen",
-                  why: "Um complexo de onsen de alta qualidade e acessível para turistas (tatuagens pequenas podem ser cobertas). Oferece banhos públicos e privativos.",
-                  bestTime:
-                    "Final da tarde, após caminhar pelo museu, para relaxar os músculos e aproveitar o anoitecer.",
-                },
-              ],
+  {
+    "name": "Hakone Open-Air Museum",
+    "why": "Um museu onde a arte e a paisagem se fundem. Obras de grandes mestres estão dispostas em um vale, com destaque para um pavilhão de Picasso.",
+    "bestTime": "Pela manhã, para explorar com calma. O outono (folhas coloridas) e a primavera (cerejeiras) são especialmente bonitos."
+  },
+  {
+    "name": "Symphonic Sculpture (Escultura Sinfônica)",
+    "why": "Uma torre de vitrais com uma escada em espiral no centro, dentro do museu. Subir até o topo oferece uma vista de 360 graus do parque.",
+    "bestTime": "Um dia ensolarado para que a luz atravesse os vitrais, criando um efeito mágico."
+  },
+  {
+    "name": "Gora Kadan",
+    "why": "Ryokan pago para 17/11. Priorizar o check-in a partir das 15h e o onsen do próprio hotel.",
+    "bestTime": "Tarde e noite, com jantar a combinar com o hotel."
+  }
+],
               hiddenGems: [
-                {
-                  name: "Footbath (escalda-pés) do Museu",
-                  tip: "Dentro do Hakone Open-Air Museum, há um escalda-pés gratuito com água termal natural. É a pausa perfeita no meio da visita.",
-                },
-                {
-                  name: "Choukoku no Mori Station",
-                  tip: "A estação de trem que serve o museu é charmosa. Ao lado fica o pequeno 'Gora Park', um parque em estilo francês com uma casa de chá e estufas.",
-                },
-                {
-                  name: "Almoço no Tamura Ginkatsu-tei",
-                  tip: "Perto da estação Gora, este restaurante é famoso por seu 'Tofu Katsu', uma costeleta de tofu empanada. As filas são longas, chegue cedo.",
-                },
-              ],
+  {
+    "name": "Footbath (escalda-pés) do Museu",
+    "tip": "Dentro do Hakone Open-Air Museum, há um escalda-pés gratuito com água termal natural. É a pausa perfeita no meio da visita."
+  },
+  {
+    "name": "Almoço no Tamura Ginkatsu-tei",
+    "tip": "Perto da estação Gora, este restaurante é famoso por seu 'Tofu Katsu', uma costeleta de tofu empanada. As filas são longas, chegue cedo."
+  }
+],
               overrated: [
                 {
                   name: "Owakudani (Vale vulcânico) em dias nublados",
@@ -4888,38 +5406,38 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "10:00",
-                  place: "Estação Chokoku-no-Mori",
-                  note: "Chegue pela cênica linha Hakone Tozan Railway. O Museu ao Ar Livre fica a poucos passos.",
-                },
-                {
-                  time: "10:10",
-                  place: "Hakone Open-Air Museum",
-                  note: "Explore a área principal ao ar livre e o Pavilhão Picasso. Não perca a 'Symphonic Sculpture'.",
-                },
-                {
-                  time: "12:30",
-                  place: "Pausa para o escalda-pés",
-                  note: "Dentro do museu, descanse os pés no footbath de água termal e tome um café no Bella Foresta Cafe.",
-                },
-                {
-                  time: "13:30",
-                  place: "Transporte para o Onsen",
-                  note: "Pegue o ônibus shuttle gratuito da estação Tonosawa para o Hakone Yuryo Onsen (verifique o horário online).",
-                },
-                {
-                  time: "14:00",
-                  place: "Hakone Yuryo Onsen",
-                  note: "Relaxe nas águas termais. Alugue um banho privativo por uma hora para uma experiência mais exclusiva.",
-                },
-              ],
+  {
+    "time": "11:45–14:00",
+    "place": "Hakone Open-Air Museum",
+    "note": "Ingresso comprado para 17/11; janela de funcionamento anotada 9h–17h, sem obrigação de chegar às 9h."
+  },
+  {
+    "time": "14:00–14:30",
+    "place": "Almoço leve em Hakone",
+    "note": "Ajustável; deixar espaço para o jantar no ryokan."
+  },
+  {
+    "time": "14:30–15:00",
+    "place": "Museu → Gora Kadan",
+    "note": "Caminhada/traslado curto e retirada das malas conforme combinado."
+  },
+  {
+    "time": "15:00–18:00",
+    "place": "Check-in e onsen no Gora Kadan",
+    "note": "Hospedagem paga para 17/11. Check-in a partir das 15h; aproveitar o onsen do ryokan, sem adicionar Hakone Yuryo."
+  },
+  {
+    "time": "18:00–19:30",
+    "place": "Jantar no Gora Kadan",
+    "note": "Janela sugerida; confirmar início às 18h ou 19h com o hotel e a reserva."
+  }
+],
             },
           },
           "hakone-ropeway": {
             icon: "🚡",
             label: "Ropeway + Lake Ashi",
-            hours: 5,
+            hours: 7.25,
             region: "hakone",
             colorKey: "hakone",
             travel: null,
@@ -4931,10 +5449,10 @@
             guide: {
               cardTitle: "Ropeway + Lake Ashi",
               icon: "🚡",
-              hours: 5.0,
+              hours: 7.25,
               city: "Hakone",
               intro:
-                "Prepare-se para uma jornada espetacular pelos céus e águas de Hakone. O Hakone Ropeway oferece vistas incríveis do vale vulcânico de Owakudani, antes de você embarcar em um cruzeiro cênico pelo Lago Ashi, com o icônico Monte Fuji como pano de fundo.",
+                "Circuito de Hakone com check-out, guarda e retirada de malas. O retorno a Tóquio só começa depois de recuperar a bagagem. Se ropeway/barco parar ou houver trânsito, reduzir o circuito para preservar a chegada ao hotel.",
               images: [
                 {
                   url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Owakudani_-_Hakone_%2827369344357%29.jpg/960px-Owakudani_-_Hakone_%2827369344357%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
@@ -5022,49 +5540,74 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "09:00",
-                  place: "Gora Station",
-                  note: "Pegue o Hakone Tozan Cable Car para Sounzan. O trajeto já oferece belas vistas.",
-                },
-                {
-                  time: "09:30",
-                  place: "Sounzan Station",
-                  note: "Embarque no Hakone Ropeway em direção a Owakudani. Sente-se do lado direito para melhores vistas.",
-                },
-                {
-                  time: "10:00",
-                  place: "Owakudani",
-                  note: "Explore a área vulcânica, sinta o cheiro de enxofre e prove os famosos ovos pretos 'kuro-tamago'.",
-                },
-                {
-                  time: "11:00",
-                  place: "Owakudani Station",
-                  note: "Continue no Ropeway até Togendai. A descida oferece vistas espetaculares do Lago Ashi e do Fuji.",
-                },
-                {
-                  time: "11:30",
-                  place: "Togendai Port",
-                  note: "Embarque no Hakone Sightseeing Cruise (barco pirata) para Moto-Hakone. Vá para o deck superior.",
-                },
-                {
-                  time: "12:15",
-                  place: "Moto-Hakone Port",
-                  note: "Desembarque e caminhe pela margem até o Santuário Hakone para a foto icônica no torii aquático.",
-                },
-                {
-                  time: "13:30",
-                  place: "Almoço em Moto-Hakone",
-                  note: "Almoce em um dos restaurantes com vista para o lago antes de pegar o ônibus de volta para Hakone-Yumoto.",
-                },
-              ],
+  {
+    "time": "08:00–08:30",
+    "place": "Café da manhã no Gora Kadan",
+    "note": "Confirmar horário com o ryokan."
+  },
+  {
+    "time": "08:30–09:00",
+    "place": "Check-out e guarda de malas no Gora Kadan",
+    "note": "Combinar guarda e retirada à tarde; não presumir entrega de bagagens em Tóquio."
+  },
+  {
+    "time": "09:00–09:30",
+    "place": "Gora → Sounzan",
+    "note": "Caminhada, funicular e espera."
+  },
+  {
+    "time": "09:30–10:00",
+    "place": "Sounzan → Owakudani",
+    "note": "Ropeway com margem; confirmar operação por clima/manutenção."
+  },
+  {
+    "time": "10:00–10:45",
+    "place": "Owakudani",
+    "note": "Visita sugerida."
+  },
+  {
+    "time": "10:45–11:15",
+    "place": "Owakudani → Togendai",
+    "note": "Ropeway."
+  },
+  {
+    "time": "11:15–11:45",
+    "place": "Margem para o barco no Lago Ashi",
+    "note": "Esperar a próxima saída real."
+  },
+  {
+    "time": "11:45–12:15",
+    "place": "Cruzeiro Togendai → Moto-Hakone",
+    "note": "Janela estimada; ajustar à tabela do barco."
+  },
+  {
+    "time": "12:15–13:00",
+    "place": "Moto-Hakone e santuário (opcional)",
+    "note": "Passeio curto, sem fila obrigatória para foto."
+  },
+  {
+    "time": "13:00–13:45",
+    "place": "Almoço em Moto-Hakone",
+    "note": "Pausa."
+  },
+  {
+    "time": "13:45–15:00",
+    "place": "Moto-Hakone → Gora Kadan",
+    "note": "75 min para ônibus/conexão/espera; trânsito de outono pode exigir corte de passeios."
+  },
+  {
+    "time": "15:00–15:15",
+    "place": "Retirada de malas no Gora Kadan",
+    "note": "Preparar a mudança para Tóquio."
+  }
+],
             },
           },
 
           "kyoto-guided-higashiyama": {
             "icon": "⛩️",
             "label": "Fushimi solo + Kyoto com guia às 12h no Nishiki",
-            "hours": 11,
+            hours: 9.2,
             "region": "kyoto",
             "colorKey": "kyoto",
             "travel": "🚆 Saída 05:25 · JR Shin-Osaka → Kyoto → Inari (antes de 07:00) · volta JR de Kyoto",
@@ -5078,7 +5621,7 @@
             "guide": {
               "cardTitle": "Fushimi solo + Kyoto com guia às 12h no Nishiki",
               "icon": "⛩️",
-              "hours": 11,
+              hours: 9.2,
               "city": "Kyoto",
               "intro": "Fushimi Inari e Tofuku-ji são feitos sem guia pela manhã. O encontro com o guia está confirmado para 12:00 no Nishiki Market (ponto exato ainda a combinar); a prioridade é chegar pontualmente ao mercado. Depois do almoço no mercado, o grupo segue com o guia por Kiyomizu-dera e o eixo histórico de Higashiyama até Gion. Horários além do encontro são estimativas sujeitas ao ritmo do grupo.",
               "images": [],
@@ -5100,26 +5643,84 @@
                 }
               ],
               "smartRoute": [
-                { "time": "05:25", "place": "Saída do hotel em Osaka", "note": "Caminhada até a estação Shin-Osaka." },
-                { "time": "05:45", "place": "JR Shin-Osaka → Kyoto → Inari", "note": "JR Special Rapid + JR Nara Line; chegar a JR Inari antes de 07:00. Horários de trem não confirmados." },
-                { "time": "06:50", "place": "Fushimi Inari Taisha", "note": "Visita sem guia. Subir pelos Senbon Torii até Mitsutsuji; não fazer o circuito completo do cume." },
-                { "time": "~08:45", "place": "Inari → Tofukuji", "note": "Uma estação pela JR Nara Line e caminhada até o templo." },
-                { "time": "~09:00–10:15", "place": "Tofuku-ji sem guia (opcional)", "note": "Ponte Tsutenkyo e jardim Hojo. Pular se houver fila longa — a prioridade é chegar pontual ao Nishiki." },
-                { "time": "~10:15", "place": "Deslocamento para o Nishiki Market", "note": "Trem/metrô ou táxi com folga; chegada recomendada por volta de 11:45." },
-                { "time": "12:00", "place": "Encontro com o guia no Nishiki Market", "note": "Horário confirmado. Ponto exato dentro/na entrada do mercado ainda a combinar com o guia." },
-                { "time": "12:00–13:00", "place": "Almoço e mercado com o guia", "note": "Estimativa." },
-                { "time": "~13:00", "place": "Deslocamento para Kiyomizu-dera", "note": "Táxi ou ônibus; estimativa." },
-                { "time": "~13:30", "place": "Kiyomizu-dera", "note": "Salão principal e mirantes." },
-                { "time": "~15:00", "place": "Sannenzaka e Ninenzaka", "note": "Caminhada pelas ruas históricas." },
-                { "time": "~16:00–17:30", "place": "Yasaka Pagoda e Gion", "note": "Conforme o ritmo do grupo e o tempo com o guia." },
-                { "time": "~18:30", "place": "Retorno a Osaka", "note": "Ônibus/táxi até Kyoto Station e JR Special Rapid para Shin-Osaka." }
-              ]
+  {
+    "time": "06:50–08:30",
+    "place": "Fushimi Inari Taisha",
+    "note": "Visita solo, sem guia."
+  },
+  {
+    "time": "08:30–09:00",
+    "place": "Inari → Tofukuji",
+    "note": "Trem/caminhada e espera."
+  },
+  {
+    "time": "09:00–10:10",
+    "place": "Tofuku-ji sem guia (opcional)",
+    "note": "Cortar ou reduzir se houver filas; o guia às 12h é prioridade."
+  },
+  {
+    "time": "10:10–10:45",
+    "place": "Tofuku-ji → SUINA Muromachi",
+    "note": "Transporte local com margem para a parada Pokémon."
+  },
+  {
+    "time": "11:20–11:45",
+    "place": "Pokémon Center KYOTO → Nishiki Market",
+    "note": "Caminhada para chegar antes do encontro."
+  },
+  {
+    "time": "11:45–12:00",
+    "place": "Margem para localizar o guia no Nishiki",
+    "note": "Confirmar o ponto exato de encontro."
+  },
+  {
+    "time": "12:00–12:05",
+    "place": "Encontro com o guia no Nishiki Market",
+    "note": "Encontro confirmado às 12h no contexto salvo.",
+    "confirmed": true
+  },
+  {
+    "time": "12:05–13:00",
+    "place": "Almoço e mercado com o guia",
+    "note": "Sequência sugerida após o encontro; duração ajustável com o guia."
+  },
+  {
+    "time": "13:00–13:30",
+    "place": "Deslocamento para Kiyomizu-dera",
+    "note": "Ônibus/táxi e caminhada de subida."
+  },
+  {
+    "time": "13:30–14:45",
+    "place": "Kiyomizu-dera",
+    "note": "Visita com o guia."
+  },
+  {
+    "time": "14:45–15:00",
+    "place": "Kiyomizu-dera → Sannenzaka",
+    "note": "Caminhada."
+  },
+  {
+    "time": "15:00–16:00",
+    "place": "Sannenzaka e Ninenzaka",
+    "note": "Passeio com o guia."
+  },
+  {
+    "time": "16:00–17:30",
+    "place": "Yasaka Pagoda e Gion",
+    "note": "Passeio sugerido; ajustar com o guia."
+  },
+  {
+    "time": "17:30–18:00",
+    "place": "Pausa e jantar leve em Gion",
+    "note": "Ajustável antes do retorno a Osaka."
+  }
+]
             }
           },
           "kyoto-west-saihoji": {
             "icon": "🎋",
             "label": "Arashiyama + Saihō-ji + Kinkaku-ji",
-            "hours": 11.5,
+            hours: 10.7,
             "region": "kyoto",
             "colorKey": "kyoto",
             "travel": "🚆 Saída 06:15 · JR até Saga-Arashiyama · táxis entre templos · volta JR de Kyoto",
@@ -5132,9 +5733,9 @@
             "guide": {
               "cardTitle": "Arashiyama + Saihō-ji + Kinkaku-ji",
               "icon": "🎋",
-              "hours": 11.5,
+              hours: 10.7,
               "city": "Kyoto",
-              "intro": "Dia no oeste de Kyoto: Arashiyama bem cedo, o jardim de musgo do Saihō-ji (somente com reserva), Kinkaku-ji, Nishiki Market e um fim de tarde sem pressa em Gion. A ordem exata da manhã depende do horário confirmado no Saihō-ji.",
+              "intro": "Bambu e Tenryu-ji cedo; preservar a reserva comprada do Saihō-ji às 11h30. Kinkaku-ji depois do almoço. Gion é cortável; transporte de ida e volta está nos cards correspondentes.",
               "images": [],
               "videos": [],
               "hiddenGems": [],
@@ -5154,57 +5755,78 @@
                 }
               ],
               "smartRoute": [
-                {
-                  "time": "06:15",
-                  "place": "Saída de Osaka",
-                  "note": "JR Shin-Osaka → Kyoto → Saga-Arashiyama."
-                },
-                {
-                  "time": "07:20",
-                  "place": "Arashiyama / Bamboo Grove",
-                  "note": "Bosque de bambu antes das multidões."
-                },
-                {
-                  "time": "08:00",
-                  "place": "Tenryu-ji",
-                  "note": "Jardim Sogenchi; confirmar horário de abertura."
-                },
-                {
-                  "time": "09:30",
-                  "place": "Táxi para Saihō-ji",
-                  "note": "Cerca de 15–20 min de táxi."
-                },
-                {
-                  "time": "10:00",
-                  "place": "Saihō-ji (Kokedera)",
-                  "note": "Horário aproximado: a ordem exata do dia depende do horário reservado."
-                },
-                {
-                  "time": "11:45",
-                  "place": "Almoço",
-                  "note": "Perto de Saihō-ji ou no caminho para Kinkaku-ji."
-                },
-                {
-                  "time": "13:15",
-                  "place": "Kinkaku-ji",
-                  "note": "Táxi a partir da região de Saihō-ji."
-                },
-                {
-                  "time": "15:15",
-                  "place": "Nishiki Market (opcional)",
-                  "note": "Opcional — o mercado já foi visitado com o guia em 11/11. Táxi ou ônibus até o centro."
-                },
-                {
-                  "time": "16:30",
-                  "place": "Gion",
-                  "note": "Caminhada ao entardecer, sem outra reserva com horário rígido."
-                },
-                {
-                  "time": "18:30",
-                  "place": "Retorno a Osaka",
-                  "note": "Ônibus/táxi até Kyoto Station e JR Special Rapid para Shin-Osaka."
-                }
-              ]
+  {
+    "time": "07:20–07:50",
+    "place": "Arashiyama / Bamboo Grove",
+    "note": "Bambu cedo."
+  },
+  {
+    "time": "07:50–08:00",
+    "place": "Bamboo Grove → Tenryu-ji",
+    "note": "Caminhada."
+  },
+  {
+    "time": "08:00–09:15",
+    "place": "Tenryu-ji",
+    "note": "Jardim e templo conforme interesse."
+  },
+  {
+    "time": "09:15–10:00",
+    "place": "Café e margem em Arashiyama",
+    "note": "Pausa para não sobrecarregar o dia."
+  },
+  {
+    "time": "10:00–10:45",
+    "place": "Táxi para Saihō-ji",
+    "note": "45 min de orçamento com trânsito e espera; evitar chegada apertada."
+  },
+  {
+    "time": "10:45–11:15",
+    "place": "Margem antes de Saihō-ji",
+    "note": "Pausa nas proximidades, sem outro passeio obrigatório."
+  },
+  {
+    "time": "11:15–11:30",
+    "place": "Check-in da reserva de Saihō-ji",
+    "note": "Chegar antes do horário comprado."
+  },
+  {
+    "time": "11:30–13:00",
+    "place": "Saihō-ji (Kokedera)",
+    "note": "Horário de 11h30 consta na reserva comprada. Reservar cerca de 90 min para a experiência.",
+    "confirmed": true
+  },
+  {
+    "time": "13:00–13:45",
+    "place": "Almoço após Saihō-ji",
+    "note": "Pausa antes do próximo deslocamento."
+  },
+  {
+    "time": "13:45–14:30",
+    "place": "Saihō-ji → Kinkaku-ji",
+    "note": "Táxi com margem; custo não estimado."
+  },
+  {
+    "time": "14:30–15:30",
+    "place": "Kinkaku-ji",
+    "note": "Visita à tarde, após a reserva do Kokedera."
+  },
+  {
+    "time": "15:30–16:15",
+    "place": "Kinkaku-ji → Gion",
+    "note": "Transporte local estimado; pode voltar direto a Osaka se houver cansaço."
+  },
+  {
+    "time": "16:15–17:30",
+    "place": "Gion (opcional)",
+    "note": "Cortável. Nishiki já é visitado em 11/11; não encaixar outra reserva rígida."
+  },
+  {
+    "time": "17:30–18:00",
+    "place": "Pausa antes do retorno",
+    "note": "Comprar algo para comer ou antecipar a volta."
+  }
+]
             }
           },
           "fushimi-inari": {
@@ -6016,7 +6638,7 @@
           dotonbori: {
             icon: "🐙",
             label: "Dotonbori (à noite)",
-            hours: 2.5,
+            hours: 4,
             region: "osaka",
             colorKey: "osaka",
             travel: null,
@@ -6024,7 +6646,7 @@
             guide: {
               cardTitle: "Dotonbori (à noite)",
               icon: "🐙",
-              hours: 2.5,
+              hours: 4,
               city: "Osaka",
               intro:
                 "Bem-vindo ao coração pulsante de Osaka, Dotonbori. À noite, este canal se transforma em um espetáculo de luzes neon, painéis publicitários gigantes e um paraíso para a 'kuidaore' – a cultura de comer até cair. Prepare-se para uma sobrecarga sensorial de sons, cheiros e sabores.",
@@ -6115,43 +6737,53 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "18:00",
-                  place: "Ponte Ebisubashi",
-                  note: "Comece no epicentro. Tire a foto clássica com o painel do Glico Man e absorva a energia inicial.",
-                },
-                {
-                  time: "18:20",
-                  place: "Kukuru Takoyaki",
-                  note: "Pegue uma porção de takoyaki para comer enquanto caminha. Cuidado, é muito quente por dentro!",
-                },
-                {
-                  time: "18:40",
-                  place: "Caminhada pelo Tombori River Walk",
-                  note: "Desça para a passarela ao lado do rio. Caminhe em direção ao leste, apreciando os neons refletidos na água.",
-                },
-                {
-                  time: "19:00",
-                  place: "Hozenji Yokocho",
-                  note: "Mergulhe na atmosfera tranquila desta viela histórica. Encontre o Templo Hozenji e jogue água na estátua de musgo.",
-                },
-                {
-                  time: "19:30",
-                  place: "Jantar de Kushikatsu",
-                  note: "Experimente os espetos fritos, outra especialidade de Osaka. Procure uma loja da rede 'Kushikatsu Daruma' e lembre-se: não mergulhe o espeto no molho duas vezes!",
-                },
-                {
-                  time: "20:00",
-                  place: "Don Quijote Dotonbori",
-                  note: "Visita sugerida de até 30 min; corte esta parada se houver cansaço após a viagem. Termine na icônica loja Don Quijote com sua roda-gigante oval. É um labirinto de produtos bizarros e ótimos para comprar lanches.",
-                },
-              ],
+  {
+    "time": "17:00–17:45",
+    "place": "Comfort Hotel → Dotonbori",
+    "note": "Metrô para Namba/Nippombashi e caminhada; 45 min com margem. Passeio leve após a viagem."
+  },
+  {
+    "time": "18:00",
+    "place": "Ponte Ebisubashi",
+    "note": "Comece no epicentro. Tire a foto clássica com o painel do Glico Man e absorva a energia inicial."
+  },
+  {
+    "time": "18:20",
+    "place": "Kukuru Takoyaki",
+    "note": "Pegue uma porção de takoyaki para comer enquanto caminha. Cuidado, é muito quente por dentro!"
+  },
+  {
+    "time": "18:40",
+    "place": "Caminhada pelo Tombori River Walk",
+    "note": "Desça para a passarela ao lado do rio. Caminhe em direção ao leste, apreciando os neons refletidos na água."
+  },
+  {
+    "time": "19:00",
+    "place": "Hozenji Yokocho",
+    "note": "Mergulhe na atmosfera tranquila desta viela histórica. Encontre o Templo Hozenji e jogue água na estátua de musgo."
+  },
+  {
+    "time": "19:30",
+    "place": "Jantar de Kushikatsu",
+    "note": "Experimente os espetos fritos, outra especialidade de Osaka. Procure uma loja da rede 'Kushikatsu Daruma' e lembre-se: não mergulhe o espeto no molho duas vezes!"
+  },
+  {
+    "time": "20:00",
+    "place": "Don Quijote Dotonbori",
+    "note": "Visita sugerida de até 30 min; corte esta parada se houver cansaço após a viagem. Termine na icônica loja Don Quijote com sua roda-gigante oval. É um labirinto de produtos bizarros e ótimos para comprar lanches."
+  },
+  {
+    "time": "20:30–21:15",
+    "place": "Dotonbori → Comfort Hotel Shin-Osaka",
+    "note": "Retorno estimado; encurtar as compras se houver cansaço."
+  }
+],
             },
           },
           kuromon: {
             icon: "🦀",
             label: "Kuromon Market",
-            hours: 1.5,
+            hours: 3.75,
             region: "osaka",
             colorKey: "osaka",
             travel: null,
@@ -6159,7 +6791,7 @@
             guide: {
               cardTitle: "Kuromon Market",
               icon: "🦀",
-              hours: 1.5,
+              hours: 3.75,
               city: "Osaka",
               intro:
                 'O Mercado Kuromon Ichiba é conhecido como "A Cozinha de Osaka", um paraíso para os amantes de comida de rua. Com mais de 150 barracas, oferece frutos do mar frescos, carnes de alta qualidade e produtos locais, sendo o lugar perfeito para um tour gastronômico.',
@@ -6248,37 +6880,47 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "09:30",
-                  place: "Estação Nippombashi (Saída 10)",
-                  note: "Chegue cedo para evitar as multidões do almoço e garantir a frescura dos produtos.",
-                },
-                {
-                  time: "09:45",
-                  place: "Maguroya Kurogin",
-                  note: "Comece com um sashimi de atum fresco para abrir o apetite.",
-                },
-                {
-                  time: "10:15",
-                  place: "Maruzen Shokuniku",
-                  note: "Prove um espeto de Kobe beef grelhado na hora.",
-                },
-                {
-                  time: "10:45",
-                  place: "Barraca de vieiras e ouriços",
-                  note: "Escolha uma das várias barracas que grelham frutos do mar na hora.",
-                },
-                {
-                  time: "11:15",
-                  place: "Daiwa Kaen",
-                  note: "Refresque-se com um suco de fruta fresca.",
-                },
-                {
-                  time: "11:30",
-                  place: "Mitoya",
-                  note: "Finalize com um doce tradicional, o warabimochi.",
-                },
-              ],
+  {
+    "time": "08:45–09:30",
+    "place": "Comfort Hotel → Nippombashi",
+    "note": "Metrô e caminhada ao Kuromon Market."
+  },
+  {
+    "time": "09:30–09:45",
+    "place": "Estação Nippombashi (Saída 10)",
+    "note": "Caminhada ao mercado."
+  },
+  {
+    "time": "09:45–10:15",
+    "place": "Maguroya Kurogin",
+    "note": "Parada sugerida, sem reserva."
+  },
+  {
+    "time": "10:15–10:45",
+    "place": "Maruzen Shokuniku",
+    "note": "Parada sugerida; respeitar fome e filas."
+  },
+  {
+    "time": "10:45–11:15",
+    "place": "Barraca de vieiras e ouriços",
+    "note": "Escolher conforme disponibilidade."
+  },
+  {
+    "time": "11:15–11:30",
+    "place": "Daiwa Kaen",
+    "note": "Parada curta."
+  },
+  {
+    "time": "11:30–12:00",
+    "place": "Mitoya",
+    "note": "Final do passeio pelo mercado."
+  },
+  {
+    "time": "12:00–12:30",
+    "place": "Kuromon → Shinsaibashi",
+    "note": "Caminhada ou metrô para o Daimaru Shinsaibashi, onde fica o Pokémon Center OSAKA DX."
+  }
+],
             },
           },
           "denim-shopping": {
@@ -6730,7 +7372,7 @@
           "nara-uji": {
             icon: "🦌",
             label: "Nara + Uji",
-            hours: 10.5,
+            hours: 7.3,
             region: "far",
             colorKey: "far",
             travel: "🚄 ~45min de Osaka · JR Nara Line (JR Pass)",
@@ -6743,7 +7385,7 @@
             guide: {
               cardTitle: "Nara + Uji",
               icon: "🦌",
-              hours: 10.5,
+              hours: 7.3,
               city: "Kansai/Chugoku",
               intro:
                 "Combine a serenidade espiritual de Nara com a elegância de Uji em um único dia. Nara é famosa por seus cervos amigáveis e o Grande Buda, enquanto Uji é o berço do chá verde matcha de alta qualidade e lar do deslumbrante Templo Byodo-in.",
@@ -6839,58 +7481,63 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "09:00",
-                  place: "Estação Kintetsu Nara",
-                  note: "Pegue um trem da linha Kintetsu (mais perto do parque que a JR). Ao chegar, caminhe em direção ao Parque de Nara.",
-                },
-                {
-                  time: "09:30",
-                  place: "Parque de Nara e Templo Kofuku-ji",
-                  note: "Compre shika senbei e interaja com os cervos. Dê uma olhada rápida no pagode de cinco andares do Templo Kofuku-ji.",
-                },
-                {
-                  time: "10:30",
-                  place: "Templo Todai-ji",
-                  note: "Visite o Grande Buda. Não se esqueça de encontrar o pilar com um buraco na base – dizem que passar por ele traz iluminação.",
-                },
-                {
-                  time: "12:00",
-                  place: "Santuário Kasuga Taisha",
-                  note: "Caminhe pela floresta até o santuário das lanternas. É uma caminhada agradável e sombreada.",
-                },
-                {
-                  time: "13:30",
-                  place: "Estação JR Nara para Uji",
-                  note: "Almoce rapidamente perto da estação (ex: udon no Mentouan) e pegue a linha JR Nara para Uji (aprox. 30 min).",
-                },
-                {
-                  time: "14:30",
-                  place: "Templo Byodo-in",
-                  note: "Saia da estação JR Uji e caminhe pela rua Uji Bashi Dori. Visite o magnífico Templo Byodo-in e seu museu.",
-                },
-                {
-                  time: "15:45",
-                  place: "Taihō-an",
-                  note: "Experiência reservada de preparo de matcha ou sencha; cerca de 40 minutos e ¥3.600 por pessoa.",
-                },
-                {
-                  time: "16:30",
-                  place: "Rua Byodo-in Omotesando",
-                  note: "Passeio curto pela rua do chá antes de retornar à estação de Uji.",
-                },
-                {
-                  time: "17:00",
-                  place: "Retorno a Osaka",
-                  note: "JR Nara Line até Kyoto e conexão para Shin-Osaka.",
-                },
-              ],
+  {
+    "time": "09:15–09:45",
+    "place": "Parque de Nara e Templo Kofuku-ji",
+    "note": "Circuito inicial sem alimentar os animais."
+  },
+  {
+    "time": "09:45–10:45",
+    "place": "Templo Todai-ji",
+    "note": "Inclui caminhada de acesso e visita."
+  },
+  {
+    "time": "10:45–11:15",
+    "place": "Todai-ji → Kasuga Taisha",
+    "note": "Caminhada."
+  },
+  {
+    "time": "11:15–11:45",
+    "place": "Santuário Kasuga Taisha",
+    "note": "Visita sugerida."
+  },
+  {
+    "time": "11:45–12:30",
+    "place": "Almoço em Nara",
+    "note": "Pausa antes de Uji."
+  },
+  {
+    "time": "14:00–14:45",
+    "place": "Templo Byodo-in",
+    "note": "Visita após a chegada a Uji."
+  },
+  {
+    "time": "14:45–15:00",
+    "place": "Byodo-in → Taihō-an",
+    "note": "Caminhada e margem."
+  },
+  {
+    "time": "15:00–16:00",
+    "place": "Taihō-an ou chá em Uji (opcional)",
+    "note": "A experiência de preparo está anotada como sem disponibilidade nas reservas salvas. Não contar como compromisso garantido: usar este intervalo para chá/café em Uji se não surgir vaga. Preparo de matcha leva cerca de 40 min; opções de sencha podem exigir mais tempo. Confirmar modalidade e horário antes de reservar."
+  },
+  {
+    "time": "16:00–16:30",
+    "place": "Rua Byodo-in Omotesando",
+    "note": "Compras e chá, ajustáveis."
+  },
+  {
+    "time": "16:30–17:00",
+    "place": "Centro de Uji → estação JR",
+    "note": "Caminhada e margem para o retorno."
+  }
+],
             },
           },
           "kobe-himeji": {
             icon: "🏯",
             label: "Kobe + Himeji",
-            hours: 8,
+            hours: 12.5,
             region: "far",
             colorKey: "far",
             travel: "🚄 ~20-40min de Osaka · Shinkansen (JR Pass)",
@@ -6902,10 +7549,10 @@
             guide: {
               cardTitle: "Kobe + Himeji",
               icon: "🏯",
-              hours: 8.0,
+              hours: 12.5,
               city: "Kansai/Chugoku",
               intro:
-                "Descubra dois ícones da província de Hyogo em um dia memorável. Comece com a majestade do Castelo de Himeji, a mais bela fortaleza feudal do Japão, e termine com a sofisticação cosmopolita de Kobe, famosa por sua carne e vistas deslumbrantes do porto.",
+                "Saída sugerida às 7h30. Himeji primeiro, Kobe no retorno. Estão incluídos acesso às estações, margem de embarque e retorno ao hotel. Bilhetes/assentos precisam ser confirmados.",
               images: [
                 {
                   url: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Himeji_castle_in_may_2015.jpg/960px-Himeji_castle_in_may_2015.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
@@ -6993,42 +7640,97 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "09:00",
-                  place: "Estação de Himeji",
-                  note: "Pegue um Shinkansen ou Special Rapid. Da estação, você já vê o castelo; é uma caminhada de 15 minutos em linha reta.",
-                },
-                {
-                  time: "09:30",
-                  place: "Castelo de Himeji",
-                  note: "Explore o complexo e suba os seis andares da torre principal. Use sapatos fáceis de tirar, pois é necessário tirá-los para entrar.",
-                },
-                {
-                  time: "11:30",
-                  place: "Jardim Koko-en",
-                  note: "Passeie pelos jardins. No restaurante Kassui-ken dentro do jardim, você pode almoçar com vista para uma lagoa de carpas.",
-                },
-                {
-                  time: "13:30",
-                  place: "Viagem para Kobe",
-                  note: "Volte para a estação de Himeji e pegue um trem Special Rapid (JR) para a estação Sannomiya em Kobe (aprox. 40 min).",
-                },
-                {
-                  time: "14:30",
-                  place: "Almoço tardio com Kobe Beef",
-                  note: "A área de Sannomiya está repleta de churrascarias. Experimente o Steakland Kobe ou o Ishida para um teppanyaki de alta qualidade. Muitos oferecem 'lunch sets' acessíveis até as 15:00.",
-                },
-                {
-                  time: "16:00",
-                  place: "Bairro Kitano-cho",
-                  note: "Suba a colina para ver as casas históricas de estilo ocidental. Tome um café no Starbucks Kitano Ijinkan, que fica em um prédio histórico.",
-                },
-                {
-                  time: "18:00",
-                  place: "Kobe Harborland",
-                  note: "Pegue o metrô ou caminhe até o porto. Passeie pelo shopping Mosaic, admire a vista noturna da Torre do Porto e jante com vista para a baía.",
-                },
-              ],
+  {
+    "time": "07:30–07:40",
+    "place": "Comfort Hotel → Shin-Osaka",
+    "note": "Caminhada."
+  },
+  {
+    "time": "07:40–08:00",
+    "place": "Margem de embarque para Himeji",
+    "note": "20 min; reservar assento conforme passe comprado."
+  },
+  {
+    "time": "08:00–08:45",
+    "place": "Shinkansen Shin-Osaka → Himeji",
+    "note": "Janela estimada; confirmar trem e plataforma."
+  },
+  {
+    "time": "08:45–09:00",
+    "place": "Himeji Station → castelo",
+    "note": "Caminhada pelo eixo principal."
+  },
+  {
+    "time": "09:00–11:00",
+    "place": "Castelo de Himeji",
+    "note": "Ingresso comprado; reservar 2h para visita e filas."
+  },
+  {
+    "time": "11:00–11:15",
+    "place": "Castelo → Jardim Koko-en",
+    "note": "Caminhada."
+  },
+  {
+    "time": "11:15–12:00",
+    "place": "Jardim Koko-en",
+    "note": "Visita sugerida."
+  },
+  {
+    "time": "12:00–12:30",
+    "place": "Koko-en → Himeji Station",
+    "note": "Caminhada e pausa curta."
+  },
+  {
+    "time": "12:30–12:45",
+    "place": "Margem para trem de Kobe",
+    "note": "Comprar lanche se necessário."
+  },
+  {
+    "time": "12:45–13:30",
+    "place": "Himeji → Sannomiya / Kobe",
+    "note": "JR com margem; não tratar a janela como trem reservado."
+  },
+  {
+    "time": "13:30–14:00",
+    "place": "Sannomiya → restaurante",
+    "note": "Caminhada e fila."
+  },
+  {
+    "time": "14:00–15:00",
+    "place": "Almoço tardio com Kobe Beef",
+    "note": "Sugerido; confirmar restaurante e reserva."
+  },
+  {
+    "time": "15:00–15:15",
+    "place": "Restaurante → Kitano",
+    "note": "Caminhada."
+  },
+  {
+    "time": "15:15–16:15",
+    "place": "Bairro Kitano-cho",
+    "note": "Passeio cortável se houver atraso."
+  },
+  {
+    "time": "16:15–17:00",
+    "place": "Kitano → Kobe Harborland",
+    "note": "Deslocamento local com margem."
+  },
+  {
+    "time": "17:00–18:30",
+    "place": "Kobe Harborland",
+    "note": "Orla ao anoitecer; lanche/jantar conforme fome."
+  },
+  {
+    "time": "18:30–19:00",
+    "place": "Harborland → estação JR",
+    "note": "Caminhada e espera."
+  },
+  {
+    "time": "19:00–20:00",
+    "place": "Kobe → Comfort Hotel Shin-Osaka",
+    "note": "Trem e caminhada ao hotel."
+  }
+],
             },
           },
           "okayama-kurachiki": {
@@ -7174,7 +7876,7 @@
           "peace-memorial": {
             icon: "🕊️",
             label: "Hiroshima + Miyajima opcional",
-            hours: 8,
+            hours: 8.75,
             region: "hiro",
             colorKey: "hiro",
             travel:
@@ -7196,10 +7898,10 @@
             guide: {
               cardTitle: "Hiroshima + Miyajima opcional",
               icon: "🕊️",
-              hours: 8.0,
+              hours: 8.75,
               city: "Hiroshima",
               intro:
-                "Hiroshima é uma cidade que renasceu das cinzas, transformando sua trágica história em uma poderosa mensagem de paz e resiliência. Explore o emocionante Parque Memorial da Paz e, se o tempo permitir, visite a deslumbrante ilha sagrada de Miyajima, famosa por seu icônico torii flutuante.",
+                "Dia longo: Parque e Museu Memorial pela manhã, almoço em Okonomimura e extensão opcional a Miyajima. A ida desde Osaka e a volta têm cards próprios, com margens. Confirmar assentos no passe comprado; encurtar Miyajima se houver atrasos.",
               images: [
                 {
                   url: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Genbaku_Dome04-r.JPG/960px-Genbaku_Dome04-r.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
@@ -7287,42 +7989,47 @@
                 },
               ],
               smartRoute: [
-                {
-                  time: "09:00",
-                  place: "Parque Memorial da Paz",
-                  note: "Comece pelo Domo da Bomba Atômica e caminhe pelo parque. É um começo de dia tranquilo e reflexivo.",
-                },
-                {
-                  time: "10:00",
-                  place: "Museu Memorial da Paz de Hiroshima",
-                  note: "Dedique no mínimo 90 minutos. A exposição é impactante, mas essencial para compreender a história da cidade.",
-                },
-                {
-                  time: "12:00",
-                  place: "Almoço em Okonomi-mura",
-                  note: "Caminhe cerca de 15 minutos do parque para almoçar a autêntica panqueca de Hiroshima. Sente no balcão para a experiência completa.",
-                },
-                {
-                  time: "13:30",
-                  place: "Balsa para Miyajima",
-                  note: "Pegue o bonde (linha 2) para a estação Hiroden-miyajimaguchi (45 min), e depois a balsa de 10 min para a ilha. O JR Pass cobre a balsa da JR.",
-                },
-                {
-                  time: "14:30",
-                  place: "Santuário de Itsukushima",
-                  note: "Visite o famoso santuário e seu torii flutuante. Verifique a tábua de marés; à tarde, a maré provavelmente estará baixa, permitindo caminhar até o portão.",
-                },
-                {
-                  time: "16:00",
-                  place: "Rua Omotesando e Daisho-in",
-                  note: "Passeie pela rua comercial para provar ostras grelhadas e momiji manju. Se sobrar energia, suba até o Templo Daisho-in, na base do Monte Misen.",
-                },
-                {
-                  time: "17:30",
-                  place: "Retorno a Hiroshima",
-                  note: "Pegue a balsa de volta ao continente. A vista do torii durante o pôr do sol, a partir da balsa, é espetacular.",
-                },
-              ],
+  {
+    "time": "09:00–10:00",
+    "place": "Parque Memorial da Paz",
+    "note": "Chegada após o deslocamento porta a porta."
+  },
+  {
+    "time": "10:00–11:30",
+    "place": "Museu Memorial da Paz de Hiroshima",
+    "note": "90 min para a exposição, em vez de apenas 1h."
+  },
+  {
+    "time": "11:30–12:00",
+    "place": "Museu → Okonomimura",
+    "note": "Caminhada com margem."
+  },
+  {
+    "time": "12:00–13:00",
+    "place": "Almoço em Okonomi-mura",
+    "note": "Almoço único em Hiroshima, compartilhado com o card Okonomimura."
+  },
+  {
+    "time": "13:00–14:15",
+    "place": "Hiroshima → Miyajima (opcional)",
+    "note": "Orçar 75 min para transporte até a estação, trem até Miyajimaguchi, caminhada, espera e balsa. A balsa sozinha não representa o deslocamento inteiro."
+  },
+  {
+    "time": "14:15–15:15",
+    "place": "Santuário de Itsukushima (opcional)",
+    "note": "Extensão a Miyajima. Cortar se houver atraso/cansaço."
+  },
+  {
+    "time": "15:15–16:15",
+    "place": "Rua Omotesando e Daisho-in (opcional)",
+    "note": "Priorizar a rua e o santuário; Daisho-in só se houver energia. Não prometer maré nem pôr do sol."
+  },
+  {
+    "time": "16:15–17:45",
+    "place": "Retorno a Hiroshima",
+    "note": "90 min reservados para balsa, trem, conexões e chegada a Hiroshima Station."
+  }
+],
             },
           },
         };
@@ -7867,6 +8574,15 @@
           return { base: null, tours: [], note: "" };
         }
 
+        function applyMissingOsakaTransferV1(p) {
+          p._updates = p._updates || {};
+          if (p._updates.osakaTransferCalendarV1) return false;
+          var day = p["2026-11-09"];
+          if (day && Array.isArray(day.tours) && day.tours.indexOf("dotonbori") !== -1 && !day.tours.some(function (id) { return id === "transport-haneda-hotel-osaka" || id === "transport-tokyo-osaka"; })) day.tours.unshift("transport-haneda-hotel-osaka");
+          p._updates.osakaTransferCalendarV1 = true;
+          return true;
+        }
+
         function loadPlan() {
           try {
             var raw = localStorage.getItem(STORAGE_KEY);
@@ -7891,6 +8607,7 @@
                 if (applyGuide10AndHiroshima15V1(parsed)) changed = true;
                 if (applyGuideNishikiNoonV1(parsed)) changed = true;
                 if (window.JaplannerPokemon.migrate(parsed)) changed = true;
+                if (applyMissingOsakaTransferV1(parsed)) changed = true;
                 if (changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
                 return parsed;
               }
@@ -7909,6 +8626,7 @@
           applyGuide10AndHiroshima15V1(freshPlan);
           applyGuideNishikiNoonV1(freshPlan);
           window.JaplannerPokemon.migrate(freshPlan);
+          applyMissingOsakaTransferV1(freshPlan);
           return freshPlan;
         }
         function savePlan() {
@@ -8091,6 +8809,7 @@
         function openGuide(tourId) {
           var def = TOUR_DEFS[tourId];
           var guide = def && def.guide;
+          if (guide && guide.dateRoutes && guide.dateRoutes[selectedDate]) guide = Object.assign({}, guide, { smartRoute: guide.dateRoutes[selectedDate] });
           var guideEl = document.getElementById("card-guide");
           var contentEl = document.getElementById("guide-content");
           if (!guide || !guideEl) return;

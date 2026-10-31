@@ -578,61 +578,12 @@
     return entry && entry.base && api.baseDefs[entry.base] ? api.baseDefs[entry.base] : null;
   }
   function stepsFor(iso) {
-    if (iso === "2026-11-10") {
-      var fixedSteps = [
-        {
-          key: iso + "|fixed|0",
-          time: "09:00",
-          place: "Kuromon Ichiba Market",
-          note: "Café da manhã e comidas do mercado.",
-        },
-        {
-          key: iso + "|fixed|1",
-          time: "11:00",
-          place: "Denden Town",
-          note: "Caminhada por eletrônicos, games e cultura pop.",
-        },
-        {
-          key: iso + "|fixed|2",
-          time: "12:30",
-          place: "Shinsekai + almoço",
-          note: "Tsutenkaku e almoço de kushikatsu.",
-        },
-        {
-          key: iso + "|fixed|3",
-          time: "14:30",
-          place: "Castelo de Osaka",
-          note: "Parque e área externa; entrar apenas se houver interesse.",
-        },
-        {
-          key: iso + "|fixed|4",
-          time: "17:00",
-          place: "Umeda Sky Building",
-          note: "Mirante próximo ao pôr do sol.",
-        },
-        {
-          key: iso + "|fixed|5",
-          time: "",
-          place: "Pokémon Center OSAKA DX",
-          note: "Após Kuromon, na passagem por Shinsaibashi/Dotonbori · 45 min · Daimaru Shinsaibashi Main Building 9F · 10:00–20:00. Estoque não garantido.",
-        },
-        {
-          key: iso + "|fixed|6",
-          time: "19:30",
-          place: "Jantar em Umeda",
-          note: "Depois, retorno ao Comfort Hotel Shin-Osaka.",
-        },
-      ];
-      var pokemonStep = fixedSteps.splice(5, 1)[0];
-      fixedSteps.splice(1, 0, pokemonStep);
-      return fixedSteps;
-    }
     var entry = plan()[iso] || { tours: [] },
       steps = [];
     (entry.tours || []).forEach(function (id, ti) {
       var def = api.tourDefs[id];
       if (!def) return;
-      var smart = def.guide && def.guide.smartRoute;
+      var smart = def.guide && ((def.guide.dateRoutes && def.guide.dateRoutes[iso]) || def.guide.smartRoute);
       if (smart && smart.length)
         smart.forEach(function (s, si) {
           steps.push({
@@ -656,7 +607,12 @@
           tourId: id,
         });
     });
-    return steps;
+    var seen = new Set();
+    return steps.filter(function (step) {
+      var identity = step.time + '|' + step.place.normalize('NFKC').toLowerCase();
+      if (seen.has(identity)) return false;
+      seen.add(identity); return true;
+    }).sort(function (a, b) { return (a.time || '99').localeCompare(b.time || '99'); });
   }
   function nextStep(steps) {
     var p = progress(),
@@ -664,7 +620,7 @@
       upcoming = null;
     steps.forEach(function (s) {
       if (p[s.key]) return;
-      var m = /^(\d{1,2}):(\d{2})$/.exec(s.time);
+      var m = /^~?(\d{1,2}):(\d{2})/.exec(s.time);
       if (m && Number(m[1]) * 60 + Number(m[2]) >= now && !upcoming) upcoming = s;
     });
     return (
