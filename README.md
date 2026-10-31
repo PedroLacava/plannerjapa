@@ -16,6 +16,8 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 ## Google Calendar
 
+The app also has **Toda a viagem**, **Semana**, and **Dia** views. Weekly and daily blocks use the same saved itinerary and Japan timezone as the calendar feed, while keeping the planner's existing colors. Click a day to open its daily view, or an activity for details and a map. View/date preferences and the last offline-readable agenda stay on the device, separate from shared trip data.
+
 Use the **Google Calendar** button to preview and subscribe to the current saved itinerary, or download a one-time `.ics` copy. The public feed is `/api/public/calendar`; `?format=json` previews the same events and `?download=1` downloads the calendar.
 
 Events use `Asia/Tokyo`. Reservation starts explicitly confirmed in the saved itinerary are marked confirmed; all other times and estimated durations remain tentative; stops without a time are flexible all-day entries. Overlaps are disclosed. Subscriptions refresh on Google's schedule and do not write changes back to the planner. No day comments, reservation records or financial data are exported.

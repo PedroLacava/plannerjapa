@@ -1,7 +1,7 @@
 type Step = { time?: string; place?: string; note?: string; dayOffset?: number; confirmed?: boolean };
 type Tour = { label?: string; hours?: number; region?: string; bullets?: string[]; suggested?: string[]; travel?: string | null; guide?: { city?: string; timeMode?: string; smartRoute?: Step[]; dateRoutes?: Record<string, Step[]> } };
 type Day = { tours?: string[]; base?: string; note?: string };
-export type CalendarEvent = { uid: string; date: string; title: string; location: string; description: string; start: number | null; end: number | null; conflict: boolean; confirmed?: boolean };
+export type CalendarEvent = { uid: string; date: string; title: string; location: string; description: string; start: number | null; end: number | null; conflict: boolean; confirmed?: boolean; region?: string; kind?: string; tourId?: string };
 function parse(value: unknown): any {
   if (typeof value !== 'string') return value || {};
   try { return JSON.parse(value); } catch { return {}; }
@@ -48,7 +48,8 @@ export function buildEvents(shared: Record<string, unknown>, catalog: Record<str
         const location = title + ', ' + city + ', Japan';
         const timing = start === null ? 'Atividade flexível: sem horário definido. O evento de dia inteiro não significa que a visita dure o dia todo.' : step.confirmed ? 'Início confirmado na reserva salva. Fuso Asia/Tokyo. Término e duração estimados.' : 'Horário sugerido do roteiro, no fuso Asia/Tokyo. Não representa uma reserva confirmada. A duração é estimada quando não informada.';
         const actualDate = step.dayOffset ? new Date(new Date(date + 'T00:00:00Z').getTime() + step.dayOffset * 86400000).toISOString().slice(0, 10) : date;
-        events.push({ uid: actualDate + '-' + hash(identity) + '@plannerjapa.lovable.app', date: actualDate, title: (start === null ? '[Flexível] ' : '') + title, location, start, end, conflict: false, confirmed: !!step.confirmed, description: [timing, step.time ? (relative ? 'Tempo decorrido desde o início da atividade (não é hora do relógio): ' : 'Janela original: ') + step.time : '', step.note || '', 'Atividade: ' + (def.label || id), 'Mapa: https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location), 'Roteiro: https://plannerjapa.lovable.app'].filter(Boolean).join('\n\n') });
+        const kind = def.region === 'transport' || /→|margem|embarque|deslocamento|retirada de malas|saída do hotel|retorno/i.test(title) ? 'transport' : id.startsWith('pokemon-') ? 'pokemon' : /almoço|jantar|café|brunch/i.test(title) ? 'meal' : 'activity';
+        events.push({ uid: actualDate + '-' + hash(identity) + '@plannerjapa.lovable.app', date: actualDate, title: (start === null ? '[Flexível] ' : '') + title, location, start, end, conflict: false, confirmed: !!step.confirmed, region: def.region, kind, tourId: id, description: [timing, step.time ? (relative ? 'Tempo decorrido desde o início da atividade (não é hora do relógio): ' : 'Janela original: ') + step.time : '', step.note || '', 'Atividade: ' + (def.label || id), 'Mapa: https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location), 'Roteiro: https://plannerjapa.lovable.app'].filter(Boolean).join('\n\n') });
       });
     }
   }
