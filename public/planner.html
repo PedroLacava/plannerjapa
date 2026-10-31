@@ -2248,16 +2248,31 @@
           "transport-osaka-hiroshima-out": {
             icon: "🚅",
             label: "Osaka → Hiroshima",
-            hours: 1.5,
+            hours: 2.75,
             region: "transport",
             colorKey: "transport",
-            travel: "Shin-Osaka → Hiroshima · ida",
+            travel: "Hotel → Shin-Osaka → Hiroshima → Parque Memorial · reservar cerca de 2h45 porta a porta",
             bullets: [
               "Usar Sakura ou Hikari com JR Pass nacional",
               "Não usar Nozomi ou Mizuho sem bilhete complementar",
-              "Reservar assento e sair cedo",
+              "Sugestão para 15/11: sair do hotel 06:15; Parque Memorial às 09:00",
+              "Referência: Sakura 743, 06:50–08:18; confirmar operação e reservar assentos",
+              "Inclui caminhada, margem de embarque, saída da estação e transporte local",
               "Este card representa apenas a ida",
             ],
+            guide: {
+              cardTitle: "Ida a Hiroshima · hotel até Parque Memorial",
+              icon: "🚅", hours: 2.75, city: "Osaka / Hiroshima",
+              intro: "Planejamento sugerido para 15/11, em horário do Japão. Sair do Comfort Hotel Shin-Osaka às 06:15 para começar o Parque Memorial às 09:00. O Sakura 743 aparece na tabela oficial de novembro com saída 06:50 e chegada 08:18; confirmar a operação em 15/11 e reservar os assentos. Caminhadas e margens são estimativas, não horários de serviços confirmados.",
+              images: [], videos: [], mustSee: [], hiddenGems: [], overrated: [],
+              smartRoute: [
+                {time: "06:15–06:25", place: "Comfort Hotel Shin-Osaka → estação Shin-Osaka", note: "Caminhada planejada de 10 min; o hotel informa cerca de 5 min até a estação. Margem extra para o grupo. https://www.choice-hotels.jp/hotel/shin-osaka/access/"},
+                {time: "06:25–06:50", place: "Localizar plataforma e embarcar em Shin-Osaka", note: "25 min de margem para encontrar o acesso ao Shinkansen, confirmar plataforma e embarcar. Bilhetes e assentos devem ser resolvidos antecipadamente."},
+                {time: "06:50–08:18", place: "Shinkansen Sakura 743 · Shin-Osaka → Hiroshima", note: "1h28 de trem, como referência da tabela oficial de novembro. Confirmar operação em 15/11 e reservar assentos; não é uma reserva confirmada. https://timetable.jr-odekake.net/train-timetable/316211?date=20261101"},
+                {time: "08:18–08:30", place: "Desembarque e saída da estação Hiroshima", note: "12 min estimados para desembarcar e encontrar o transporte ao Parque Memorial."},
+                {time: "08:30–09:00", place: "Estação Hiroshima → Parque Memorial da Paz", note: "30 min planejados, incluindo espera e caminhada final; transporte local costuma levar cerca de 20 min. Consultar a rota atual. https://dive-hiroshima.com/en/information/access-peacememorialpark/"},
+              ],
+            },
           },
           "transport-hiroshima-osaka-return": {
             icon: "🚅",
@@ -6401,133 +6416,15 @@
             },
           },
           okonomimura: {
-            icon: "🥘",
-            label: "Okonomimura",
-            hours: 1.5,
-            region: "osaka",
-            colorKey: "osaka",
-            travel: null,
-            bullets: ["3 andares, 20+ restaurantes", "Veja o chef preparar na sua frente"],
+            icon: "🥘", label: "Okonomimura · Hiroshima", hours: 1,
+            region: "hiro", colorKey: "hiro", travel: null,
+            bullets: ["Almoço em Hiroshima, no complexo de okonomiyaki de Shintenchi", "5-13 Shintenchi, Naka-ku, Hiroshima · 2º ao 4º andar", "Planejar cerca de 1h; funcionamento e filas variam por restaurante"],
             guide: {
-              cardTitle: "Okonomimura",
-              icon: "🥘",
-              hours: 1.5,
-              city: "Osaka",
-              intro:
-                "Embora 'Okonomimura' seja um famoso complexo em Hiroshima, Osaka é o verdadeiro berço do Okonomiyaki. A versão de Osaka se diferencia por misturar todos os ingredientes na massa antes de grelhar, criando uma panqueca saborosa e reconfortante. Bairros como Dotonbori e Namba são os melhores lugares para provar esta especialidade local.",
-              images: [
-                {
-                  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Okonomiyaki_001.jpg/960px-Okonomiyaki_001.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-                  alt: "Osaka okonomiyaki cooking",
-                  caption: "Okonomiyaki na chapa quente",
-                },
-                {
-                  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Osaka_Dotonbori_Ebisu_Bridge.jpg/960px-Osaka_Dotonbori_Ebisu_Bridge.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-                  alt: "Dotonbori okonomiyaki restaurant",
-                  caption: "Restaurante de okonomiyaki em Dotonbori",
-                },
-                {
-                  url: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/MIZUNO_logo.svg/960px-MIZUNO_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-                  alt: "Mizuno",
-                  caption: "Mizuno",
-                },
-              ],
-              videos: [
-                {
-                  platform: "YouTube",
-                  title: "Fazendo Okonomiyaki em Osaka",
-                  embedUrl: "https://www.youtube.com/embed/MHT851vgSYk",
-                  sourceUrl: "https://www.youtube.com/watch?v=MHT851vgSYk",
-                },
-                {
-                  platform: "YouTube",
-                  title: "Onde Comer o Melhor Okonomiyaki",
-                  embedUrl: "https://www.youtube.com/embed/w2V2tq2Y94o",
-                  sourceUrl: "https://www.youtube.com/watch?v=w2V2tq2Y94o",
-                },
-              ],
-              mustSee: [
-                {
-                  name: "Mizuno",
-                  why: "Com uma estrela Michelin Bib Gourmand, suas longas filas são justificadas pela qualidade. O 'Yamaimo-yaki', feito com inhame da montanha, é imperdível.",
-                  bestTime:
-                    "Chegue 30-45 minutos antes da abertura (11:00 ou 17:00) para evitar a fila mais longa.",
-                },
-                {
-                  name: "Ajinoya",
-                  why: "Outro Bib Gourmand, famoso por sua massa fofa e saborosa. Eles incentivam os clientes a cozinhar seu próprio okonomiyaki na chapa da mesa, uma experiência divertida.",
-                  bestTime:
-                    "Vá em um grupo pequeno e chegue um pouco antes do horário de pico do jantar (por volta das 18:00).",
-                },
-                {
-                  name: "Fukutarou",
-                  why: "Amado pelos locais, oferece um okonomiyaki com uma massa mais fina e crocante. Experimente o 'Suji-negiyaki', uma variação com tendão de boi e muita cebolinha.",
-                  bestTime:
-                    "Durante a semana no almoço para uma experiência mais local e menos turística.",
-                },
-                {
-                  name: "Chibo (Filial Dotonbori)",
-                  why: "Uma cadeia popular e confiável com várias opções no menu, incluindo versões mais elaboradas. O 'Dotonbori-yaki' é a especialidade da casa.",
-                  bestTime: "Final da tarde (16:00-17:00) para um jantar cedo sem tanta espera.",
-                },
-              ],
-              hiddenGems: [
-                {
-                  name: "Okonomiyaki Kiji (Umeda Sky Building)",
-                  tip: "Escondido no subsolo do Umeda Sky Building, este lugar é um favorito dos trabalhadores locais. O 'Modern-yaki' (com macarrão yakisoba) é excelente.",
-                },
-                {
-                  name: "Tsuruhashi Fugetsu",
-                  tip: "Uma cadeia local com forte presença em Osaka. O diferencial é a grande quantidade de repolho, que cozinha lentamente, resultando em um okonomiyaki doce e macio.",
-                },
-                {
-                  name: "Omoni",
-                  tip: "Localizado perto do Bairro Coreano (Tsuruhashi), este restaurante existe há mais de 50 anos e é famoso por suas criações únicas com um toque coreano.",
-                },
-              ],
-              overrated: [
-                {
-                  name: "Okonomiyaki nos arredores do Castelo de Osaka",
-                  whyAvoid:
-                    "Muitos quiosques e pequenos restaurantes perto de atrações turísticas principais servem versões rápidas e de baixa qualidade a preços inflacionados.",
-                  alternative:
-                    "Caminhe 15-20 minutos até áreas como Kyobashi ou Tenma para encontrar restaurantes de okonomiyaki muito melhores e mais autênticos, como 'Momotaro'.",
-                },
-                {
-                  name: "Cadeias com menus em 10 idiomas na entrada",
-                  whyAvoid:
-                    "Embora convenientes, muitas vezes sacrificam a autenticidade por uma abordagem 'tamanho único'. O sabor pode ser genérico.",
-                  alternative:
-                    "Procure por lugares com menus mais simples e uma clientela visivelmente local. Use o Google Translate para ajudar. Locais como 'Fukutarou' ou 'Kiji' oferecem a experiência real.",
-                },
-              ],
-              smartRoute: [
-                {
-                  time: "17:30",
-                  place: "Estação Namba",
-                  note: "Saia pela área de Dotonbori para o jantar.",
-                },
-                {
-                  time: "17:45",
-                  place: "Chegada ao Ajinoya",
-                  note: "Coloque seu nome na lista de espera. A espera pode ser de 30-60 minutos.",
-                },
-                {
-                  time: "18:00",
-                  place: "Passeio pela Hozenji Yokocho",
-                  note: "Enquanto espera, explore a charmosa ruela de paralelepípedos ao lado do restaurante e jogue água na estátua de Fudo Myoo coberta de musgo.",
-                },
-                {
-                  time: "18:45",
-                  place: "Jantar no Ajinoya",
-                  note: "Peça o okonomiyaki misto e o yakisoba. Tente prepará-los você mesmo na chapa.",
-                },
-                {
-                  time: "20:00",
-                  place: "Dotonbori Glico Sign",
-                  note: "Após o jantar, faça a digestão caminhando pela vibrante Dotonbori e tire a foto clássica com o painel do Glico.",
-                },
-              ],
+              cardTitle: "Okonomimura · Hiroshima", icon: "🥘", hours: 1, city: "Hiroshima",
+              intro: "Complexo de restaurantes de okonomiyaki no estilo de Hiroshima, em 5-13 Shintenchi, Naka-ku. Almoço no passeio de Hiroshima, sem deslocamento para Osaka. Horários e dias de funcionamento variam entre restaurantes. Fonte: https://dive-hiroshima.com/en/explore/377/",
+              images: [], videos: [], hiddenGems: [], overrated: [],
+              mustSee: [{name: "Okonomiyaki no estilo de Hiroshima", why: "Ver o preparo na chapa e almoçar antes da extensão opcional a Miyajima."}],
+              smartRoute: [{time: "12:00–13:00", place: "Almoço em Okonomi-mura", note: "5-13 Shintenchi, Naka-ku, Hiroshima. Cerca de 1h, ajustável conforme fila. É o mesmo almoço descrito no guia de Hiroshima; não são duas refeições. https://dive-hiroshima.com/en/explore/377/"}],
             },
           },
           "osaka-central-highlights": {

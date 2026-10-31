@@ -268,15 +268,47 @@ export default {
   },
   "transport-osaka-hiroshima-out": {
     "label": "Osaka → Hiroshima",
-    "hours": 1.5,
+    "hours": 2.75,
     "region": "transport",
     "bullets": [
       "Usar Sakura ou Hikari com JR Pass nacional",
       "Não usar Nozomi ou Mizuho sem bilhete complementar",
-      "Reservar assento e sair cedo",
+      "Sugestão para 15/11: sair do hotel 06:15; Parque Memorial às 09:00",
+      "Referência: Sakura 743, 06:50–08:18; confirmar operação e reservar assentos",
+      "Inclui caminhada, margem de embarque, saída da estação e transporte local",
       "Este card representa apenas a ida"
     ],
-    "travel": "Shin-Osaka → Hiroshima · ida"
+    "travel": "Hotel → Shin-Osaka → Hiroshima → Parque Memorial · reservar cerca de 2h45 porta a porta",
+    "guide": {
+      "city": "Osaka / Hiroshima",
+      "smartRoute": [
+        {
+          "time": "06:15–06:25",
+          "place": "Comfort Hotel Shin-Osaka → estação Shin-Osaka",
+          "note": "Caminhada planejada de 10 min; o hotel informa cerca de 5 min até a estação. Margem extra para o grupo. https://www.choice-hotels.jp/hotel/shin-osaka/access/"
+        },
+        {
+          "time": "06:25–06:50",
+          "place": "Localizar plataforma e embarcar em Shin-Osaka",
+          "note": "25 min de margem para encontrar o acesso ao Shinkansen, confirmar plataforma e embarcar. Bilhetes e assentos devem ser resolvidos antecipadamente."
+        },
+        {
+          "time": "06:50–08:18",
+          "place": "Shinkansen Sakura 743 · Shin-Osaka → Hiroshima",
+          "note": "1h28 de trem, como referência da tabela oficial de novembro. Confirmar operação em 15/11 e reservar assentos; não é uma reserva confirmada. https://timetable.jr-odekake.net/train-timetable/316211?date=20261101"
+        },
+        {
+          "time": "08:18–08:30",
+          "place": "Desembarque e saída da estação Hiroshima",
+          "note": "12 min estimados para desembarcar e encontrar o transporte ao Parque Memorial."
+        },
+        {
+          "time": "08:30–09:00",
+          "place": "Estação Hiroshima → Parque Memorial da Paz",
+          "note": "30 min planejados, incluindo espera e caminhada final; transporte local costuma levar cerca de 20 min. Consultar a rota atual. https://dive-hiroshima.com/en/information/access-peacememorialpark/"
+        }
+      ]
+    }
   },
   "transport-hiroshima-osaka-return": {
     "label": "Hiroshima → Osaka",
@@ -2015,41 +2047,22 @@ export default {
     }
   },
   "okonomimura": {
-    "label": "Okonomimura",
-    "hours": 1.5,
-    "region": "osaka",
+    "label": "Okonomimura · Hiroshima",
+    "hours": 1,
+    "region": "hiro",
     "bullets": [
-      "3 andares, 20+ restaurantes",
-      "Veja o chef preparar na sua frente"
+      "Almoço em Hiroshima, no complexo de okonomiyaki de Shintenchi",
+      "5-13 Shintenchi, Naka-ku, Hiroshima · 2º ao 4º andar",
+      "Planejar cerca de 1h; funcionamento e filas variam por restaurante"
     ],
     "travel": null,
     "guide": {
-      "city": "Osaka",
+      "city": "Hiroshima",
       "smartRoute": [
         {
-          "time": "17:30",
-          "place": "Estação Namba",
-          "note": "Saia pela área de Dotonbori para o jantar."
-        },
-        {
-          "time": "17:45",
-          "place": "Chegada ao Ajinoya",
-          "note": "Coloque seu nome na lista de espera. A espera pode ser de 30-60 minutos."
-        },
-        {
-          "time": "18:00",
-          "place": "Passeio pela Hozenji Yokocho",
-          "note": "Enquanto espera, explore a charmosa ruela de paralelepípedos ao lado do restaurante e jogue água na estátua de Fudo Myoo coberta de musgo."
-        },
-        {
-          "time": "18:45",
-          "place": "Jantar no Ajinoya",
-          "note": "Peça o okonomiyaki misto e o yakisoba. Tente prepará-los você mesmo na chapa."
-        },
-        {
-          "time": "20:00",
-          "place": "Dotonbori Glico Sign",
-          "note": "Após o jantar, faça a digestão caminhando pela vibrante Dotonbori e tire a foto clássica com o painel do Glico."
+          "time": "12:00–13:00",
+          "place": "Almoço em Okonomi-mura",
+          "note": "5-13 Shintenchi, Naka-ku, Hiroshima. Cerca de 1h, ajustável conforme fila. É o mesmo almoço descrito no guia de Hiroshima; não são duas refeições. https://dive-hiroshima.com/en/explore/377/"
         }
       ]
     }
