@@ -52,11 +52,29 @@
   }
   function links(s) { return '<div class="pokemon-links"><a target="_blank" rel="noopener noreferrer" href="' + s.url + '">Site oficial</a><small>shop.pokemon.co.jp</small><a target="_blank" rel="noopener noreferrer" href="' + mapUrl(s) + '">Abrir no mapa</a></div>'; }
   function detail(iso) { var stops=forDate(iso); return stops.length ? '<section class="pokemon-day-detail"><h3>' + ball() + ' Rota Pokémon</h3>' + stops.map(function(s) {return '<p><b>' + esc(s.name) + '</b><br>' + esc(s.window) + ' · ' + esc(s.duration) + '<br>' + esc(s.alert) + '</p>' + links(s);}).join('') + '</section>' : ''; }
+  // Regional maps linked by Pokémon-Info to Pokémon Local Acts (checked 2026-11-05).
+  var LID_MAPS = [
+    {id:'tokyo',name:'Tóquio',mid:'1z8Fw3kWgxcj7Mo1MjeXkq412_2zRW8-V',note:'Consulte Ueno e as demais áreas no mapa; nem todas ficam perto do roteiro.'},
+    {id:'kyoto',name:'Kyoto',mid:'1ztVhiPYNohCSLzJ5CY_CtHIFzykPUtEF',note:'Compare as tampas com o passeio do dia antes de fazer um desvio.'},
+    {id:'osaka',name:'Osaka',mid:'1wMmxbrhNDLwF6gp9QqzRbmtdUGYk13tX',note:'As tampas ficam em Higashiosaka; considere o deslocamento a partir do centro.'},
+    {id:'nara',name:'Nara',mid:'1p1IgYqCJcUL5a3Zyvi7Z-Hquw6uAo-qc',note:'O mapa cobre a província; uma tampa pode ficar longe do Parque de Nara.'},
+    {id:'kanagawa',name:'Kanagawa',mid:'1opNS_5jL4HdJUhTOK7Z5ylbKdza2i-v9',note:'A província inclui Hakone e Yokohama; confira a localização, pois não são lugares próximos.'}
+  ];
+  var lidRegion='tokyo', lidMapOpen=false;
+  function lidMapUrl(region, embedded) { return 'https://www.google.com/maps/d/' + (embedded ? 'embed' : 'viewer') + '?mid=' + encodeURIComponent(region.mid) + '&hl=pt-BR'; }
+  function lidMapContent() {
+    var region=LID_MAPS.find(function(r){return r.id===lidRegion;}) || LID_MAPS[0];
+    return '<p class="pokemon-lid-note">'+esc(region.note)+'</p><div class="pokemon-links"><a href="'+esc(lidMapUrl(region,false))+'" target="_blank" rel="noopener noreferrer">Abrir mapa em tela cheia</a><a href="https://local.pokemon.jp/en/manhole/'+region.id+'.html" target="_blank" rel="noopener noreferrer">Catálogo oficial da região</a></div>' + (lidMapOpen ? '<iframe title="Mapa dos Poké Lids de '+esc(region.name)+'" src="'+esc(lidMapUrl(region,true))+'" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' : '<button type="button" class="pokemon-lid-open" data-load-lids>Carregar mapa dos Poké Lids</button>') + '<small>Mapa on-line do Google My Maps · fonte: Pokémon Local Acts, via <a href="https://pokemon.wingzero.tw/en/maps/pokemon-manhole/'+region.id+'" target="_blank" rel="noopener noreferrer">Pokémon-Info</a>. Se o mapa não carregar, use o link de tela cheia.</small>';
+  }
+  function lidSection() {
+    return '<section class="pokemon-lids" aria-labelledby="pokemon-lids-title"><h3 id="pokemon-lids-title">Mapa dos Poké Lids</h3><p>Encontre as tampas de bueiro com desenhos de Pokémon. Escolha uma região para explorar; a consulta não adiciona atividades ao roteiro.</p><label for="pokemon-lid-region">Região do mapa</label> <select id="pokemon-lid-region" data-lid-region>'+LID_MAPS.map(function(r){return '<option value="'+r.id+'" '+(r.id===lidRegion?'selected':'')+'>'+esc(r.name)+'</option>';}).join('')+'</select><div data-lid-map-content>'+lidMapContent()+'</div></section>';
+  }
   function load() { try { return JSON.parse(window.JaplannerSharedStore.get(KEY) || '{}'); } catch(e) {return {};} }
   function render() {
     var host = document.getElementById('pokemon-view'); if (!host || !window.JaplannerSharedStore) return;
     var state=load(), visited=STOPS.filter(function(s){return state[s.id] && state[s.id].visited;}).length;
     var html='<header class="pokemon-header"><div><h2>' + ball() + ' Rota Pokémon</h2><p>8 Pokémon Centers + 2 Pokémon Stores</p><b>Visitado ' + visited + '/10</b><progress max="10" value="' + visited + '" aria-label="Progresso visitado"></progress></div><button type="button" data-close-pokemon>Voltar ao roteiro</button></header><p class="pokemon-note">O estoque central se repete; itens regionais, limites, filas e sorteios podem mudar. Confirme os avisos oficiais perto da data.</p>';
+    html+=lidSection();
     var group=''; STOPS.forEach(function(s){
       var heading=s.date+'|'+s.city;
       if(group!==heading){if(group)html+='</div>';html+='<h3 class="pokemon-group">'+esc(s.city)+' · '+s.date.slice(8)+'/11/2026</h3><div class="pokemon-grid">';group=heading;}
@@ -76,8 +94,8 @@
   document.addEventListener('DOMContentLoaded',function(){
     var b=document.getElementById('open-pokemon-view');if(b)b.addEventListener('click',function(){window.plannerShowPokemon(true);});
     var host=document.getElementById('pokemon-view');if(!host)return;
-    host.addEventListener('click',function(e){if(e.target.closest('[data-close-pokemon]'))window.plannerShowPokemon(false);});
-    host.addEventListener('change',function(e){var input=e.target;if(!input.dataset.stop)return;var state=load();state[input.dataset.stop]=state[input.dataset.stop] || {};state[input.dataset.stop][input.dataset.field]=input.checked;window.JaplannerSharedStore.set(KEY,JSON.stringify(state));var focusId=input.dataset.stop, field=input.dataset.field;render();var replacement=host.querySelector('[data-stop="'+focusId+'"][data-field="'+field+'"]');if(replacement)replacement.focus();});
+    host.addEventListener('click',function(e){if(e.target.closest('[data-close-pokemon]'))window.plannerShowPokemon(false);if(e.target.closest('[data-load-lids]')){lidMapOpen=true;host.querySelector('[data-lid-map-content]').innerHTML=lidMapContent();}});
+    host.addEventListener('change',function(e){var input=e.target;if(input.matches('[data-lid-region]')){lidRegion=input.value;host.querySelector('[data-lid-map-content]').innerHTML=lidMapContent();return;}if(!input.dataset.stop)return;var state=load();state[input.dataset.stop]=state[input.dataset.stop] || {};state[input.dataset.stop][input.dataset.field]=input.checked;window.JaplannerSharedStore.set(KEY,JSON.stringify(state));var focusId=input.dataset.stop, field=input.dataset.field;render();var replacement=host.querySelector('[data-stop="'+focusId+'"][data-field="'+field+'"]');if(replacement)replacement.focus();});
     // Existing desktop module actions close this module without modifying their behavior.
     document.querySelector('.today-toolbar').addEventListener('click',function(e){var button=e.target.closest('button');if(button && button.id!=='open-pokemon-view'){document.body.classList.remove('pokemon-open','m-pokemon');}});
   });

@@ -34,3 +34,9 @@ body.pokemon-open .pokemon-view { display:block; }
 .pokemon-map-marker .pokeball { width:28px; height:28px; }
 .today-toolbar { flex-wrap:wrap; }
 @media(max-width:760px) { .pokemon-grid { grid-template-columns:1fr; } .pokemon-header { flex-wrap:wrap; } .pokemon-card { padding:14px; } .pokemon-card dl { grid-template-columns:1fr; gap:4px; } .pokemon-card dd { margin-bottom:8px; } .pokemon-view { padding:0 4px; } .pokemon-day-badge .pokeball { width:16px; height:16px; flex-basis:16px; } }
+
+.pokemon-lids { margin:20px 0;padding:18px;border:1px solid var(--line);border-radius:8px;background:var(--pokemon-white);line-height:1.5; }
+.pokemon-lids h3 { margin:0 0 8px; }.pokemon-lids p{margin:8px 0}.pokemon-lids label{font-weight:700;font-size:13px}
+.pokemon-lids select,.pokemon-lid-open{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);min-height:44px;cursor:pointer}
+.pokemon-lids iframe{display:block;width:100%;height:520px;border:1px solid var(--line);border-radius:6px;background:var(--paper);margin:12px 0}.pokemon-lids small{display:block;font-size:11px;color:#625c50;margin-top:10px}.pokemon-lids a{color:var(--pokemon-accent)}.pokemon-lid-note{font-size:13px}.pokemon-lid-open{display:block;margin:12px 0}
+@media(max-width:760px){.pokemon-lids{padding:14px}.pokemon-lids iframe{height:460px;max-height:65dvh}}
