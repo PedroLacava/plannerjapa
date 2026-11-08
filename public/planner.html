@@ -1646,7 +1646,7 @@
     <script src="/pokemon-view.js?v=2"></script>
     <script src="/trip-runtime.js?v=8"></script>
     <script src="/calendar-view.js?v=2"></script>
-    <script src="/week-calendar.js?v=1"></script>
+    <script src="/week-calendar.js?v=2"></script>
     <script>
       var SHARED_KEYS = [
         "japan-trip-planner-v3",
@@ -1760,7 +1760,7 @@
         var STORAGE_KEY = "japan-trip-planner-v3";
         var CUSTOM_KEY = "japan-trip-planner-custom-v1";
 
-        var TRIP_START = "2026-11-08"; // arrival (Haneda 23h55)
+        var TRIP_START = "2026-11-08"; // stopover in Doha
         var TRIP_END = "2026-11-27"; // departure (Narita 16h55)
         var WD_PT = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 
@@ -1816,11 +1816,13 @@
         }
 
         var lockedInfo = {};
-        lockedInfo[TRIP_START] = { type: "arrival", text: "Chegada Haneda 23h55" };
+        // 08/11 is now the Doha stopover, not the Haneda arrival.
+        // Keep departure-day locking unchanged.
         lockedInfo[TRIP_END] = { type: "departure", text: "Voo Narita 16h55" };
 
         // ---- BASES: onde vocês dormem (1 por dia) ----
         var BASE_DEFS = {
+          "doha-hotel-pending": {icon:"◈",label:"Hotel em Doha a definir",sleepCity:"Doha · UTC+3",colorKey:"transport",bullets:["Parada para deixar malas e descansar; nome/endereço pendentes. Voo para Osaka às 01:00 de 09/11."]},
           "henn-haneda": {
             icon: "🦖",
             label: "Henn na Hotel Tokyo Haneda",
@@ -8036,9 +8038,12 @@
           },
         };
 
+        Object.assign(TOUR_DEFS, {"doha-stopover": {"label": "Doha: hotel, MIA, Katara opcional e Souq Waqif", "icon": "◈", "hours": 8, "region": "doha", "colorKey": "transport", "environment": "mixed", "bullets": ["08/11 · horários locais de Doha (UTC+3).", "Hotel ainda a definir; deslocamentos estimados.", "Voo direto para Osaka: 09/11 às 01:00; aeroporto até 22:00 de 08/11."], "guide": {"city": "Doha", "timezone": "Asia/Qatar", "intro": "Conexão remarcada: dia em Doha antes do voo direto para Osaka. Katara opcional; hotel pendente.", "smartRoute": [{"time": "10:00–10:45", "place": "Aeroporto de Doha → hotel a definir", "note": "45 min estimados de traslado; hotel, voucher e transporte ainda a confirmar."}, {"time": "10:45–12:00", "place": "Hotel a definir: deixar malas e descansar", "note": "Confirmar se o quarto pode ser usado pela manhã; se não, pedir guarda de bagagem. Nome/endereço pendentes."}, {"time": "12:00–12:45", "place": "Almoço próximo ao hotel", "note": "Escolher depois de saber o hotel."}, {"time": "12:45–13:15", "place": "Hotel → Museu de Arte Islâmica", "note": "30 min estimados; ajustar conforme endereço do hotel e trânsito."}, {"time": "13:15–15:00", "place": "Museu de Arte Islâmica (MIA)", "note": "Domingo: 09:00–19:00. Ombros e joelhos cobertos. Fonte: https://mia.org.qa/en/visit/"}, {"time": "15:00–15:45", "place": "MIA → Katara / 21 High Street", "note": "45 min de margem para carro e trânsito. Se estiverem cansados, cortar Katara e seguir para pausa/Souq."}, {"time": "15:45–16:45", "place": "21 High Street, Katara (opcional)", "note": "Área comercial com climatização externa; parar para café e passeio curto. Assumida como a rua desejada; confirmar. Fonte: https://www.qatarairways.com/en-ae/journeys/inspire/air-conditioned-outdoor-spaces-qatar.html"}, {"time": "16:45–17:30", "place": "Katara → Souq Waqif", "note": "45 min de margem; trânsito pode mudar."}, {"time": "17:30–19:00", "place": "Souq Waqif e jantar", "note": "Passeio pelo mercado e jantar cedo. Se não forem a Katara, aproveitar mais tempo aqui e no hotel."}, {"time": "19:00–19:45", "place": "Souq Waqif → hotel", "note": "Hotel a definir; estimativa de traslado, ajustar ao endereço."}, {"time": "19:45–21:00", "place": "Hotel: descanso, malas e preparação para o aeroporto", "note": "Conferir voo direto a Osaka, terminal, bagagem e traslado com a Qatar. Não presumir que as malas precisam ser retiradas."}, {"time": "21:00–22:00", "place": "Hotel → Aeroporto de Doha", "note": "Janela conservadora de 60 min; chegar até 22:00 de 08/11 para o voo de 01:00 de 09/11."}, {"time": "22:00–23:45", "place": "Aeroporto: check-in, segurança e portão", "note": "Voo remarcado direto para Osaka às 01:00 de 09/11, conforme informado pelo viajante. Conferir horário de embarque e aeroporto de chegada na passagem."}, {"time": "23:45–23:59", "place": "Aguardar embarque para Osaka", "note": "Horário de embarque ilustrativo, seguir o cartão. A partida é às 01:00 da madrugada seguinte, no fuso Asia/Qatar."}]}}, "osaka-arrival-remarcada": {"label": "Chegada direta a Osaka e traslado ao Comfort Hotel", "icon": "✈", "hours": 2, "region": "osaka", "colorKey": "osaka", "environment": "mixed", "bullets": ["Partida de Doha em 09/11 às 01:00 (horário de Doha).", "Horário e aeroporto de chegada pendentes: confirmar na passagem.", "Não usar mais o trajeto Haneda/Narita → Tóquio → Osaka."], "guide": {"city": "Osaka", "intro": "Chegada ao Japão em voo direto a Osaka; confirmar aeroporto e horário antes de definir o traslado.", "smartRoute": [{"place": "Chegada a Osaka: imigração, malas e traslado ao Comfort Hotel Shin-Osaka", "note": "Sem horário definido. Confirmar aeroporto (Kansai/Itami) e chegada na passagem; escolher transporte depois. Passeios extras só conforme disposição."}]}}});
+
         window.JaplannerPokemon.register(TOUR_DEFS);
 
         var REGION_LABELS = {
+          doha: "Doha · conexão no Qatar",
           transport: "Deslocamentos — priorizando JR Pass",
           tokyo: "Passeios em Tóquio",
           hakone: "Passeios em Hakone",
@@ -8049,6 +8054,7 @@
           custom: "Seus passeios criados",
         };
         var REGION_ORDER = [
+          "doha",
           "transport",
           "tokyo",
           "hakone",
@@ -8585,6 +8591,22 @@
           return true;
         }
 
+        function applyDohaStopoverV1(p) {
+          p._updates = p._updates || {};
+          if (p._updates.dohaStopoverV1) return false;
+          p._updates.beforeDohaStopoverV1 = JSON.parse(JSON.stringify({day8:p['2026-11-08'] || {},day9:p['2026-11-09'] || {}}));
+          var d8 = p['2026-11-08'] || (p['2026-11-08'] = emptyDay());
+          d8.base='doha-hotel-pending';
+          d8.tours=['doha-stopover'].concat((d8.tours || []).filter(function(id){return id!=='transport-haneda-tokyo' && id!=='doha-stopover';}));
+          d8.note='Doha · horário local UTC+3. Saída do aeroporto às 10:00 → hotel a definir → MIA → Katara/21 High Street opcional → Souq Waqif → hotel → aeroporto até 22:00. Voo direto para Osaka às 01:00 de 09/11. Deslocamentos estimados; ajustar quando o hotel for conhecido.';
+          var d9 = p['2026-11-09'] || (p['2026-11-09'] = emptyDay());
+          d9.base='osaka';
+          d9.tours=['osaka-arrival-remarcada'].concat((d9.tours || []).filter(function(id){return !['transport-haneda-tokyo','transport-haneda-hotel-osaka','transport-tokyo-osaka','transport-osaka-tokyo','dotonbori','osaka-arrival-remarcada'].includes(id);}));
+          d9.note='Voo direto Doha → Osaka: saída às 01:00 de 09/11 em Doha. Confirmar aeroporto e hora local de chegada. Imigração, bagagem e traslado ao Comfort Hotel Shin-Osaka; noite leve conforme disposição. Roteiro anterior desses dois dias preservado no histórico da atualização.';
+          p._updates.dohaStopoverV1=true;
+          return true;
+        }
+
         function loadPlan() {
           try {
             var raw = localStorage.getItem(STORAGE_KEY);
@@ -8610,6 +8632,7 @@
                 if (applyGuideNishikiNoonV1(parsed)) changed = true;
                 if (window.JaplannerPokemon.migrate(parsed)) changed = true;
                 if (applyMissingOsakaTransferV1(parsed)) changed = true;
+                if (applyDohaStopoverV1(parsed)) changed = true;
                 if (changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
                 return parsed;
               }
@@ -8629,6 +8652,7 @@
           applyGuideNishikiNoonV1(freshPlan);
           window.JaplannerPokemon.migrate(freshPlan);
           applyMissingOsakaTransferV1(freshPlan);
+          applyDohaStopoverV1(freshPlan);
           return freshPlan;
         }
         function savePlan() {

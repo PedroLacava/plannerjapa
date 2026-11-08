@@ -39,7 +39,7 @@
   function clamp(d){return /^2026-11-\d{2}$/.test(d||'') ? d<FIRST?FIRST:d>LAST?LAST:d : '2026-11-09';}
   function time(n){return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}
   function dateLabel(iso,long){return new Intl.DateTimeFormat('pt-BR',{day:'numeric',month:long?'long':'short',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));}
-  function span(e){if(e.start===null)return 'Horário flexível';return dateLabel(e.date)+' · '+time(e.start)+'–'+time(e.end%1440)+(e.end>=1440?' do dia '+dateLabel(addDays(e.date,1)):'')+' · Japão';}
+  function span(e){if(e.start===null)return 'Horário flexível';return dateLabel(e.date)+' · '+time(e.start)+'–'+time(e.end%1440)+(e.end>=1440?' do dia '+dateLabel(addDays(e.date,1)):'')+(e.timezone==='Asia/Qatar'?' · Doha (UTC+3)':' · Japão');}
   function color(e){var allowed=['tokyo','kyoto','osaka','hakone','hiro','far','koyasan'];var region=e.kind==='transport'?'transport':allowed.indexOf(e.region)>=0?e.region:'free';if(e.kind==='meal')region='free';return '--event-color:var(--'+region+');--event-bg:var(--'+region+'-bg)';}
   function dates(){return mode==='day'?[selected]:Array.from({length:7},function(_,i){return addDays(weekStart(selected),i);});}
   function baseLabel(date){if(!api||!api.getPlan)return '';var day=api.getPlan()[date];var base=day&&api.baseDefs[day.base];return base&&(base.sleepCity||base.label)||'';}
@@ -79,14 +79,14 @@
     if(mode==='trip'||!mounted)return;
     var ds=dates(),segments=splitEvents(events),scroll=host.querySelector('.wk-scroll'),same=painted===mode+'|'+ds[0],top=scroll.scrollTop,left=scroll.scrollLeft;
     host.querySelector('[data-wk-heading]').textContent=mode==='day'?dateLabel(selected,true):dateLabel(ds[0])+' a '+dateLabel(ds[6],true);
-    host.querySelector('[data-wk-subtitle]').textContent=(mode==='day'?'Agenda do dia':'Agenda semanal')+' · novembro de 2026 · horário do Japão';
+    host.querySelector('[data-wk-subtitle]').textContent=(mode==='day'?'Agenda do dia':'Agenda semanal')+' · novembro de 2026 · '+(ds.indexOf('2026-11-08')>=0?'horário local: Doha UTC+3; Japão UTC+9':'horário do Japão');
     host.querySelector('[data-wk-week]').hidden=mode==='day';host.querySelector('[data-wk-date]').hidden=mode!=='day';
     host.querySelector('[data-wk-week]').value=weekStart(selected);host.querySelector('[data-wk-date]').value=selected;
     host.querySelector('[data-wk-prev]').disabled=mode==='day'?selected<=FIRST:ds[0]<=weekStart(FIRST);
     host.querySelector('[data-wk-next]').disabled=mode==='day'?selected>=LAST:ds[0]>=weekStart(LAST);
     host.querySelector('[data-wk-prev]').setAttribute('aria-label',mode==='day'?'Dia anterior':'Semana anterior');host.querySelector('[data-wk-next]').setAttribute('aria-label',mode==='day'?'Próximo dia':'Próxima semana');
     grid.className='wk-grid'+(mode==='day'?' daily':'');
-    var html='<div class="wk-corner">JST<br>GMT+9</div>';
+    var html='<div class="wk-corner">'+(ds.indexOf('2026-11-08')>=0?'Local<br>UTC+3/+9':'JST<br>GMT+9')+'</div>';
     ds.forEach(function(date){var outside=date<FIRST||date>LAST;var dow=new Intl.DateTimeFormat('pt-BR',{weekday:'short',timeZone:'UTC'}).format(new Date(date+'T12:00:00Z'));html+='<div class="wk-head'+(date===selected?' selected':'')+(outside?' outside':'')+'"><button type="button" data-wk-day="'+date+'" '+(outside?'disabled':'')+' aria-label="'+esc('Abrir visão diária de '+dateLabel(date,true))+'"><span class="wk-dow">'+esc(dow)+'</span><span class="wk-num">'+date.slice(8)+'</span><span class="wk-base">'+esc(baseLabel(date))+'</span></button></div>';});
     html+='<div class="wk-flex-label">Sem<br>horário</div>';
     ds.forEach(function(date){html+='<div class="wk-flex">'+segments.filter(function(s){return s.date===date&&s.start===null;}).map(function(s){return '<button type="button" data-wk-event="'+s.index+'">'+esc(s.event.title.replace(/^\[Flexível\]\s*/,''))+'</button>';}).join('')+'</div>';});

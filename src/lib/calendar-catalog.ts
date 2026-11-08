@@ -2944,6 +2944,111 @@ export default {
       ]
     }
   },
+  "doha-stopover": {
+    "label": "Doha: hotel, MIA, Katara opcional e Souq Waqif",
+    "hours": 8,
+    "region": "doha",
+    "bullets": [
+      "08/11 · horários locais de Doha (UTC+3).",
+      "Hotel ainda a definir; deslocamentos estimados.",
+      "Voo direto para Osaka: 09/11 às 01:00; aeroporto até 22:00 de 08/11."
+    ],
+    "guide": {
+      "city": "Doha",
+      "timezone": "Asia/Qatar",
+      "smartRoute": [
+        {
+          "time": "10:00–10:45",
+          "place": "Aeroporto de Doha → hotel a definir",
+          "note": "45 min estimados de traslado; hotel, voucher e transporte ainda a confirmar."
+        },
+        {
+          "time": "10:45–12:00",
+          "place": "Hotel a definir: deixar malas e descansar",
+          "note": "Confirmar se o quarto pode ser usado pela manhã; se não, pedir guarda de bagagem. Nome/endereço pendentes."
+        },
+        {
+          "time": "12:00–12:45",
+          "place": "Almoço próximo ao hotel",
+          "note": "Escolher depois de saber o hotel."
+        },
+        {
+          "time": "12:45–13:15",
+          "place": "Hotel → Museu de Arte Islâmica",
+          "note": "30 min estimados; ajustar conforme endereço do hotel e trânsito."
+        },
+        {
+          "time": "13:15–15:00",
+          "place": "Museu de Arte Islâmica (MIA)",
+          "note": "Domingo: 09:00–19:00. Ombros e joelhos cobertos. Fonte: https://mia.org.qa/en/visit/"
+        },
+        {
+          "time": "15:00–15:45",
+          "place": "MIA → Katara / 21 High Street",
+          "note": "45 min de margem para carro e trânsito. Se estiverem cansados, cortar Katara e seguir para pausa/Souq."
+        },
+        {
+          "time": "15:45–16:45",
+          "place": "21 High Street, Katara (opcional)",
+          "note": "Área comercial com climatização externa; parar para café e passeio curto. Assumida como a rua desejada; confirmar. Fonte: https://www.qatarairways.com/en-ae/journeys/inspire/air-conditioned-outdoor-spaces-qatar.html"
+        },
+        {
+          "time": "16:45–17:30",
+          "place": "Katara → Souq Waqif",
+          "note": "45 min de margem; trânsito pode mudar."
+        },
+        {
+          "time": "17:30–19:00",
+          "place": "Souq Waqif e jantar",
+          "note": "Passeio pelo mercado e jantar cedo. Se não forem a Katara, aproveitar mais tempo aqui e no hotel."
+        },
+        {
+          "time": "19:00–19:45",
+          "place": "Souq Waqif → hotel",
+          "note": "Hotel a definir; estimativa de traslado, ajustar ao endereço."
+        },
+        {
+          "time": "19:45–21:00",
+          "place": "Hotel: descanso, malas e preparação para o aeroporto",
+          "note": "Conferir voo direto a Osaka, terminal, bagagem e traslado com a Qatar. Não presumir que as malas precisam ser retiradas."
+        },
+        {
+          "time": "21:00–22:00",
+          "place": "Hotel → Aeroporto de Doha",
+          "note": "Janela conservadora de 60 min; chegar até 22:00 de 08/11 para o voo de 01:00 de 09/11."
+        },
+        {
+          "time": "22:00–23:45",
+          "place": "Aeroporto: check-in, segurança e portão",
+          "note": "Voo remarcado direto para Osaka às 01:00 de 09/11, conforme informado pelo viajante. Conferir horário de embarque e aeroporto de chegada na passagem."
+        },
+        {
+          "time": "23:45–23:59",
+          "place": "Aguardar embarque para Osaka",
+          "note": "Horário de embarque ilustrativo, seguir o cartão. A partida é às 01:00 da madrugada seguinte, no fuso Asia/Qatar."
+        }
+      ]
+    }
+  },
+  "osaka-arrival-remarcada": {
+    "label": "Chegada direta a Osaka e traslado ao Comfort Hotel",
+    "hours": 2,
+    "region": "osaka",
+    "bullets": [
+      "Partida de Doha em 09/11 às 01:00 (horário de Doha).",
+      "Horário e aeroporto de chegada pendentes: confirmar na passagem.",
+      "Não usar mais o trajeto Haneda/Narita → Tóquio → Osaka."
+    ],
+    "guide": {
+      "city": "Osaka",
+      "smartRoute": [
+        {
+          "place": "Chegada a Osaka: imigração, malas e traslado ao Comfort Hotel Shin-Osaka",
+          "note": "Sem horário definido. Confirmar aeroporto (Kansai/Itami) e chegada na passagem; escolher transporte depois. Passeios extras só conforme disposição."
+        }
+      ]
+    }
+  },
   "pokemon-kyoto": {
     "label": "Pokémon Center KYOTO",
     "hours": 0.58,

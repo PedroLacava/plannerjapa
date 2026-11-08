@@ -1,7 +1,7 @@
 type Step = { time?: string; place?: string; note?: string; dayOffset?: number; confirmed?: boolean };
-type Tour = { label?: string; hours?: number; region?: string; bullets?: string[]; suggested?: string[]; travel?: string | null; guide?: { city?: string; timeMode?: string; smartRoute?: Step[]; dateRoutes?: Record<string, Step[]> } };
+type Tour = { label?: string; hours?: number; region?: string; bullets?: string[]; suggested?: string[]; travel?: string | null; guide?: { city?: string; timezone?: string; timeMode?: string; smartRoute?: Step[]; dateRoutes?: Record<string, Step[]> } };
 type Day = { tours?: string[]; base?: string; note?: string };
-export type CalendarEvent = { uid: string; date: string; title: string; location: string; description: string; start: number | null; end: number | null; conflict: boolean; confirmed?: boolean; region?: string; kind?: string; tourId?: string };
+export type CalendarEvent = { uid: string; date: string; title: string; location: string; description: string; start: number | null; end: number | null; conflict: boolean; confirmed?: boolean; region?: string; kind?: string; tourId?: string; timezone?: string };
 function parse(value: unknown): any {
   if (typeof value !== 'string') return value || {};
   try { return JSON.parse(value); } catch { return {}; }
@@ -45,11 +45,12 @@ export function buildEvents(shared: Record<string, unknown>, catalog: Record<str
         const estimate = duration(step.note || '') || (steps.length === 1 && def.hours ? Math.min(240, Math.round(def.hours * 60)) : 60);
         const end = start === null ? null : explicitEnd !== null ? explicitEnd + (explicitEnd <= start ? 1440 : 0) : start + Math.min(estimate, nextStart !== null && nextStart > start ? nextStart - start : estimate);
         const city = def.guide?.city || ({ tokyo: 'Tokyo', kyoto: 'Kyoto', osaka: 'Osaka', hiro: 'Hiroshima', hakone: 'Hakone' } as Record<string, string>)[def.region || ''] || 'Japan';
-        const location = title + ', ' + city + ', Japan';
-        const timing = start === null ? 'Atividade flexível: sem horário definido. O evento de dia inteiro não significa que a visita dure o dia todo.' : step.confirmed ? 'Início confirmado na reserva salva. Fuso Asia/Tokyo. Término e duração estimados.' : 'Horário sugerido do roteiro, no fuso Asia/Tokyo. Não representa uma reserva confirmada. A duração é estimada quando não informada.';
+        const timezone = def.guide?.timezone || 'Asia/Tokyo';
+        const location = title + ', ' + city + (timezone === 'Asia/Qatar' ? ', Qatar' : ', Japan');
+        const timing = start === null ? 'Atividade flexível: sem horário definido. O evento de dia inteiro não significa que a visita dure o dia todo.' : step.confirmed ? 'Início confirmado na reserva salva. Fuso ' + timezone + '. Término e duração estimados.' : 'Horário sugerido do roteiro, no fuso ' + timezone + '. Não representa uma reserva confirmada. A duração é estimada quando não informada.';
         const actualDate = step.dayOffset ? new Date(new Date(date + 'T00:00:00Z').getTime() + step.dayOffset * 86400000).toISOString().slice(0, 10) : date;
         const kind = def.region === 'transport' || /→|margem|embarque|deslocamento|retirada de malas|saída do hotel|retorno/i.test(title) ? 'transport' : id.startsWith('pokemon-') ? 'pokemon' : /almoço|jantar|café|brunch/i.test(title) ? 'meal' : 'activity';
-        events.push({ uid: actualDate + '-' + hash(identity) + '@plannerjapa.lovable.app', date: actualDate, title: (start === null ? '[Flexível] ' : '') + title, location, start, end, conflict: false, confirmed: !!step.confirmed, region: def.region, kind, tourId: id, description: [timing, step.time ? (relative ? 'Tempo decorrido desde o início da atividade (não é hora do relógio): ' : 'Janela original: ') + step.time : '', step.note || '', 'Atividade: ' + (def.label || id), 'Mapa: https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location), 'Roteiro: https://plannerjapa.lovable.app'].filter(Boolean).join('\n\n') });
+        events.push({ uid: actualDate + '-' + hash(identity) + '@plannerjapa.lovable.app', date: actualDate, title: (start === null ? '[Flexível] ' : '') + title, location, start, end, conflict: false, confirmed: !!step.confirmed, region: def.region, kind, tourId: id, timezone, description: [timing, step.time ? (relative ? 'Tempo decorrido desde o início da atividade (não é hora do relógio): ' : 'Janela original: ') + step.time : '', step.note || '', 'Atividade: ' + (def.label || id), 'Mapa: https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(location), 'Roteiro: https://plannerjapa.lovable.app'].filter(Boolean).join('\n\n') });
       });
     }
   }
@@ -74,10 +75,11 @@ function dateTime(date: string, minutes: number) {
 export function toIcs(events: CalendarEvent[], stamp = new Date().toISOString()) {
   const dtstamp = stamp.slice(0, 19).replace(/[-:]/g, '') + 'Z';
   const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PlannerJapa//Japao 2026//PT-BR', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:Japão 2026', 'X-WR-TIMEZONE:Asia/Tokyo', 'REFRESH-INTERVAL;VALUE=DURATION:PT1H', 'BEGIN:VTIMEZONE', 'TZID:Asia/Tokyo', 'BEGIN:STANDARD', 'DTSTART:19700101T000000', 'TZOFFSETFROM:+0900', 'TZOFFSETTO:+0900', 'TZNAME:JST', 'END:STANDARD', 'END:VTIMEZONE'];
+  if (events.some(event => event.timezone === 'Asia/Qatar')) lines.push('BEGIN:VTIMEZONE','TZID:Asia/Qatar','BEGIN:STANDARD','DTSTART:19700101T000000','TZOFFSETFROM:+0300','TZOFFSETTO:+0300','TZNAME:AST','END:STANDARD','END:VTIMEZONE');
   for (const event of events) {
     lines.push('BEGIN:VEVENT', 'UID:' + event.uid, 'DTSTAMP:' + dtstamp);
     if (event.start === null) lines.push('DTSTART;VALUE=DATE:' + event.date.replace(/-/g, ''), 'DTEND;VALUE=DATE:' + dateTime(event.date, 1440).slice(0, 8));
-    else lines.push('DTSTART;TZID=Asia/Tokyo:' + dateTime(event.date, event.start), 'DTEND;TZID=Asia/Tokyo:' + dateTime(event.date, event.end!));
+    else lines.push('DTSTART;TZID=' + (event.timezone || 'Asia/Tokyo') + ':' + dateTime(event.date, event.start), 'DTEND;TZID=' + (event.timezone || 'Asia/Tokyo') + ':' + dateTime(event.date, event.end!));
     lines.push('SUMMARY:' + escapeText(event.title), 'DESCRIPTION:' + escapeText(event.description), 'LOCATION:' + escapeText(event.location), event.confirmed ? 'STATUS:CONFIRMED' : 'STATUS:TENTATIVE', 'TRANSP:TRANSPARENT', 'END:VEVENT');
   }
   lines.push('END:VCALENDAR');

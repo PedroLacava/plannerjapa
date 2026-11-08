@@ -1,4 +1,4 @@
-const CACHE = "japlanner-shell-v54";
+const CACHE = "japlanner-shell-v55";
 const SHELL = [
   "/",
   "/planner.html",
@@ -12,7 +12,7 @@ const SHELL = [
   "/pokemon-view.js?v=2",
   "/pokemon-view.css?v=2",
   "/calendar-view.js?v=2",
-  "/week-calendar.js?v=1",
+  "/week-calendar.js?v=2",
   "/week-calendar.css?v=2",
   "/manifest.webmanifest",
   "/icons/icon-180.png",
