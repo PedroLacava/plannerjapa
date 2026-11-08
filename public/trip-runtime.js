@@ -19,20 +19,10 @@
     koyasan: { name: "Koyasan", lat: 34.2142, lng: 135.5841 },
   };
   var DATE_ROUTES = {
-    "2026-11-08": [
-      ["Aeroporto de Haneda", 35.5494, 139.7798],
-      ["Henn na Hotel Tokyo Haneda", 35.5523, 139.7397],
-    ],
     "2026-11-09": [
-      ["Henn na Hotel Tokyo Haneda", 35.5523, 139.7397],
-      ["Estação Otorii", 35.5528, 139.7405],
-      ["Estação Shinagawa", 35.6285, 139.7387],
-      ["Estação Shin-Osaka", 34.7335, 135.5002],
-      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
-      ["Dotonbori", 34.6687, 135.5013],
-      ["Estação Namba", 34.6663, 135.5004],
-      ["Estação Shin-Osaka", 34.7335, 135.5002],
-      ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],
+      ["Kansai International Airport, Terminal 1",34.4358,135.2439],
+      ["Estação Shin-Osaka",34.7335,135.5002],
+      ["Comfort Hotel Shin-Osaka",34.7303,135.4992],
     ],
     "2026-11-10": [
       ["Comfort Hotel Shin-Osaka", 34.7303, 135.4992],

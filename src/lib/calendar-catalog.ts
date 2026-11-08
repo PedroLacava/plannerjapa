@@ -2950,8 +2950,8 @@ export default {
     "region": "doha",
     "bullets": [
       "08/11 · horários locais de Doha (UTC+3).",
-      "Hotel ainda a definir; deslocamentos estimados.",
-      "Voo direto para Osaka: 09/11 às 01:00; aeroporto até 22:00 de 08/11."
+      "Ramada Encore by Wyndham Doha · hotel informado pelo viajante.",
+      "QR802: 09/11 às 00:55 DOH → 16:25 KIX, Terminal 1. Aeroporto de Doha até 21:55 de 08/11."
     ],
     "guide": {
       "city": "Doha",
@@ -2959,23 +2959,23 @@ export default {
       "smartRoute": [
         {
           "time": "10:00–10:45",
-          "place": "Aeroporto de Doha → hotel a definir",
-          "note": "45 min estimados de traslado; hotel, voucher e transporte ainda a confirmar."
+          "place": "Aeroporto de Doha → Ramada Encore Doha",
+          "note": "45 min de margem de traslado até o Ramada Encore by Wyndham Doha; ajustar ao transporte fornecido pela Qatar."
         },
         {
           "time": "10:45–12:00",
-          "place": "Hotel a definir: deixar malas e descansar",
-          "note": "Confirmar se o quarto pode ser usado pela manhã; se não, pedir guarda de bagagem. Nome/endereço pendentes."
+          "place": "Ramada Encore Doha: deixar malas e descansar",
+          "note": "Deixar as malas e descansar. Confirmar acesso ao quarto e horário do traslado de retorno. Hotel informado pelo viajante."
         },
         {
           "time": "12:00–12:45",
           "place": "Almoço próximo ao hotel",
-          "note": "Escolher depois de saber o hotel."
+          "note": "Almoço no hotel ou nas proximidades, conforme disposição."
         },
         {
           "time": "12:45–13:15",
-          "place": "Hotel → Museu de Arte Islâmica",
-          "note": "30 min estimados; ajustar conforme endereço do hotel e trânsito."
+          "place": "Ramada Encore Doha → Museu de Arte Islâmica",
+          "note": "30 min de margem em carro desde o Ramada Encore Doha, incluindo espera; ajustar ao trânsito."
         },
         {
           "time": "13:15–15:00",
@@ -3004,47 +3004,68 @@ export default {
         },
         {
           "time": "19:00–19:45",
-          "place": "Souq Waqif → hotel",
-          "note": "Hotel a definir; estimativa de traslado, ajustar ao endereço."
+          "place": "Souq Waqif → Ramada Encore Doha",
+          "note": "Retorno ao Ramada Encore Doha, próximo ao Souq; janela inclui espera de carro e margem."
         },
         {
           "time": "19:45–21:00",
-          "place": "Hotel: descanso, malas e preparação para o aeroporto",
+          "place": "Ramada Encore Doha: descanso, malas e preparação para o aeroporto",
           "note": "Conferir voo direto a Osaka, terminal, bagagem e traslado com a Qatar. Não presumir que as malas precisam ser retiradas."
         },
         {
-          "time": "21:00–22:00",
-          "place": "Hotel → Aeroporto de Doha",
-          "note": "Janela conservadora de 60 min; chegar até 22:00 de 08/11 para o voo de 01:00 de 09/11."
+          "time": "21:00–21:55",
+          "place": "Ramada Encore Doha → Aeroporto de Doha",
+          "note": "Sair do Ramada Encore até 21:00; chegar ao aeroporto até 21:55, três horas antes do QR802. Confirmar o traslado com a recepção/Qatar."
         },
         {
-          "time": "22:00–23:45",
+          "time": "21:55–23:45",
           "place": "Aeroporto: check-in, segurança e portão",
-          "note": "Voo remarcado direto para Osaka às 01:00 de 09/11, conforme informado pelo viajante. Conferir horário de embarque e aeroporto de chegada na passagem."
+          "note": "QR802 Qatar Airways: partida em 09/11 às 00:55 de Doha; chegada em Kansai às 16:25, Terminal 1. Dados da imagem enviada. Seguir o horário de embarque do cartão."
         },
         {
           "time": "23:45–23:59",
           "place": "Aguardar embarque para Osaka",
-          "note": "Horário de embarque ilustrativo, seguir o cartão. A partida é às 01:00 da madrugada seguinte, no fuso Asia/Qatar."
+          "note": "Horário de embarque ilustrativo, seguir o cartão. A partida é às 00:55 da madrugada seguinte, no fuso Asia/Qatar."
         }
       ]
     }
   },
   "osaka-arrival-remarcada": {
-    "label": "Chegada direta a Osaka e traslado ao Comfort Hotel",
-    "hours": 2,
+    "label": "QR802: chegada Kansai 16:25 → Comfort Hotel Shin-Osaka",
+    "hours": 4,
     "region": "osaka",
     "bullets": [
-      "Partida de Doha em 09/11 às 01:00 (horário de Doha).",
-      "Horário e aeroporto de chegada pendentes: confirmar na passagem.",
-      "Não usar mais o trajeto Haneda/Narita → Tóquio → Osaka."
+      "09/11 · QR802 Qatar Airways: 00:55 DOH → 16:25 KIX, Terminal 1; duração 9h30. Horários locais da passagem enviada.",
+      "HARUKA direto até Shin-Osaka; escolher trem depois da imigração e bagagem.",
+      "Chegada ao hotel planejada para aproximadamente 19:30–20:30; procedimentos e trânsito podem alterar."
     ],
     "guide": {
       "city": "Osaka",
       "smartRoute": [
         {
-          "place": "Chegada a Osaka: imigração, malas e traslado ao Comfort Hotel Shin-Osaka",
-          "note": "Sem horário definido. Confirmar aeroporto (Kansai/Itami) e chegada na passagem; escolher transporte depois. Passeios extras só conforme disposição."
+          "time": "16:25–18:00",
+          "place": "Kansai KIX T1: chegada, imigração e malas",
+          "note": "QR802, chegada prevista na passagem às 16:25 JST. Janela de 95 min para procedimentos, que podem demorar mais."
+        },
+        {
+          "time": "18:00–18:30",
+          "place": "Terminal 1 → estação Kansai-airport / bilhete HARUKA",
+          "note": "Seguir placas de trens/JR, comprar bilhete e reservar o próximo HARUKA disponível para Shin-Osaka. Não é trem reservado; ajustar os horários seguintes."
+        },
+        {
+          "time": "18:30–19:30",
+          "place": "HARUKA: Kansai-airport → Shin-Osaka",
+          "note": "Janela estimada de 60 min, não um horário de trem confirmado. Serviço direto; conferir disponibilidade no aeroporto. Fonte: https://www.westjr.co.jp/global/en/ticket/westqr/haruka/"
+        },
+        {
+          "time": "19:30–20:00",
+          "place": "Shin-Osaka → Comfort Hotel Shin-Osaka e check-in",
+          "note": "30 min de margem para desembarque, saída da estação, malas e check-in. Ajustar à chegada real do trem."
+        },
+        {
+          "time": "20:00–21:00",
+          "place": "Jantar leve próximo ao Comfort Hotel",
+          "note": "Estimativa flexível conforme cansaço e chegada; descansar para o dia seguinte."
         }
       ]
     }

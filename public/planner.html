@@ -1644,7 +1644,7 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="/pokemon-view.js?v=2"></script>
-    <script src="/trip-runtime.js?v=8"></script>
+    <script src="/trip-runtime.js?v=9"></script>
     <script src="/calendar-view.js?v=2"></script>
     <script src="/week-calendar.js?v=2"></script>
     <script>
@@ -1822,7 +1822,7 @@
 
         // ---- BASES: onde vocês dormem (1 por dia) ----
         var BASE_DEFS = {
-          "doha-hotel-pending": {icon:"◈",label:"Hotel em Doha a definir",sleepCity:"Doha · UTC+3",colorKey:"transport",bullets:["Parada para deixar malas e descansar; nome/endereço pendentes. Voo para Osaka às 01:00 de 09/11."]},
+          "doha-hotel-pending": {icon:"◈",label:"Ramada Encore by Wyndham Doha",sleepCity:"Doha · UTC+3",colorKey:"transport",bullets:["Hotel informado pelo viajante; parada para malas e descanso.","Próximo ao Souq Waqif. Confirmar traslado de retorno até 21:00.","QR802: 09/11 00:55 DOH → 16:25 KIX T1."]},
           "henn-haneda": {
             icon: "🦖",
             label: "Henn na Hotel Tokyo Haneda",
@@ -8038,7 +8038,7 @@
           },
         };
 
-        Object.assign(TOUR_DEFS, {"doha-stopover": {"label": "Doha: hotel, MIA, Katara opcional e Souq Waqif", "icon": "◈", "hours": 8, "region": "doha", "colorKey": "transport", "environment": "mixed", "bullets": ["08/11 · horários locais de Doha (UTC+3).", "Hotel ainda a definir; deslocamentos estimados.", "Voo direto para Osaka: 09/11 às 01:00; aeroporto até 22:00 de 08/11."], "guide": {"city": "Doha", "timezone": "Asia/Qatar", "intro": "Conexão remarcada: dia em Doha antes do voo direto para Osaka. Katara opcional; hotel pendente.", "smartRoute": [{"time": "10:00–10:45", "place": "Aeroporto de Doha → hotel a definir", "note": "45 min estimados de traslado; hotel, voucher e transporte ainda a confirmar."}, {"time": "10:45–12:00", "place": "Hotel a definir: deixar malas e descansar", "note": "Confirmar se o quarto pode ser usado pela manhã; se não, pedir guarda de bagagem. Nome/endereço pendentes."}, {"time": "12:00–12:45", "place": "Almoço próximo ao hotel", "note": "Escolher depois de saber o hotel."}, {"time": "12:45–13:15", "place": "Hotel → Museu de Arte Islâmica", "note": "30 min estimados; ajustar conforme endereço do hotel e trânsito."}, {"time": "13:15–15:00", "place": "Museu de Arte Islâmica (MIA)", "note": "Domingo: 09:00–19:00. Ombros e joelhos cobertos. Fonte: https://mia.org.qa/en/visit/"}, {"time": "15:00–15:45", "place": "MIA → Katara / 21 High Street", "note": "45 min de margem para carro e trânsito. Se estiverem cansados, cortar Katara e seguir para pausa/Souq."}, {"time": "15:45–16:45", "place": "21 High Street, Katara (opcional)", "note": "Área comercial com climatização externa; parar para café e passeio curto. Assumida como a rua desejada; confirmar. Fonte: https://www.qatarairways.com/en-ae/journeys/inspire/air-conditioned-outdoor-spaces-qatar.html"}, {"time": "16:45–17:30", "place": "Katara → Souq Waqif", "note": "45 min de margem; trânsito pode mudar."}, {"time": "17:30–19:00", "place": "Souq Waqif e jantar", "note": "Passeio pelo mercado e jantar cedo. Se não forem a Katara, aproveitar mais tempo aqui e no hotel."}, {"time": "19:00–19:45", "place": "Souq Waqif → hotel", "note": "Hotel a definir; estimativa de traslado, ajustar ao endereço."}, {"time": "19:45–21:00", "place": "Hotel: descanso, malas e preparação para o aeroporto", "note": "Conferir voo direto a Osaka, terminal, bagagem e traslado com a Qatar. Não presumir que as malas precisam ser retiradas."}, {"time": "21:00–22:00", "place": "Hotel → Aeroporto de Doha", "note": "Janela conservadora de 60 min; chegar até 22:00 de 08/11 para o voo de 01:00 de 09/11."}, {"time": "22:00–23:45", "place": "Aeroporto: check-in, segurança e portão", "note": "Voo remarcado direto para Osaka às 01:00 de 09/11, conforme informado pelo viajante. Conferir horário de embarque e aeroporto de chegada na passagem."}, {"time": "23:45–23:59", "place": "Aguardar embarque para Osaka", "note": "Horário de embarque ilustrativo, seguir o cartão. A partida é às 01:00 da madrugada seguinte, no fuso Asia/Qatar."}]}}, "osaka-arrival-remarcada": {"label": "Chegada direta a Osaka e traslado ao Comfort Hotel", "icon": "✈", "hours": 2, "region": "osaka", "colorKey": "osaka", "environment": "mixed", "bullets": ["Partida de Doha em 09/11 às 01:00 (horário de Doha).", "Horário e aeroporto de chegada pendentes: confirmar na passagem.", "Não usar mais o trajeto Haneda/Narita → Tóquio → Osaka."], "guide": {"city": "Osaka", "intro": "Chegada ao Japão em voo direto a Osaka; confirmar aeroporto e horário antes de definir o traslado.", "smartRoute": [{"place": "Chegada a Osaka: imigração, malas e traslado ao Comfort Hotel Shin-Osaka", "note": "Sem horário definido. Confirmar aeroporto (Kansai/Itami) e chegada na passagem; escolher transporte depois. Passeios extras só conforme disposição."}]}}});
+        Object.assign(TOUR_DEFS, {"doha-stopover": {"label": "Doha: hotel, MIA, Katara opcional e Souq Waqif", "icon": "◈", "hours": 8, "region": "doha", "colorKey": "transport", "environment": "mixed", "bullets": ["08/11 · horários locais de Doha (UTC+3).", "Ramada Encore by Wyndham Doha · hotel informado pelo viajante.", "QR802: 09/11 às 00:55 DOH → 16:25 KIX, Terminal 1. Aeroporto de Doha até 21:55 de 08/11."], "guide": {"city": "Doha", "timezone": "Asia/Qatar", "intro": "Conexão em Doha com parada no Ramada Encore by Wyndham Doha. QR802 confirmado na imagem: 09/11 00:55 DOH → 16:25 KIX T1. Katara opcional.", "smartRoute": [{"time": "10:00–10:45", "place": "Aeroporto de Doha → Ramada Encore Doha", "note": "45 min de margem de traslado até o Ramada Encore by Wyndham Doha; ajustar ao transporte fornecido pela Qatar."}, {"time": "10:45–12:00", "place": "Ramada Encore Doha: deixar malas e descansar", "note": "Deixar as malas e descansar. Confirmar acesso ao quarto e horário do traslado de retorno. Hotel informado pelo viajante."}, {"time": "12:00–12:45", "place": "Almoço próximo ao hotel", "note": "Almoço no hotel ou nas proximidades, conforme disposição."}, {"time": "12:45–13:15", "place": "Ramada Encore Doha → Museu de Arte Islâmica", "note": "30 min de margem em carro desde o Ramada Encore Doha, incluindo espera; ajustar ao trânsito."}, {"time": "13:15–15:00", "place": "Museu de Arte Islâmica (MIA)", "note": "Domingo: 09:00–19:00. Ombros e joelhos cobertos. Fonte: https://mia.org.qa/en/visit/"}, {"time": "15:00–15:45", "place": "MIA → Katara / 21 High Street", "note": "45 min de margem para carro e trânsito. Se estiverem cansados, cortar Katara e seguir para pausa/Souq."}, {"time": "15:45–16:45", "place": "21 High Street, Katara (opcional)", "note": "Área comercial com climatização externa; parar para café e passeio curto. Assumida como a rua desejada; confirmar. Fonte: https://www.qatarairways.com/en-ae/journeys/inspire/air-conditioned-outdoor-spaces-qatar.html"}, {"time": "16:45–17:30", "place": "Katara → Souq Waqif", "note": "45 min de margem; trânsito pode mudar."}, {"time": "17:30–19:00", "place": "Souq Waqif e jantar", "note": "Passeio pelo mercado e jantar cedo. Se não forem a Katara, aproveitar mais tempo aqui e no hotel."}, {"time": "19:00–19:45", "place": "Souq Waqif → Ramada Encore Doha", "note": "Retorno ao Ramada Encore Doha, próximo ao Souq; janela inclui espera de carro e margem."}, {"time": "19:45–21:00", "place": "Ramada Encore Doha: descanso, malas e preparação para o aeroporto", "note": "Conferir voo direto a Osaka, terminal, bagagem e traslado com a Qatar. Não presumir que as malas precisam ser retiradas."}, {"time": "21:00–21:55", "place": "Ramada Encore Doha → Aeroporto de Doha", "note": "Sair do Ramada Encore até 21:00; chegar ao aeroporto até 21:55, três horas antes do QR802. Confirmar o traslado com a recepção/Qatar."}, {"time": "21:55–23:45", "place": "Aeroporto: check-in, segurança e portão", "note": "QR802 Qatar Airways: partida em 09/11 às 00:55 de Doha; chegada em Kansai às 16:25, Terminal 1. Dados da imagem enviada. Seguir o horário de embarque do cartão."}, {"time": "23:45–23:59", "place": "Aguardar embarque para Osaka", "note": "Horário de embarque ilustrativo, seguir o cartão. A partida é às 00:55 da madrugada seguinte, no fuso Asia/Qatar."}]}}, "osaka-arrival-remarcada": {"label": "QR802: chegada Kansai 16:25 → Comfort Hotel Shin-Osaka", "icon": "✈", "hours": 4, "region": "osaka", "colorKey": "osaka", "environment": "mixed", "bullets": ["09/11 · QR802 Qatar Airways: 00:55 DOH → 16:25 KIX, Terminal 1; duração 9h30. Horários locais da passagem enviada.", "HARUKA direto até Shin-Osaka; escolher trem depois da imigração e bagagem.", "Chegada ao hotel planejada para aproximadamente 19:30–20:30; procedimentos e trânsito podem alterar."], "guide": {"city": "Osaka", "intro": "Chegada em Kansai T1 às 16:25 conforme passagem QR802. Imigração e bagagem, HARUKA direto a Shin-Osaka e traslado ao Comfort Hotel. Os horários após o pouso são estimativas.", "smartRoute": [{"time": "16:25–18:00", "place": "Kansai KIX T1: chegada, imigração e malas", "note": "QR802, chegada prevista na passagem às 16:25 JST. Janela de 95 min para procedimentos, que podem demorar mais."}, {"time": "18:00–18:30", "place": "Terminal 1 → estação Kansai-airport / bilhete HARUKA", "note": "Seguir placas de trens/JR, comprar bilhete e reservar o próximo HARUKA disponível para Shin-Osaka. Não é trem reservado; ajustar os horários seguintes."}, {"time": "18:30–19:30", "place": "HARUKA: Kansai-airport → Shin-Osaka", "note": "Janela estimada de 60 min, não um horário de trem confirmado. Serviço direto; conferir disponibilidade no aeroporto. Fonte: https://www.westjr.co.jp/global/en/ticket/westqr/haruka/"}, {"time": "19:30–20:00", "place": "Shin-Osaka → Comfort Hotel Shin-Osaka e check-in", "note": "30 min de margem para desembarque, saída da estação, malas e check-in. Ajustar à chegada real do trem."}, {"time": "20:00–21:00", "place": "Jantar leve próximo ao Comfort Hotel", "note": "Estimativa flexível conforme cansaço e chegada; descansar para o dia seguinte."}]}}});
 
         window.JaplannerPokemon.register(TOUR_DEFS);
 
@@ -8607,6 +8607,16 @@
           return true;
         }
 
+        function applyRamadaQr802V2(p) {
+          p._updates=p._updates || {};
+          if(p._updates.ramadaQr802V2)return false;
+          var d8=p['2026-11-08'];
+          if(d8 && d8.base==='doha-hotel-pending')d8.note='Doha 08/11 · UTC+3. Aeroporto às 10:00 → Ramada Encore by Wyndham Doha → MIA → Katara/21 High Street opcional → Souq Waqif → hotel → aeroporto até 21:55. QR802 em 09/11 às 00:55 para Kansai, chegada 16:25 (Japão), Terminal 1. Traslados estimados.';
+          var d9=p['2026-11-09'];
+          if(d9 && (d9.tours || []).includes('osaka-arrival-remarcada'))d9.note='QR802 Qatar Airways: 09/11 00:55 DOH → 16:25 KIX, Terminal 1; duração 9h30. Horários da passagem enviada. Imigração e malas → HARUKA direto a Shin-Osaka → Comfort Hotel. Hotel estimado 19:30–20:30; ajustar ao desembarque e trem reais.';
+          p._updates.ramadaQr802V2=true;return true;
+        }
+
         function loadPlan() {
           try {
             var raw = localStorage.getItem(STORAGE_KEY);
@@ -8633,6 +8643,7 @@
                 if (window.JaplannerPokemon.migrate(parsed)) changed = true;
                 if (applyMissingOsakaTransferV1(parsed)) changed = true;
                 if (applyDohaStopoverV1(parsed)) changed = true;
+                if (applyRamadaQr802V2(parsed)) changed = true;
                 if (changed) sharedSet(STORAGE_KEY, JSON.stringify(parsed));
                 return parsed;
               }
@@ -8653,6 +8664,7 @@
           window.JaplannerPokemon.migrate(freshPlan);
           applyMissingOsakaTransferV1(freshPlan);
           applyDohaStopoverV1(freshPlan);
+          applyRamadaQr802V2(freshPlan);
           return freshPlan;
         }
         function savePlan() {
