@@ -1107,7 +1107,6 @@
   function showToday() {
     document.body.classList.add("desktop-today");
     document.getElementById("today-view").classList.add("active");
-    if (window.plannerSetMobileView) window.plannerSetMobileView("today");
     todayISO = clampDay(tokyoNow().iso);
     renderToday();
     window.scrollTo(0, 0);
@@ -1155,6 +1154,7 @@
     });
   }
   window.TripRuntime = {
+    showToday: showToday,
     init: function (config) {
       api = config;
       Object.keys(api.tourDefs).forEach(function (id) {
@@ -1165,7 +1165,10 @@
             : "outdoor";
       });
       todayISO = clampDay(tokyoNow().iso);
-      document.getElementById("open-today-desktop").addEventListener("click", showToday);
+      document.getElementById("open-today-desktop").addEventListener("click", function () {
+        if (window.plannerSetMobileView) window.plannerSetMobileView("today");
+        else showToday();
+      });
       setupInstall();
       showCalendar();
     },

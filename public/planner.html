@@ -1644,7 +1644,7 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="/pokemon-view.js?v=2"></script>
-    <script src="/trip-runtime.js?v=9"></script>
+    <script src="/trip-runtime.js?v=10"></script>
     <script src="/calendar-view.js?v=2"></script>
     <script src="/week-calendar.js?v=2"></script>
     <script>
@@ -10256,7 +10256,14 @@
           function setView(view) {
             document.body.classList.remove("m-today", "m-jetlag", "m-pool", "m-detail", "m-transport", "m-activities", "m-budget", "m-reservations", "m-shopping", "m-pokemon");
             document.body.classList.remove("jetlag-open", "transport-open", "activities-open", "budget-open", "reservations-open", "shopping-open", "pokemon-open");
-            if (view === "today") document.body.classList.add("m-today");
+            if (view !== "today") {
+              document.body.classList.remove("desktop-today");
+              document.getElementById("today-view").classList.remove("active");
+            }
+            if (view === "today") {
+              document.body.classList.add("m-today");
+              if (window.TripRuntime) window.TripRuntime.showToday();
+            }
             if (view === "jetlag") {
               document.body.classList.add("m-jetlag");
               if (window.plannerShowJetlag) window.plannerShowJetlag(true);
